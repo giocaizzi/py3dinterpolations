@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3Dinterpolations.core.griddata.GridData &mdash; py3Dinterpolations 0.1.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="py3Dinterpolations.core.griddata.GridDataSpecs" href="py3Dinterpolations.core.griddata.GridDataSpecs.html" />
+    <link rel="prev" title="py3Dinterpolations.core.griddata" href="py3Dinterpolations.core.griddata.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            py3Dinterpolations
+          </a>
+              <div class="version">
+                0.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/quickstart.html">Quick start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="py3Dinterpolations.html">py3Dinterpolations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="py3Dinterpolations.core.html">py3Dinterpolations.core</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="py3Dinterpolations.core.create_regulargrid3d_from_griddata.html">py3Dinterpolations.core.create_regulargrid3d_from_griddata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py3Dinterpolations.core.grid3d.html">py3Dinterpolations.core.grid3d</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="py3Dinterpolations.core.griddata.html">py3Dinterpolations.core.griddata</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">py3Dinterpolations.core.griddata.GridData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3Dinterpolations.core.griddata.GridDataSpecs.html">py3Dinterpolations.core.griddata.GridDataSpecs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="py3Dinterpolations.modelling.html">py3Dinterpolations.modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="py3Dinterpolations.plotting.html">py3Dinterpolations.plotting</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">py3Dinterpolations</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="py3Dinterpolations.html">py3Dinterpolations</a></li>
+          <li class="breadcrumb-item"><a href="py3Dinterpolations.core.html">py3Dinterpolations.core</a></li>
+          <li class="breadcrumb-item"><a href="py3Dinterpolations.core.griddata.html">py3Dinterpolations.core.griddata</a></li>
+      <li class="breadcrumb-item active">py3Dinterpolations.core.griddata.GridData</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/py3Dinterpolations.core.griddata.GridData.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="py3dinterpolations-core-griddata-griddata">
+<h1>py3Dinterpolations.core.griddata.GridData<a class="headerlink" href="#py3dinterpolations-core-griddata-griddata" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="py3Dinterpolations.core.griddata.GridData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py3Dinterpolations.core.griddata.</span></span><span class="sig-name descname"><span class="pre">GridData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'V'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>GridData class</p>
+<p>Class for 3D grid data.</p>
+<p>As defaults, looks for X, Y, Z, V columns in the data.
+Otherwise, custom column names can be provided.</p>
+<p>This object keeps track of the transformations (preprocessing)
+applied to the data, by storing the relative parameters in the
+<cite>preprocessing_params</cite> attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – source data</p></li>
+<li><p><strong>ID</strong> (<em>str</em>) – column name of the ID, default: “ID”</p></li>
+<li><p><strong>X</strong> (<em>str</em>) – column name of the X, default: “X”</p></li>
+<li><p><strong>Y</strong> (<em>str</em>) – column name of the Y, default: “Y”</p></li>
+<li><p><strong>Z</strong> (<em>str</em>) – column name of the Z, default: “Z”</p></li>
+<li><p><strong>V</strong> (<em>str</em>) – column name of the V, default: “V”</p></li>
+<li><p><strong>preprocessing_params</strong> (<em>dict</em>) – preprocessing parameters</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3Dinterpolations.core.griddata.GridData.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.data" title="Permalink to this definition"></a></dt>
+<dd><p>data in GridData.data standard</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3Dinterpolations.core.griddata.GridData.preprocessing_params">
+<span class="sig-name descname"><span class="pre">preprocessing_params</span></span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.preprocessing_params" title="Permalink to this definition"></a></dt>
+<dd><p>preprocessing parameters,
+if some Preprocessing is applied this attribute is a dict
+containing the preprocessing parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3Dinterpolations.core.griddata.GridData.columns">
+<span class="sig-name descname"><span class="pre">columns</span></span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.columns" title="Permalink to this definition"></a></dt>
+<dd><p>column names mapping</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Properties:</dt><dd><p>numpy_data (np.ndarray): numpy data of X,Y,Z,V
+specs (GridDataSpecs): specs of the GridData</p>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(data[, ID, X, Y, Z, V, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3Dinterpolations.core.griddata.GridData.columns" title="py3Dinterpolations.core.griddata.GridData.columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">columns</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3Dinterpolations.core.griddata.GridData.data" title="py3Dinterpolations.core.griddata.GridData.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3Dinterpolations.core.griddata.GridData.numpy_data" title="py3Dinterpolations.core.griddata.GridData.numpy_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy_data</span></code></a></p></td>
+<td><p>get numpy data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3Dinterpolations.core.griddata.GridData.preprocessing_params" title="py3Dinterpolations.core.griddata.GridData.preprocessing_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preprocessing_params</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3Dinterpolations.core.griddata.GridData.specs" title="py3Dinterpolations.core.griddata.GridData.specs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">specs</span></code></a></p></td>
+<td><p>specs of the GridData</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py property">
+<dt class="sig sig-object py" id="py3Dinterpolations.core.griddata.GridData.numpy_data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numpy_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.numpy_data" title="Permalink to this definition"></a></dt>
+<dd><p>get numpy data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy data of X,Y,Z,V</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py3Dinterpolations.core.griddata.GridData.specs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">specs</span></span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.specs" title="Permalink to this definition"></a></dt>
+<dd><p>specs of the GridData</p>
+<p>Initializes a GridDataSpecs object
+with the current GridData object
+to get the specs of the GridData</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>specs of the GridData</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="py3Dinterpolations.core.griddata.GridDataSpecs.html#py3Dinterpolations.core.griddata.GridDataSpecs" title="py3Dinterpolations.core.griddata.GridDataSpecs">GridDataSpecs</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="py3Dinterpolations.core.griddata.html" class="btn btn-neutral float-left" title="py3Dinterpolations.core.griddata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="py3Dinterpolations.core.griddata.GridDataSpecs.html" class="btn btn-neutral float-right" title="py3Dinterpolations.core.griddata.GridDataSpecs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, giocaizzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick start &mdash; py3Dinterpolations 0.1.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="py3Dinterpolations" href="../_autosummary/py3Dinterpolations.html" />
+    <link rel="prev" title="Welcome to py3Dinterpolations’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            py3Dinterpolations
+          </a>
+              <div class="version">
+                0.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Import-data-from-pandas">Import data from pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#GridData-object">GridData object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Preprocessing">Preprocessing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Downsampling">Downsampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Normalization-of-XYZ-and-standardization-of-V">Normalization of XYZ and standardization of V</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-comparison-of-data-before-and-after-downsampling">Plot comparison of data before and after downsampling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Modelling">Modelling</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/py3Dinterpolations.html">py3Dinterpolations</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">py3Dinterpolations</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/quickstart.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Quick-start">
+<h1>Quick start<a class="headerlink" href="#Quick-start" title="Permalink to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[187]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">from</span> <span class="nn">py3Dinterpolations.core</span> <span class="kn">import</span> <span class="n">GridData</span>
+<span class="kn">from</span> <span class="nn">py3Dinterpolations.preprocessing</span> <span class="kn">import</span> <span class="n">Preprocessing</span><span class="p">,</span> <span class="n">reverse_preprocessing</span>
+<span class="kn">from</span> <span class="nn">py3Dinterpolations.plotting</span> <span class="kn">import</span> <span class="n">plot_downsampling</span>
+<span class="kn">from</span> <span class="nn">py3Dinterpolations.model</span> <span class="kn">import</span> <span class="n">Model3D</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre></div></div>
+</div>
+<section id="Import-data-from-pandas">
+<h2>Import data from pandas<a class="headerlink" href="#Import-data-from-pandas" title="Permalink to this heading"></a></h2>
+<p>The package is written so to be able to import data from pandas. The data must be in a pandas dataframe.</p>
+<p>Column names could be either default [“X”, “Y”, “Z”,”V”] or custom. In the latter case, the user must specify the column names in the function call.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[172]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;../data/griddata_default_colnames.csv&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[172]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Z</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>ID</th>
+      <th>V</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>31669</th>
+      <td>-19.050</td>
+      <td>4686.534</td>
+      <td>672307.806</td>
+      <td>MIP14</td>
+      <td>705130</td>
+    </tr>
+    <tr>
+      <th>31670</th>
+      <td>-19.065</td>
+      <td>4686.534</td>
+      <td>672307.806</td>
+      <td>MIP14</td>
+      <td>705054</td>
+    </tr>
+    <tr>
+      <th>31671</th>
+      <td>-19.080</td>
+      <td>4686.534</td>
+      <td>672307.806</td>
+      <td>MIP14</td>
+      <td>706275</td>
+    </tr>
+    <tr>
+      <th>31672</th>
+      <td>-19.096</td>
+      <td>4686.534</td>
+      <td>672307.806</td>
+      <td>MIP14</td>
+      <td>705740</td>
+    </tr>
+    <tr>
+      <th>31673</th>
+      <td>-19.111</td>
+      <td>4686.534</td>
+      <td>672307.806</td>
+      <td>MIP14</td>
+      <td>758766</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="GridData-object">
+<h2>GridData object<a class="headerlink" href="#GridData-object" title="Permalink to this heading"></a></h2>
+<p>This object is designed to store the data that is being interpolated in an efficient manner. It is a wrapper around a pandas dataframe, with capability to return the equivalent numpy array for interaction with interpolation packages (eg. pyKrige, scipy)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[173]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">GridData</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">gd</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[173]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>V</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">MIP9</th>
+      <th rowspan="5" valign="top">4665.043</th>
+      <th rowspan="5" valign="top">672282.574</th>
+      <th>0.000</th>
+      <td>166250</td>
+    </tr>
+    <tr>
+      <th>-0.015</th>
+      <td>165944</td>
+    </tr>
+    <tr>
+      <th>-0.030</th>
+      <td>166173</td>
+    </tr>
+    <tr>
+      <th>-0.046</th>
+      <td>166097</td>
+    </tr>
+    <tr>
+      <th>-0.061</th>
+      <td>166250</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th rowspan="5" valign="top">MIP1</th>
+      <th rowspan="5" valign="top">4618.074</th>
+      <th rowspan="5" valign="top">672268.238</th>
+      <th>-14.966</th>
+      <td>243995</td>
+    </tr>
+    <tr>
+      <th>-14.981</th>
+      <td>241020</td>
+    </tr>
+    <tr>
+      <th>-14.996</th>
+      <td>246208</td>
+    </tr>
+    <tr>
+      <th>-15.011</th>
+      <td>244072</td>
+    </tr>
+    <tr>
+      <th>-15.027</th>
+      <td>244453</td>
+    </tr>
+  </tbody>
+</table>
+<p>31674 rows × 1 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[174]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">gd</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span> <span class="n">gd</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">vmax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 5622272
+</pre></div></div>
+</div>
+</section>
+<section id="Preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#Preprocessing" title="Permalink to this heading"></a></h2>
+<p>The package offers preprocessing procedures.</p>
+<ul class="simple">
+<li><p><strong>Downsampling data</strong>: by grouping data back blocks of fixed size (resolution) and applying the mean function to each block.</p></li>
+<li><p><strong>Normalization X,Y,Z coordinates</strong>: normalizing the coordinates to the range [0,1] by subtracting the minimum and dividing by the maximum.</p></li>
+<li><p><strong>Standardization of V values</strong>: standardizing the V values by subtracting the mean and dividing by the standard deviation.</p></li>
+</ul>
+<section id="Downsampling">
+<h3>Downsampling<a class="headerlink" href="#Downsampling" title="Permalink to this heading"></a></h3>
+<p>The downsampling procedure is implemented in the function <code class="docutils literal notranslate"><span class="pre">downsample_data</span></code>. It takes as input a pandas dataframe and the resolution of the blocks. At the moment, uses the average of the block. Can be easily customized.</p>
+</section>
+<section id="Normalization-of-XYZ-and-standardization-of-V">
+<h3>Normalization of XYZ and standardization of V<a class="headerlink" href="#Normalization-of-XYZ-and-standardization-of-V" title="Permalink to this heading"></a></h3>
+<p>Normalizing the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates ensures that all the coordinates are within a similar range, which can help prevent one coordinate from dominating the kriging interpolation process. It is especially useful when the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates have different scales or units.</p>
+<p>Standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values by centering them around 0 and giving them equal variances can help ensure that the kriging algorithm is not influenced by the absolute magnitude of <code class="docutils literal notranslate"><span class="pre">V</span></code>. This can be beneficial if the <code class="docutils literal notranslate"><span class="pre">V</span></code> values have a large range or if you want to focus more on the relative differences between <code class="docutils literal notranslate"><span class="pre">V</span></code> values rather than their absolute values.</p>
+<p>By normalizing the XYZ coordinates and standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values, you align the scales of the different variables and make them more comparable, which can improve the performance of the kriging algorithm.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[175]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">downsample_res</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># downsample solution</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[176]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessed_griddata</span> <span class="o">=</span> <span class="n">Preprocessing</span><span class="p">(</span>
+    <span class="n">gd</span><span class="p">,</span> <span class="n">normalize_xyz</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">standardize_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">downsampling_factor</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
+<span class="n">preprocessed_griddata</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[176]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>V</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">MIP9</th>
+      <th rowspan="5" valign="top">0.347923</th>
+      <th rowspan="5" valign="top">0.194902</th>
+      <th>1.000000</th>
+      <td>-0.530089</td>
+    </tr>
+    <tr>
+      <th>0.973684</th>
+      <td>-0.529953</td>
+    </tr>
+    <tr>
+      <th>0.947368</th>
+      <td>-0.531140</td>
+    </tr>
+    <tr>
+      <th>0.921053</th>
+      <td>-0.532935</td>
+    </tr>
+    <tr>
+      <th>0.894737</th>
+      <td>-0.473396</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th rowspan="5" valign="top">MIP1</th>
+      <th rowspan="5" valign="top">0.085040</th>
+      <th rowspan="5" valign="top">0.000000</th>
+      <th>0.315789</th>
+      <td>-0.034761</td>
+    </tr>
+    <tr>
+      <th>0.289474</th>
+      <td>-0.129860</td>
+    </tr>
+    <tr>
+      <th>0.263158</th>
+      <td>-0.258866</td>
+    </tr>
+    <tr>
+      <th>0.236842</th>
+      <td>-0.322314</td>
+    </tr>
+    <tr>
+      <th>0.210526</th>
+      <td>-0.373528</td>
+    </tr>
+  </tbody>
+</table>
+<p>994 rows × 1 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[177]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessed_griddata</span><span class="o">.</span><span class="n">preprocessing_params</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[177]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;downsampling&#39;: {&#39;resolution&#39;: 0.5},
+ &#39;normalization&#39;: {&#39;X&#39;: {&#39;min&#39;: 4602.880000000005, &#39;max&#39;: 4781.548999999999},
+  &#39;Y&#39;: {&#39;min&#39;: 672268.2379999999, &#39;max&#39;: 672341.7929999996},
+  &#39;Z&#39;: {&#39;min&#39;: -19.0, &#39;max&#39;: 0.0}},
+ &#39;standardization&#39;: {&#39;mean&#39;: 457532.0136261614, &#39;std&#39;: 551291.6904739843}}
+</pre></div></div>
+</div>
+<section id="Plot-comparison-of-data-before-and-after-downsampling">
+<h4>Plot comparison of data before and after downsampling<a class="headerlink" href="#Plot-comparison-of-data-before-and-after-downsampling" title="Permalink to this heading"></a></h4>
+<p>This method allows to plot the griddata before and after the downsampling. the plot allows to assess how the downsampling affects the data, by smoothing out peaks.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[178]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_downsampling</span><span class="p">(</span><span class="n">gd</span><span class="p">,</span> <span class="n">reverse_preprocessing</span><span class="p">(</span><span class="n">preprocessed_griddata</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[178]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_quickstart_14_0.png" src="../_images/examples_quickstart_14_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="Modelling">
+<h2>Modelling<a class="headerlink" href="#Modelling" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Modeler</span></code> class works as general wrapper for a model instance, allowing to easily switch between different models.</p>
+<p>At the moment, the package offers the following models: - Ordinary Kriging (pyKrige)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[189]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;variogram_model&quot;</span><span class="p">:</span> <span class="s2">&quot;spherical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nlags&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;exact_values&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;enable_plotting&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[190]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model3D</span><span class="p">(</span>
+    <span class="n">preprocessed_griddata</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;ordinary_kriging&quot;</span><span class="p">,</span> <span class="n">model_params</span><span class="o">=</span><span class="n">model_params</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Plotting Enabled
+
+Adjusting data for anisotropy...
+Initializing variogram model...
+Using &#39;spherical&#39; Variogram Model
+Partial Sill: 0.740408232053143
+Full Sill: 1.1915710557512569
+Range: 0.9406074732049604
+Nugget: 0.45116282369811384
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_quickstart_17_1.png" src="../_images/examples_quickstart_17_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Calculating statistics on variogram model fit...
+Q1 = 0.047697690226026074
+Q2 = 0.7086359283779117
+cR = 0.42001957201012047
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[181]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">plot_model_epsilon</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_quickstart_18_0.png" src="../_images/examples_quickstart_18_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[182]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Executing Ordinary Kriging...
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[185]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">griddata</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[185]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>V</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">MIP9</th>
+      <th rowspan="5" valign="top">0.347923</th>
+      <th rowspan="5" valign="top">0.194902</th>
+      <th>1.000000</th>
+      <td>-0.530089</td>
+    </tr>
+    <tr>
+      <th>0.973684</th>
+      <td>-0.529953</td>
+    </tr>
+    <tr>
+      <th>0.947368</th>
+      <td>-0.531140</td>
+    </tr>
+    <tr>
+      <th>0.921053</th>
+      <td>-0.532935</td>
+    </tr>
+    <tr>
+      <th>0.894737</th>
+      <td>-0.473396</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th rowspan="5" valign="top">MIP1</th>
+      <th rowspan="5" valign="top">0.085040</th>
+      <th rowspan="5" valign="top">0.000000</th>
+      <th>0.315789</th>
+      <td>-0.034761</td>
+    </tr>
+    <tr>
+      <th>0.289474</th>
+      <td>-0.129860</td>
+    </tr>
+    <tr>
+      <th>0.263158</th>
+      <td>-0.258866</td>
+    </tr>
+    <tr>
+      <th>0.236842</th>
+      <td>-0.322314</td>
+    </tr>
+    <tr>
+      <th>0.210526</th>
+      <td>-0.373528</td>
+    </tr>
+  </tbody>
+</table>
+<p>994 rows × 1 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[188]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">get_predictions</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Unexpected exception formatting exception. Falling back to standard exception
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Traceback (most recent call last):
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/interactiveshell.py&#34;, line 3460, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File &#34;/var/folders/qd/pm08qr3s0dx5q76fd9pxjgyh0000gn/T/ipykernel_34601/2321407002.py&#34;, line 1, in &lt;module&gt;
+    model.get_predictions()
+  File &#34;/Users/giorgiocaizzi/Documents/GitHub/py3Dinterpolations/py3Dinterpolations/model.py&#34;, line 89, in get_predictions
+    and self.griddata.preprocessing_params[&#34;standardization&#34;]
+TypeError: unhashable type: &#39;dict&#39;
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/interactiveshell.py&#34;, line 2057, in showtraceback
+    stb = self.InteractiveTB.structured_traceback(
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/ultratb.py&#34;, line 1118, in structured_traceback
+    return FormattedTB.structured_traceback(
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/ultratb.py&#34;, line 1012, in structured_traceback
+    return VerboseTB.structured_traceback(
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/ultratb.py&#34;, line 865, in structured_traceback
+    formatted_exception = self.format_exception_as_a_whole(etype, evalue, etb, number_of_lines_of_context,
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/ultratb.py&#34;, line 818, in format_exception_as_a_whole
+    frames.append(self.format_record(r))
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/IPython/core/ultratb.py&#34;, line 736, in format_record
+    result += &#39;&#39;.join(_format_traceback_lines(frame_info.lines, Colors, self.has_colors, lvals))
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/stack_data/utils.py&#34;, line 145, in cached_property_wrapper
+    value = obj.__dict__[self.func.__name__] = self.func(obj)
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/stack_data/core.py&#34;, line 698, in lines
+    pieces = self.included_pieces
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/stack_data/utils.py&#34;, line 145, in cached_property_wrapper
+    value = obj.__dict__[self.func.__name__] = self.func(obj)
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/stack_data/core.py&#34;, line 649, in included_pieces
+    pos = scope_pieces.index(self.executing_piece)
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/stack_data/utils.py&#34;, line 145, in cached_property_wrapper
+    value = obj.__dict__[self.func.__name__] = self.func(obj)
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/stack_data/core.py&#34;, line 628, in executing_piece
+    return only(
+  File &#34;/opt/miniconda3/envs/general/lib/python3.10/site-packages/executing/executing.py&#34;, line 164, in only
+    raise NotOneValueFound(&#39;Expected one value, found 0&#39;)
+executing.executing.NotOneValueFound: Expected one value, found 0
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to py3Dinterpolations’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../_autosummary/py3Dinterpolations.html" class="btn btn-neutral float-right" title="py3Dinterpolations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, giocaizzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

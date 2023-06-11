@@ -2,6 +2,7 @@
 ![PyPI](https://img.shields.io/pypi/v/py3Dinterpolations)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py3Dinterpolations)
 [![Tests](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/tests.yml)[![codecov](https://codecov.io/gh/giocaizzi/py3Dinterpolations/branch/main/graph/badge.svg?token=8COIITUR2I)](https://codecov.io/gh/giocaizzi/py3Dinterpolations)
+[![Documentation](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/documentation.yml/badge.svg?branch=gh-pages)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/documentation.yml)
 
 
 This is a python package to compute **quick 3D interpolations of spatial data**.

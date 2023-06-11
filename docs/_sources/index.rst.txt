@@ -20,6 +20,7 @@ Preprocessing tools:
    :caption: Examples
 
    examples/quickstart.ipynb
+   examples/preprocessing.ipynb
 
 
 

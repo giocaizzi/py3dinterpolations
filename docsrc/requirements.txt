@@ -1,0 +1,7 @@
+sphinx
+sphinx_rtd_theme
+myst-parser
+docutils
+nbsphinx
+ipython # for jupyter notebooks rendering
+ipykernel

@@ -37,7 +37,5 @@ jobs:
         pytest 
       
     - name: "Upload coverage to Codecov"
-      uses: codecov/codecov-action@v2
-      if: matrix.python-version == '3.10' #uplode just once
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      uses: codecov/codecov-action@v3
+      if: matrix.python-version == '3.10'

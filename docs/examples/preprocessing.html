@@ -107,8 +107,8 @@
 <p>Normalizing the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates ensures that all the coordinates are within a similar range, which can help prevent one coordinate from dominating the kriging interpolation process. It is especially useful when the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates have different scales or units.</p>
 <p>Standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values by centering them around 0 and giving them equal variances can help ensure that the kriging algorithm is not influenced by the absolute magnitude of <code class="docutils literal notranslate"><span class="pre">V</span></code>. This can be beneficial if the <code class="docutils literal notranslate"><span class="pre">V</span></code> values have a large range or if you want to focus more on the relative differences between <code class="docutils literal notranslate"><span class="pre">V</span></code> values rather than their absolute values.</p>
 <p>By normalizing the XYZ coordinates and standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values, you align the scales of the different variables and make them more comparable, which can improve the performance of the kriging algorithm.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
@@ -122,28 +122,19 @@
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s2">&quot;../data/griddata_default_colnames.csv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;../../../tests/fixtures/griddata_default_colnames.csv&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -165,60 +156,60 @@ The autoreload extension is already loaded. To reload it, use:
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Z</th>
+      <th>ID</th>
       <th>X</th>
       <th>Y</th>
-      <th>ID</th>
+      <th>Z</th>
       <th>V</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>31669</th>
-      <td>-19.050</td>
-      <td>4686.534</td>
-      <td>672307.806</td>
-      <td>MIP14</td>
-      <td>705130</td>
+      <th>508</th>
+      <td>ID00</td>
+      <td>15.194</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>25.080662</td>
     </tr>
     <tr>
-      <th>31670</th>
-      <td>-19.065</td>
-      <td>4686.534</td>
-      <td>672307.806</td>
-      <td>MIP14</td>
-      <td>705054</td>
+      <th>509</th>
+      <td>ID00</td>
+      <td>15.194</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>19.047857</td>
     </tr>
     <tr>
-      <th>31671</th>
-      <td>-19.080</td>
-      <td>4686.534</td>
-      <td>672307.806</td>
-      <td>MIP14</td>
-      <td>706275</td>
+      <th>510</th>
+      <td>ID00</td>
+      <td>15.194</td>
+      <td>0.0</td>
+      <td>6</td>
+      <td>19.042223</td>
     </tr>
     <tr>
-      <th>31672</th>
-      <td>-19.096</td>
-      <td>4686.534</td>
-      <td>672307.806</td>
-      <td>MIP14</td>
-      <td>705740</td>
+      <th>511</th>
+      <td>ID00</td>
+      <td>15.194</td>
+      <td>0.0</td>
+      <td>5</td>
+      <td>14.111599</td>
     </tr>
     <tr>
-      <th>31673</th>
-      <td>-19.111</td>
-      <td>4686.534</td>
-      <td>672307.806</td>
-      <td>MIP14</td>
-      <td>758766</td>
+      <th>512</th>
+      <td>ID00</td>
+      <td>15.194</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>11.667224</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">GridData</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -227,6 +218,108 @@ The autoreload extension is already loaded. To reload it, use:
 </div>
 </div>
 <div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>V</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">ID30</th>
+      <th rowspan="5" valign="top">62.163</th>
+      <th rowspan="5" valign="top">14.336</th>
+      <th>19</th>
+      <td>7.523950</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>7.504403</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>10.089374</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>15.369461</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>11.836174</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">gd</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+513
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_gd</span> <span class="o">=</span> <span class="n">Preprocessing</span><span class="p">(</span>
+    <span class="n">gd</span><span class="p">,</span>
+    <span class="n">normalize_xyz</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">standardize_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">downsampling_res</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_gd</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
@@ -264,232 +357,34 @@ The autoreload extension is already loaded. To reload it, use:
   </thead>
   <tbody>
     <tr>
-      <th rowspan="5" valign="top">MIP9</th>
-      <th rowspan="5" valign="top">4665.043</th>
-      <th rowspan="5" valign="top">672282.574</th>
-      <th>0.000</th>
-      <td>166250.0</td>
-    </tr>
-    <tr>
-      <th>-0.015</th>
-      <td>165944.0</td>
-    </tr>
-    <tr>
-      <th>-0.030</th>
-      <td>166173.0</td>
-    </tr>
-    <tr>
-      <th>-0.046</th>
-      <td>166097.0</td>
-    </tr>
-    <tr>
-      <th>-0.061</th>
-      <td>166250.0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">gd</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-31674
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prova</span> <span class="o">=</span> <span class="n">Preprocessing</span><span class="p">(</span><span class="n">gd</span><span class="p">,</span> <span class="n">downsampling_res</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize_xyz</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">standardize_v</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
-<span class="n">prova</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th>V</th>
-    </tr>
-    <tr>
-      <th>ID</th>
-      <th>X</th>
-      <th>Y</th>
-      <th>Z</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th rowspan="5" valign="top">MIP9</th>
-      <th rowspan="5" valign="top">4665.043</th>
-      <th rowspan="5" valign="top">672282.574</th>
-      <th>0.000</th>
-      <td>166250.0</td>
-    </tr>
-    <tr>
-      <th>-0.015</th>
-      <td>165944.0</td>
-    </tr>
-    <tr>
-      <th>-0.030</th>
-      <td>166173.0</td>
-    </tr>
-    <tr>
-      <th>-0.046</th>
-      <td>166097.0</td>
-    </tr>
-    <tr>
-      <th>-0.061</th>
-      <td>166250.0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prova</span><span class="o">.</span><span class="n">preprocessing_params</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{&#39;normalization&#39;: {&#39;X&#39;: {&#39;min&#39;: 4602.880000000005, &#39;max&#39;: 4781.548999999999},
-  &#39;Y&#39;: {&#39;min&#39;: 672268.2379999999, &#39;max&#39;: 672341.7929999996},
-  &#39;Z&#39;: {&#39;min&#39;: -19.111, &#39;max&#39;: 0.0}},
- &#39;standardization&#39;: {&#39;mean&#39;: 462356.21086695715, &#39;std&#39;: 566627.0061256837}}
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_gd</span> <span class="o">=</span> <span class="n">Preprocessing</span><span class="p">(</span>
-    <span class="n">gd</span><span class="p">,</span>
-    <span class="n">normalize_xyz</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">standardize_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">downsampling_res</span><span class="o">=</span><span class="mf">1.0</span>
-<span class="p">)</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preproc_gd</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th>V</th>
-    </tr>
-    <tr>
-      <th>ID</th>
-      <th>X</th>
-      <th>Y</th>
-      <th>Z</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th rowspan="5" valign="top">MIP9</th>
+      <th rowspan="5" valign="top">ID30</th>
       <th rowspan="5" valign="top">0.347923</th>
       <th rowspan="5" valign="top">0.194902</th>
-      <th>1.000000</th>
-      <td>-0.543961</td>
+      <th>1.0</th>
+      <td>-0.522776</td>
     </tr>
     <tr>
-      <th>0.947368</th>
-      <td>-0.544122</td>
+      <th>0.9</th>
+      <td>-0.523604</td>
     </tr>
     <tr>
-      <th>0.894737</th>
-      <td>-0.464977</td>
+      <th>0.8</th>
+      <td>-0.314683</td>
     </tr>
     <tr>
-      <th>0.842105</th>
-      <td>-0.228924</td>
+      <th>0.7</th>
+      <td>-0.305259</td>
     </tr>
     <tr>
-      <th>0.789474</th>
-      <td>-0.343175</td>
+      <th>0.6</th>
+      <td>-0.080439</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<section id="Plot-comparison-of-data-before-and-after-downsampling">
-<h3>Plot comparison of data before and after downsampling<a class="headerlink" href="#Plot-comparison-of-data-before-and-after-downsampling" title="Permalink to this heading"></a></h3>
-<p>This method allows to plot the griddata before and after the downsampling. the plot allows to assess how the downsampling affects the data, by smoothing out peaks.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">preproc_gd</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -497,37 +392,48 @@ The autoreload extension is already loaded. To reload it, use:
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-514
+283
+</pre></div></div>
+</div>
+<section id="Plot-comparison-of-data-before-and-after-downsampling">
+<h3>Plot comparison of data before and after downsampling<a class="headerlink" href="#Plot-comparison-of-data-before-and-after-downsampling" title="Permalink to this heading"></a></h3>
+<p>This method allows to plot the griddata before and after the downsampling. the plot allows to assess how the downsampling affects the data, by smoothing out peaks.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">preproc_gd</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+283
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_downsampling</span><span class="p">(</span><span class="n">gd</span><span class="p">,</span> <span class="n">preproc_gd</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-enter_norm
-enter_stand
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_preprocessing_11_1.png" src="../_images/examples_preprocessing_11_1.png" />
+<img alt="../_images/examples_preprocessing_10_0.png" src="../_images/examples_preprocessing_10_0.png" />
 </div>
 </div>
 </section>

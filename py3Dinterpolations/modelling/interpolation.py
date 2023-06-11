@@ -84,7 +84,7 @@ class Interpolator3D:
         Sets the results attribute within the model attribute
 
         Args:
-            **kwargs: keyword arguments to be passed to the model predict method
+            \**kwargs: keyword arguments to be passed to the model predict method
 
         """
         # predict

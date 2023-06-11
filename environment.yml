@@ -1,0 +1,29 @@
+name: interpolations
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  # notebooks
+  - ipython
+  - ipykernel
+  # package requirements
+  - pandas
+  - numpy
+  - matplotlib
+  - pykrige
+  # formatting and linting
+  - black
+  - black-jupyter
+  - flake8
+  - flake8-rst-docstrings
+  # docs
+  - sphinx
+  - sphinx_rtd_theme
+  - myst-parser
+  - docutils
+  - nbsphinx
+  # testing
+  - pytest
+  - pytest-cov
+  # pip
+  - pip

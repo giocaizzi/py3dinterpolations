@@ -1,0 +1,61 @@
+name: Documentation build precheck
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  docs-pre-check:
+    runs-on: ubuntu-latest
+    steps:
+    
+    # full pandoc installation by
+    # nbsphinx extension
+    - name: Install pandoc
+      run: |
+        sudo apt-get install pandoc
+
+    # python 3.9 installation
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    # required otherwise fails
+    - name: Configure git
+      run: |
+        git config --global user.email "fooo@example.com"
+        git config --global user.name "Fooo Baar"
+
+    # checkout gh-pages branch
+    - uses: actions/checkout@v3
+      with:
+        ref : gh-pages
+        fetch-depth: 0  # otherwise cant merge because unrelated histories 
+
+    # due to main branch protection
+    # we need to create a new branch
+    - name: Create branch
+      run : |
+        git branch documentation-precheck
+        git checkout documentation-precheck
+
+    # merge PR changes
+    - name: Merge PR changes
+      run: |
+        git fetch origin pull/${{ github.event.pull_request.number }}/merge --no-tags --no-recurse-submodules -q
+        git merge FETCH_HEAD --no-edit
+
+    - name: Set up dependencies
+      run: |
+        pip install --upgrade pip 
+        pip install -r requirements.txt
+        pip install -r docsrc/requirements.txt
+        pip install . 
+  
+    - name: Build docs
+      run : |
+        cd docsrc/
+        make github-action
+        cd ..
+

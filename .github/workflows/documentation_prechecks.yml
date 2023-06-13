@@ -11,7 +11,9 @@ jobs:
     
     # full pandoc installation by
     # nbsphinx extension
-    - uses: docker://pandoc/core:latest-ubuntu
+    - name: Install pandoc
+      run: |
+        sudo apt-get install pandoc
 
     # python 3.9 installation
     - name: Set up Python 3.9

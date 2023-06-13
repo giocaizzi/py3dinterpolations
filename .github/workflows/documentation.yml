@@ -1,4 +1,4 @@
-name: Documentation
+name: Build documentation
 
 on:
   push:
@@ -10,11 +10,18 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
+      
+    # full pandoc installation by
+    # nbsphinx extension
+    - uses: docker://pandoc/core:2.9 
 
     - uses: actions/checkout@v3
       with:
         ref : ${{ github.ref }}
 
+  # open PR and commit changes to new branch
+  # to be reviewed before merging to gh-pages
+  # and deploying to GitHub Pages
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
@@ -23,8 +30,6 @@ jobs:
         title: "Actions: Build documentation"
         body: "This PR was automatically created by the documentation build action."
 
-      # create new branch, open PR, and push changes to it
-
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
@@ -32,13 +37,12 @@ jobs:
 
     - name: Set up dependencies
       run: |
-        sudo apt install pandoc
         pip install --upgrade pip 
         pip install -r requirements.txt
         pip install -r docsrc/requirements.txt
         pip install . 
   
-    - name: Building docs
+    - name: Build docs
       run : |
         cd docsrc/
         make github-action

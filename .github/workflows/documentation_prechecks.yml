@@ -33,9 +33,11 @@ jobs:
         git branch documentation-precheck
         git checkout documentation-precheck
 
-    - name: Merge main into branch
-      run : |
-        git merge main
+    # merge PR changes
+    - name: Merge PR changes
+      run: |
+        git fetch origin pull/${{ github.event.pull_request.number }}/merge --no-tags --no-recurse-submodules -q
+        git merge FETCH_HEAD --no-edit
 
     - name: Set up dependencies
       run: |

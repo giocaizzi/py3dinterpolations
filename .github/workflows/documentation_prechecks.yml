@@ -31,6 +31,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         ref : gh-pages
+        fetch-depth: 0  # otherwise cant merge because unrelated histories 
 
     # due to main branch protection
     # we need to create a new branch

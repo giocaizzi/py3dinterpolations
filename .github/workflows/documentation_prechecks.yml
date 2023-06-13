@@ -1,4 +1,4 @@
-name: Build precheck
+name: Documentation build precheck
 
 on:
   pull_request:
@@ -8,19 +8,32 @@ jobs:
   docs-check:
     runs-on: ubuntu-latest
     steps:
-      
+    
     # full pandoc installation by
     # nbsphinx extension
     - uses: docker://pandoc/core:2.9 
 
-    - uses: actions/checkout@v3
-      with:
-        ref : ${{ github.ref }}
-
+    # python 3.9 installation
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
         python-version: "3.9"
+
+    # checkout gh-pages branch
+    - uses: actions/checkout@v3
+      with:
+        ref : gh-pages
+
+    # due to main branch protection
+    # we need to create a new branch
+    - name: Create branch
+      run : |
+        git branch documentation-precheck
+        git checkout documentation-precheck
+
+    - name: Merge main into branch
+      run : |
+        git merge main
 
     - name: Set up dependencies
       run: |

@@ -14,9 +14,16 @@ jobs:
     - uses: actions/checkout@v3
       with:
         ref : ${{ github.ref }}
-        # provide PAT so to allow pushing on the 
-        # repository bypassing the branch protection
-        token : ${{secrets.PAT}}
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Actions: Build documentation"
+        title: "Actions: Build documentation"
+        body: "This PR was automatically created by the documentation build action."
+
+      # create new branch, open PR, and push changes to it
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
@@ -36,20 +43,4 @@ jobs:
         cd docsrc/
         make github-action
         cd ..
-
-    - name: Commit documentation changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Actions: Build documentation" -a || true
-    
-      # The last command will fail if no changes were present, so we ignore
-      # the return code.
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        branch: ${{ github.ref }}
-        github_token: ${{ secrets.GITHUB_TOKEN }}
 

@@ -19,6 +19,12 @@ jobs:
       with:
         python-version: "3.9"
 
+    # required otherwise fails
+    - name: Configure git
+      run: |
+        git config --global user.email "fooo@example.com"
+        git config --global user.name "Fooo Baar"
+
     # checkout gh-pages branch
     - uses: actions/checkout@v3
       with:

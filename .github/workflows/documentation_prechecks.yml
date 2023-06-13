@@ -23,6 +23,8 @@ jobs:
     - uses: actions/checkout@v3
       with:
         ref : gh-pages
+        fetch-depth: 0 
+        # include all history to retrive main branch
 
     # due to main branch protection
     # we need to create a new branch

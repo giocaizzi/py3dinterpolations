@@ -1,0 +1,37 @@
+name: Build precheck
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    steps:
+      
+    # full pandoc installation by
+    # nbsphinx extension
+    - uses: docker://pandoc/core:2.9 
+
+    - uses: actions/checkout@v3
+      with:
+        ref : ${{ github.ref }}
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Set up dependencies
+      run: |
+        pip install --upgrade pip 
+        pip install -r requirements.txt
+        pip install -r docsrc/requirements.txt
+        pip install . 
+  
+    - name: Build docs
+      run : |
+        cd docsrc/
+        make github-action
+        cd ..
+

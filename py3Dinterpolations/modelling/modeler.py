@@ -4,7 +4,7 @@ import numpy as np
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from ..modelling.models import SUPPORTED_MODELS
+from .models.models import SUPPORTED_MODELS
 
 
 class Modeler3D:

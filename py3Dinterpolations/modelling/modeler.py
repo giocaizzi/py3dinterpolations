@@ -73,7 +73,7 @@ class Modeler3D:
         # pykrige fit automatically
         pass
 
-    def predict(self, **kwargs) -> None:
+    def predict(self, **kwargs) -> np.ndarray:
         """makes predictions considering all past preprocessing
 
         - if preprocessing was applied, predict on normalized grid
@@ -82,6 +82,9 @@ class Modeler3D:
 
         Args:
             grids_arrays (dict): dictionary with x, y, z grids 1d np.ndarray
+
+        Returns:
+            interpolated (np.ndarray): interpolated grid
         """
         # make predictions on normalized grid if preprocessing was applied
         if self.griddata.preprocessing_params is None:
@@ -121,6 +124,8 @@ class Modeler3D:
 
         # sets results  also in grid3d
         self.grid3d.results = self.results
+
+        return interpolated
 
 
 def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray:

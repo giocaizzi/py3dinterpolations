@@ -1,4 +1,4 @@
-name: Build documentation
+name: Documentation build
 
 on:
   push:
@@ -27,18 +27,6 @@ jobs:
       with:
         ref : ${{ github.ref }}
     
-    # due to branch protection rules
-    # open PR and commit changes to new branch
-    # to be reviewed before merging to gh-pages
-    # and deploying to GitHub Pages
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "Actions: Build documentation"
-        title: "Documentation build"
-        body: "This PR was automatically created by the documentation build action."
-
 
     - name: Set up dependencies
       run: |
@@ -53,3 +41,17 @@ jobs:
         make github-action
         cd ..
 
+    # due to branch protection rules
+    # open PR and commit changes to new branch
+    # to be reviewed before merging to gh-pages
+    # and deploying to GitHub Pages
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Actions: Build documentation"
+        title: "Documentation build"
+        body: "This PR was automatically created by the documentation build action."
+        base: ${{ github.head_ref }} 
+        # specify base to fix error
+        # When the repository is checked out on a commit instead of a branch, the 'base' input must be supplied.

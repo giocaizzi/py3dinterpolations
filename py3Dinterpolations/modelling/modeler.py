@@ -4,7 +4,7 @@ import numpy as np
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from .models.models import SUPPORTED_MODELS
+from .models import SUPPORTED_MODELS
 
 
 class Modeler3D:
@@ -16,9 +16,9 @@ class Modeler3D:
     allow future wrapping of sklearn models
 
     Defines a fit and a predict method, to be called
-    by the Interpolator3D class.
+    when interpolating.
 
-    Ensures correct input and output for the Interpolator3D class.
+    Ensures correct input and output.
 
     Args:
         griddata (GridData): GridData istance

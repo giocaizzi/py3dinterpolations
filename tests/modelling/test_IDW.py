@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from py3Dinterpolations.modelling.models.models import SimpleIDW
+from py3Dinterpolations.modelling.models.idw import IDW
 
 
 def test_simple_idw():
@@ -25,7 +25,7 @@ def test_simple_idw():
 
 
     # Create a SimpleIDW model and fit it to the data
-    model = SimpleIDW(x,y,z,v)
+    model = IDW(x,y,z,v)
     results = model.compute(gridx, gridy, gridz)
 
     assert isinstance(results, np.ndarray)

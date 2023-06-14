@@ -13,11 +13,10 @@ def interpolate(
     model_name: str,
     model_params: dict,
     grid_resolution: float,
-    preprocess_kwags: dict = None,      
-    predict_kwags: dict = None, 
+    preprocess_kwags: dict = None,
+    predict_kwags: dict = None,
     return_components: bool = False,
 ):
-    
     # retrive associated grid
     grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
 

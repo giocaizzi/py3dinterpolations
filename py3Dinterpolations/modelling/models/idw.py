@@ -50,7 +50,7 @@ class IDW(DeterministicModel):
         self,
         x: float,
         y: float,
-        z : float,
+        z: float,
         power: float,
         xv: np.ndarray,
         yv: np.ndarray,
@@ -78,7 +78,7 @@ class IDW(DeterministicModel):
                 + (z - zv[i]) * (z - zv[i])
             )
 
-            # If the point is really close to one of the data points, 
+            # If the point is really close to one of the data points,
             # return the data point value to avoid singularities
             # EXACT interpolations
             if dist < threshold:
@@ -93,9 +93,9 @@ class IDW(DeterministicModel):
         else:
             value = np.nan
         return value
-    
-    def compute(self,gridx,gridy,gridz):
-        meshx, meshy, meshz = np.meshgrid(gridx,gridy,gridz,indexing="xy")
+
+    def compute(self, gridx, gridy, gridz):
+        meshx, meshy, meshz = np.meshgrid(gridx, gridy, gridz, indexing="xy")
 
         # Create a new mesh to store the coordinates
         new_mesh = np.zeros_like(meshx)

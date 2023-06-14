@@ -7,8 +7,6 @@ from pykrige.ok3d import OrdinaryKriging3D
 from .idw import IDW
 
 
-
-
 SUPPORTED_MODELS = {
     "statistical": {
         "ordinary_kriging": OrdinaryKriging3D,  # pykrige

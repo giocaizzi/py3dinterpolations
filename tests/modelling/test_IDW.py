@@ -23,9 +23,8 @@ def test_simple_idw():
     gridy = np.arange(y.min(), y.max(), resoution)
     gridz = np.arange(z.min(), z.max(), resoution)
 
-
     # Create a SimpleIDW model and fit it to the data
-    model = IDW(x,y,z,v)
+    model = IDW(x, y, z, v)
     results = model.compute(gridx, gridy, gridz)
 
     assert isinstance(results, np.ndarray)

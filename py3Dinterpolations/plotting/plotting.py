@@ -87,7 +87,7 @@ def plot_model_epsilon(model) -> None:
 
 
 def plot_3d_model(
-    modeler: Modeler3D, plot_points : bool = False, scale_points=1.0, **kwargs
+    modeler: Modeler3D, plot_points: bool = False, scale_points=1.0, **kwargs
 ) -> go.Figure:
     """plot 3d model"""
     data = [

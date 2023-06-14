@@ -82,7 +82,7 @@ class DeterministicModel:
     def compute(self):
         """predict values at the points where the model will be evaluated
 
-        This method is overriden by the child classes.
+        This method has to be overriden by the child classes.
         """
         pass
 
@@ -115,15 +115,24 @@ class SimpleIDW(DeterministicModel):
         values: np.ndarray,
         power: float = 1,
     ):
+        # initialize parent class
         super().__init__(x=x, y=y, z=z, values=values)
 
-    def compute(self, gridX: np.ndarray, gridY: np.ndarray, gridZ: np.ndarray):
+        # set power
+        self.power = power
+
+    def compute(
+        self, gridX: np.ndarray, gridY: np.ndarray, gridZ: np.ndarray
+    ) -> np.ndarray:
         """compute IDW grid
 
         Args:
             gridX (np.ndarray): x coordinates of the grid
             gridY (np.ndarray): y coordinates of the grid
             gridZ (np.ndarray): z coordinates of the grid
+
+        Returns:
+            np.ndarray: grid of values
         """
         self.distance_matrix = compute_distance_matrix(
             x0=self.x,
@@ -134,6 +143,7 @@ class SimpleIDW(DeterministicModel):
             z1=gridZ,
         )
 
+        # calculate weights
         weights = 1.0 / (self.distance_matrix + 1e-12) ** self.power
 
         # Make weights sum to one

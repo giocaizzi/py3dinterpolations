@@ -55,6 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#Import-data-from-pandas">Import data from pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#GridData-object">GridData object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Interpolate">Interpolate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3D-Visualization-with-Plotly">3D Visualization with Plotly</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
@@ -315,6 +316,13 @@ The autoreload extension is already loaded. To reload it, use:
 </section>
 <section id="Interpolate">
 <h2>Interpolate<a class="headerlink" href="#Interpolate" title="Permalink to this heading"></a></h2>
+<p>Interpolate by calling the <code class="docutils literal notranslate"><span class="pre">Interpolator3D</span></code> objects, that wraps up all ncessary functions to interpolate the data.</p>
+<ul class="simple">
+<li><p>Calulcates required 3d grid for prediction</p></li>
+<li><p>Executes preprocessing</p></li>
+<li><p>Fit the model</p></li>
+<li><p>Executes interpolation</p></li>
+</ul>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -393,6 +401,10 @@ Executing Ordinary Kriging...
 
 </pre></div></div>
 </div>
+</section>
+<section id="3D-Visualization-with-Plotly">
+<h2>3D Visualization with Plotly<a class="headerlink" href="#3D-Visualization-with-Plotly" title="Permalink to this heading"></a></h2>
+<p>The package natively supports <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">plotly</span></code> for visualization.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>

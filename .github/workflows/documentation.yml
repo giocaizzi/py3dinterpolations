@@ -41,17 +41,17 @@ jobs:
         make github-action
         cd ..
 
-    # due to branch protection rules
-    # open PR and commit changes to new branch
-    # to be reviewed before merging to gh-pages
-    # and deploying to GitHub Pages
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
+  # The last command will fail if no changes were present, so we ignore
+  # the return code.
+    - name: Commit documentation changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Actions: Build documentation" -a || true
+  
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "Actions: Build documentation"
-        title: "Documentation build"
-        body: "This PR was automatically created by the documentation build action."
-        base: ${{ github.head_ref }} 
-        # specify base to fix error
-        # When the repository is checked out on a commit instead of a branch, the 'base' input must be supplied.
+        branch: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}

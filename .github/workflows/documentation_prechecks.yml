@@ -1,4 +1,4 @@
-name: Documentation build precheck
+name: Documentation build - precheck
 
 on:
   pull_request:

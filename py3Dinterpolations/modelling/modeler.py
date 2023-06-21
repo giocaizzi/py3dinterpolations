@@ -10,10 +10,14 @@ from .models import SUPPORTED_MODELS
 class Modeler3D:
     """modeler for wrapping 3d models from different libraries
 
-    currently only supports
-    - pykrige
+    Currently supports:
+        Statistical:
+            - Ordinary Kriging : (pykrige)
+        Deterministic:
+            - Inverse Distance Weighting 
 
-    allow future wrapping of sklearn models
+
+    This class is designed to allow future of sklearn models.
 
     Defines a fit and a predict method, to be called
     when interpolating.
@@ -122,7 +126,7 @@ class Modeler3D:
             "variance": variance,
         }
 
-        # sets results  also in grid3d
+        # sets results  also in associated grid3d
         self.grid3d.results = self.results
 
         return interpolated

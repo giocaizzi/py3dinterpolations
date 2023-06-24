@@ -33,7 +33,6 @@ def test_Modeler3D_init(test_data):
     m3d = Modeler3D(
         griddata=gd,
         grid3d=g3d,
-        model_type=TEST_MODEL["model_type"],
         model_name=TEST_MODEL["model_name"],
         model_params=TEST_MODEL_MODEL_PARAMS,
     )

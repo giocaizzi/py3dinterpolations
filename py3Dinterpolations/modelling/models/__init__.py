@@ -15,3 +15,11 @@ SUPPORTED_MODELS = {
         "idw": IDW,
     },
 }
+
+def get_model_type(inner_key: str):
+    """get model type"""
+    for outer_key in SUPPORTED_MODELS:
+        if inner_key in SUPPORTED_MODELS[outer_key]:
+            return outer_key
+        else:
+            raise ValueError(f"model {inner_key} not supported")

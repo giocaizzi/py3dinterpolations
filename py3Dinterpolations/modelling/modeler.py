@@ -1,10 +1,11 @@
 """model wrapper for interpolation"""
 
 import numpy as np
+from typing import Union
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from .models import SUPPORTED_MODELS
+from .models import SUPPORTED_MODELS, get_model_type
 
 
 class Modeler3D:
@@ -12,9 +13,9 @@ class Modeler3D:
 
     Currently supports:
         Statistical:
-            - Ordinary Kriging : (pykrige)
+            - Ordinary Kriging : `ordinary_kriging` (pykrige)
         Deterministic:
-            - Inverse Distance Weighting 
+            - Inverse Distance Weighting : `idw`
 
 
     This class is designed to allow future of sklearn models.
@@ -27,8 +28,6 @@ class Modeler3D:
     Args:
         griddata (GridData): GridData istance
         grid3d (Grid3D): Grid3D istance
-        model_type (str): model type, statistical or deterministic,
-            default `statistical`
         model_name (str): model name, default `ordinary_kriging`
         model_params (dict): model parameters
 
@@ -36,29 +35,28 @@ class Modeler3D:
         griddata (GridData): GridData istance
         grid3d (Grid3D): Grid3D istance
         model (object): model object
+        results (dict): dictionary with interpolated and variance grids
         _model_name (str): model name
         _model_type (str): model type
-        results (dict): dictionary with interpolated and variance grids
     """
 
     griddata: GridData = None
     grid3d: Grid3D = None
     model = None
-    _model_name = None
-    _model_type = None
     results: dict = None
+    _model_name : str = None
+    _model_type : str = None
 
     def __init__(
         self,
-        griddata: GridData = None,
-        grid3d: Grid3D = None,
-        model_type: str = "statistical",
-        model_name: str = "oridnary_kriging",
+        griddata: GridData,
+        grid3d: Grid3D, 
+        model_name: str = "oridnary_kriging",  # fix typo in default value
         model_params: dict = None,
     ):
-        # model type and name
-        self._model_type = model_type
+        # model name and get type
         self._model_name = model_name
+        self._model_type = get_model_type(self._model_name)
 
         # griddata and grid3d
         self.griddata = griddata
@@ -75,6 +73,8 @@ class Modeler3D:
 
     def fit(self):
         # pykrige fit automatically
+        # deterministic models do not need fit
+        # sk-learn models need fit
         pass
 
     def predict(self, **kwargs) -> np.ndarray:

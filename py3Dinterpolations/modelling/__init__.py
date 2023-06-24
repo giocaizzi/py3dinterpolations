@@ -12,7 +12,6 @@ from ..modelling.preprocessing import Preprocessing
 
 def interpolate(
     griddata: GridData,
-    model_type: str,
     model_name: str,
     model_params: dict,
     grid_resolution: float,
@@ -23,7 +22,7 @@ def interpolate(
     """interpolate griddata
 
     Interpolate griddata using a Modeler3D instance that wraps all supported
-    models. The modeler instance is initialized with the given model_type,
+    models.
     model_name and model_params.
 
     The 3D grid is retrived from the training data.
@@ -32,7 +31,6 @@ def interpolate(
 
     Args:
         griddata (GridData): griddata to interpolate
-        model_type (str): model type
         model_name (str): model name
         model_params (dict): model parameters
         grid_resolution (float): grid resolution
@@ -57,7 +55,6 @@ def interpolate(
     model = Modeler3D(
         griddata=griddata,
         grid3d=grid3d,
-        model_type=model_type,
         model_name=model_name,
         model_params=model_params,
     )

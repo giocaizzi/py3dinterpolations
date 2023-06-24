@@ -99,6 +99,13 @@ class Modeler3D:
                 variance, self.griddata.preprocessing_params["standardization"]
             )
 
+        # reshape fron zxy to xyz
+        if self.model._model_name == "ordinary_kriging":
+            # reshape pykrige output
+            interpolated = _reshape_pykrige(interpolated)
+            variance = _reshape_pykrige(variance)
+
+
         # save results
         self.results = {
             "interpolated": interpolated,
@@ -118,3 +125,8 @@ def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray
     considers that data could be none, in which case returns an empty array
     """
     return data * standardization["std"] + standardization["mean"]
+
+def _reshape_pykrige(ndarray: np.ndarray) -> np.ndarray:
+    """reshape pykrige output to match the grid3d shape"""
+    return np.einsum("ZXY->XYZ", ndarray)
+

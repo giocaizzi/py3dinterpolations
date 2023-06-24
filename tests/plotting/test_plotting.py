@@ -1,8 +1,9 @@
 """test plotting module"""
 
 import pytest
-import matplotlib
 from unittest.mock import patch
+
+from matplotlib.figure import Figure
 
 from py3Dinterpolations.core.griddata import GridData
 from py3Dinterpolations.modelling.preprocessing import Preprocessing
@@ -23,18 +24,20 @@ def test_plot_downsampling(test_data):
     ).preprocess()
 
     # patch the reverse_preprocessing function
+    # returning  a GriddData object
+    # created with a sample of the test_data
     with patch(
         "py3Dinterpolations.plotting.plotting.reverse_preprocessing",
-        return_value=GridData(test_data.sample(n=500, random_state=42)),
+        return_value=GridData(test_data.sample(n=50, random_state=42)),
     ):
         fig = plot_downsampling(gd, preprocessed_gd)
 
     # assert is figure
-    assert isinstance(fig, matplotlib.figure.Figure)
+    assert isinstance(fig, Figure)
 
     # assert figure has n visible axes
     n = len(gd.data.index.get_level_values("ID").unique())
     visible_axes = [ax for ax in fig.axes if ax.get_visible()]
     assert len(visible_axes) == n
 
-    # # assert each axes has 2 lines
+    # # TODO assert each axes has 2 lines

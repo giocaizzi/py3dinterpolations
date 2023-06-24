@@ -10,6 +10,7 @@ dependencies:
   - pandas
   - numpy
   - matplotlib
+  - plotly
   - pykrige
   # formatting and linting
   - black

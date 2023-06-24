@@ -235,7 +235,7 @@ class RegularGrid3D(Grid3D):
 
     Args:
         gridres (float): grid resolution, equal in X, Y, Z
-        \**kwargs: keyword arguments for Grid3D base class
+        \\**kwargs: keyword arguments for Grid3D base class
     """
 
     def __init__(

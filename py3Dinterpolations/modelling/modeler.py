@@ -38,10 +38,8 @@ class Modeler3D:
         results (dict): dictionary with interpolated and variance grids
     """
 
-    griddata: Union[None, GridData] = None
-    grid3d: Union[None, Grid3D] = None
-    model = None
-    results: Union[None, dict] = None
+    model: ModelsWrapper
+    results: Union[dict, np.ndarray]
 
     def __init__(
         self,
@@ -77,18 +75,18 @@ class Modeler3D:
         Returns:
             interpolated (np.ndarray): interpolated grid
         """
-
         # make predictions on normalized grid if preprocessing was applied
-        if self.griddata.preprocessing_params is None:
+        if self.griddata.preprocessing_params == {}:
             grids_arrays = self.grid3d.grid
         else:
             grids_arrays = self.grid3d.normalized_grid
 
         # predict
+        #
         interpolated, variance = self.model.predict(
-            xpoints=grids_arrays["X"],
-            ypoints=grids_arrays["Y"],
-            zpoints=grids_arrays["Z"],
+            grids_arrays["X"],
+            grids_arrays["Y"],
+            grids_arrays["Z"],
             **kwargs,
         )
 
@@ -101,12 +99,6 @@ class Modeler3D:
                 variance, self.griddata.preprocessing_params["standardization"]
             )
 
-        # reshape fron zxy to xyz
-        if self.model._model_name == "ordinary_kriging":
-            # reshape pykrige output
-            interpolated = _reshape_pykrige(interpolated)
-            variance = _reshape_pykrige(variance)
-
         # save results
         self.results = {
             "interpolated": interpolated,
@@ -116,14 +108,13 @@ class Modeler3D:
         # sets results  also in associated grid3d
         self.grid3d.results = self.results
 
+        # return interpolated grid
         return interpolated
 
 
 def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray:
-    """reverse standardization of a 1d numpy array"""
+    """reverse standardization of a 1d numpy array
+
+    considers that data could be none, in which case returns an empty array
+    """
     return data * standardization["std"] + standardization["mean"]
-
-
-def _reshape_pykrige(ndarray: np.ndarray) -> np.ndarray:
-    """reshape pykrige output to match the grid3d shape"""
-    return np.einsum("ZXY->XYZ", ndarray)

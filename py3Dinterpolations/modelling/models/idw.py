@@ -26,11 +26,9 @@ class IDW(DeterministicModel):
 
     Attributes:
         power (float): power of the IDW model
-        distance_matrix (np.ndarray): distance matrix between observations and data points
+        distance_matrix (np.ndarray): distance matrix between
+            observations and data points
     """
-
-    power: float = 1
-    distance_matrix: np.ndarray = None
 
     def __init__(
         self,
@@ -56,7 +54,8 @@ class IDW(DeterministicModel):
     ) -> float:
         """find value at a point
 
-        Loops through all the data points to estimate the value at a point based on the Inverse Distance Weighting (IDW) method.
+        Loops through all the data points to estimate the value at a point
+        based on the Inverse Distance Weighting (IDW) method.
         Might be really slow for large datasets.
 
         This implementation however offers easy advanced parametrization with:

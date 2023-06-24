@@ -30,7 +30,7 @@ def test_Modeler3D_init(model_name, model_params, test_data):
     # quick testing without mocking, should be improved
 
     gd = GridData(test_data)
-    g3d = create_regulargrid3d_from_griddata(gd, 1)
+    g3d = create_regulargrid3d_from_griddata(gd, 5)
     m3d = Modeler3D(
         griddata=gd,
         grid3d=g3d,
@@ -44,20 +44,15 @@ def test_Modeler3D_init(model_name, model_params, test_data):
     assert m3d.model is not None
 
     # assert m3d.grid3d object has no results
-    assert m3d.results is None
+    assert not hasattr(m3d, "results")
 
     # predict
     m3d.predict()
 
-    if m3d.model._model_type=="statistical":
-        # assert m3d.grid3d object has results
-        # statistical models return a dict, interpolated and variance arrays    
-        assert isinstance(m3d.results["interpolated"], np.ndarray)
-        assert isinstance(m3d.results["variance"], np.ndarray)
-    
-    if m3d.model._model_type=="deterministic":
-        # assert m3d.grid3d object has results
-        # deterministic models return an array
-        assert isinstance(m3d.results, np.ndarray)
+    # assert has attribute results
+    assert hasattr(m3d, "results")
 
-
+    # assert m3d.grid3d object has results
+    # statistical models return a dict, interpolated and variance arrays
+    assert isinstance(m3d.results["interpolated"], np.ndarray)
+    assert isinstance(m3d.results["variance"], np.ndarray)

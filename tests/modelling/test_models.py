@@ -6,6 +6,7 @@ import numpy as np
 
 from py3Dinterpolations.modelling.models import get_model_type
 
+
 def test_get_model_type():
     """test get_model_type"""
     assert get_model_type("ordinary_kriging") == "statistical"

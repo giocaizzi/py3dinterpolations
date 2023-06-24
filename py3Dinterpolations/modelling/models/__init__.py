@@ -1,6 +1,6 @@
 """models for 3D interpolation"""
 
-from typing import Union
+import numpy as np
 
 # EXTERNAL
 from pykrige.ok3d import OrdinaryKriging3D
@@ -43,18 +43,15 @@ class ModelsWrapper:
 
     Args:
         model_name (str): model name
-        *args: args for model
-        **kwargs: kwargs for model
+        \\*args: args for model
+        \\*\\*kwargs: kwargs for model
 
     Attributes:
+        model (object): model object
         model_type (str): model type
         model_name (str): model name
 
     """
-
-    _model_name: Union[str, None] = None
-    _model_type: Union[str, None] = None
-    model = None
 
     @property
     def model_type(self):
@@ -82,16 +79,30 @@ class ModelsWrapper:
         # deterministic models are not
         pass
 
-    def predict(self, *args, **kwargs):
+    def predict(self, *args, **kwargs) -> tuple:
         """predict method
 
         Execute predictions for the model.
 
         Args:
-            *args: args for model
-            \*\*kwargs: kwargs for model
+            \\*args: args for model
+            \\*\\*kwargs: kwargs for model
         """
-        if self.model_name == "ordinary_kriging":
-            return self.model.execute(style="grid", *args, **kwargs)
-        if self.model_name == "idw":
-            return self.model.compute(*args, **kwargs)
+        if self.model_type == "statistical":
+            # returns both interpolated and variance grids
+
+            # quickfix for weird behacviour
+            # unpack first three args as x, y, z
+            x, y, z, *args = args
+            return self.model.execute(
+                *args,
+                style="grid",
+                xpoints=x,
+                ypoints=y,
+                zpoints=z,
+                **kwargs)
+        elif self.model_type == "deterministic":
+            # idw does not return variance
+            return self.model.compute(*args, **kwargs), np.ndarray([])
+        else:
+            raise ValueError(f"model {self.model_type} not supported")

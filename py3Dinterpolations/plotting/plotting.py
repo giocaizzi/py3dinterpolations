@@ -97,7 +97,7 @@ def plot_3d_model(
             z=modeler.grid3d.mesh["Z"].flatten(),
             value=modeler.results["interpolated"].flatten(),
             surface_count=20,
-            opacityscale=[(0,0),(1,1)],
+            opacityscale=[(0, 0), (1, 1)],
             **kwargs,
         ),
     ]

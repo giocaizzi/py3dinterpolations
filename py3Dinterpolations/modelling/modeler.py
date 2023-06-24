@@ -105,7 +105,6 @@ class Modeler3D:
             interpolated = _reshape_pykrige(interpolated)
             variance = _reshape_pykrige(variance)
 
-
         # save results
         self.results = {
             "interpolated": interpolated,
@@ -126,7 +125,7 @@ def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray
     """
     return data * standardization["std"] + standardization["mean"]
 
+
 def _reshape_pykrige(ndarray: np.ndarray) -> np.ndarray:
     """reshape pykrige output to match the grid3d shape"""
     return np.einsum("ZXY->XYZ", ndarray)
-

@@ -95,12 +95,8 @@ class ModelsWrapper:
             # unpack first three args as x, y, z
             x, y, z, *args = args
             return self.model.execute(
-                *args,
-                style="grid",
-                xpoints=x,
-                ypoints=y,
-                zpoints=z,
-                **kwargs)
+                *args, style="grid", xpoints=x, ypoints=y, zpoints=z, **kwargs
+            )
         elif self.model_type == "deterministic":
             # idw does not return variance
             return self.model.compute(*args, **kwargs), np.ndarray([])

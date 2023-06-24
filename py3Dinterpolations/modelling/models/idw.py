@@ -3,7 +3,7 @@
 import numpy as np
 import math
 
-from .baseclasses import DeterministicModel
+from .deterministic import DeterministicModel
 
 
 class IDW(DeterministicModel):
@@ -52,10 +52,6 @@ class IDW(DeterministicModel):
         y: float,
         z: float,
         power: float,
-        xv: np.ndarray,
-        yv: np.ndarray,
-        zv: np.ndarray,
-        values: np.ndarray,
         threshold: float = 0.0000000001,
     ) -> float:
         """find value at a point
@@ -71,20 +67,20 @@ class IDW(DeterministicModel):
         denominator = 0
 
         # distance in 3d
-        for i in range(0, len(values)):
+        for i in range(0, len(self.values)):
             dist = math.sqrt(
-                (x - xv[i]) * (x - xv[i])
-                + (y - yv[i]) * (y - yv[i])
-                + (z - zv[i]) * (z - zv[i])
+                (x - self.x[i]) * (x - self.x[i])
+                + (y - self.y[i]) * (y - self.y[i])
+                + (z - self.z[i]) * (z - self.z[i])
             )
 
             # If the point is really close to one of the data points,
             # return the data point value to avoid singularities
             # EXACT interpolations
             if dist < threshold:
-                return values[i]
+                return self.values[i]
 
-            nominator = nominator + (values[i] / pow(dist, power))
+            nominator = nominator + (self.values[i] / pow(dist, power))
             denominator = denominator + (1 / pow(dist, power))
 
         # Return NaN if the denominator is zero
@@ -94,7 +90,9 @@ class IDW(DeterministicModel):
             value = np.nan
         return value
 
-    def compute(self, gridx, gridy, gridz):
+    def compute(
+        self, gridx: np.ndarray, gridy: np.ndarray, gridz: np.ndarray
+    ) -> np.ndarray:
         meshx, meshy, meshz = np.meshgrid(gridx, gridy, gridz, indexing="xy")
 
         # Create a new mesh to store the coordinates
@@ -110,9 +108,5 @@ class IDW(DeterministicModel):
                         y=meshy[i, j, k],
                         z=meshz[i, j, k],
                         power=self.power,
-                        xv=self.x,
-                        yv=self.y,
-                        zv=self.z,
-                        values=self.values,
                     )
         return new_mesh

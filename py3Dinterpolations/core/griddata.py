@@ -37,10 +37,9 @@ class GridData:
         specs (GridDataSpecs): specs of the GridData
     """
 
-    data = None
-    specs = None
-    preprocessing_params = None
-    columns = None
+    data = pd.DataFrame()
+    preprocessing_params = {}
+    columns = {}
 
     def __init__(
         self,

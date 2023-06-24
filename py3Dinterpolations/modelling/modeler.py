@@ -5,7 +5,7 @@ from typing import Union
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from .models import SUPPORTED_MODELS, get_model_type
+from .models import ModelsWrapper
 
 
 class Modeler3D:
@@ -36,46 +36,33 @@ class Modeler3D:
         grid3d (Grid3D): Grid3D istance
         model (object): model object
         results (dict): dictionary with interpolated and variance grids
-        _model_name (str): model name
-        _model_type (str): model type
     """
 
-    griddata: GridData = None
-    grid3d: Grid3D = None
+    griddata: Union[None, GridData] = None
+    grid3d: Union[None, Grid3D] = None
     model = None
-    results: dict = None
-    _model_name : str = None
-    _model_type : str = None
+    results: Union[None, dict] = None
 
     def __init__(
         self,
         griddata: GridData,
-        grid3d: Grid3D, 
-        model_name: str = "oridnary_kriging",  # fix typo in default value
-        model_params: dict = None,
+        grid3d: Grid3D,
+        model_name: str = "ordinary_kriging",
+        model_params: dict = {},
     ):
-        # model name and get type
-        self._model_name = model_name
-        self._model_type = get_model_type(self._model_name)
-
         # griddata and grid3d
         self.griddata = griddata
         self.grid3d = grid3d
 
         # model
-        self.model = SUPPORTED_MODELS[self._model_type][self._model_name](
+        self.model = ModelsWrapper(
+            model_name,
             self.griddata.numpy_data[:, 0],  # x
             self.griddata.numpy_data[:, 1],  # y
             self.griddata.numpy_data[:, 2],  # z
             self.griddata.numpy_data[:, 3],  # value
             **model_params,
         )
-
-    def fit(self):
-        # pykrige fit automatically
-        # deterministic models do not need fit
-        # sk-learn models need fit
-        pass
 
     def predict(self, **kwargs) -> np.ndarray:
         """makes predictions considering all past preprocessing
@@ -90,6 +77,7 @@ class Modeler3D:
         Returns:
             interpolated (np.ndarray): interpolated grid
         """
+
         # make predictions on normalized grid if preprocessing was applied
         if self.griddata.preprocessing_params is None:
             grids_arrays = self.grid3d.grid
@@ -97,8 +85,7 @@ class Modeler3D:
             grids_arrays = self.grid3d.normalized_grid
 
         # predict
-        interpolated, variance = self.model.execute(
-            style="grid",
+        interpolated, variance = self.model.predict(
             xpoints=grids_arrays["X"],
             ypoints=grids_arrays["Y"],
             zpoints=grids_arrays["Z"],
@@ -115,7 +102,7 @@ class Modeler3D:
             )
 
         # reshape fron zxy to xyz
-        if self._model_name == "ordinary_kriging":
+        if self.model._model_name == "ordinary_kriging":
             # reshape pykrige output
             interpolated = _reshape_pykrige(interpolated)
             variance = _reshape_pykrige(variance)

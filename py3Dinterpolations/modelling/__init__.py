@@ -21,13 +21,13 @@ def interpolate(
     return_components: bool = False,
 ) -> Union[np.ndarray, Tuple[np.ndarray, Modeler3D, Grid3D, GridData]]:
     """interpolate griddata
-    
+
     Interpolate griddata using a Modeler3D instance that wraps all supported
     models. The modeler instance is initialized with the given model_type,
-    model_name and model_params. 
-    
+    model_name and model_params.
+
     The 3D grid is retrived from the training data.
-    
+
     If requested, the griddata is preprocessed using the Preprocessing class.
 
     Args:
@@ -43,7 +43,7 @@ def interpolate(
     Returns:
         Union[np.ndarray, Tuple[np.ndarray, Modeler3D, Grid3D, GridData]]:
             interpolated griddata or all components
-    
+
     """
     # retrive associated grid
     grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)

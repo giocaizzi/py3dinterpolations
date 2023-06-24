@@ -1,6 +1,7 @@
 """grid3d object"""
 
 import numpy as np
+from typing import Union
 
 
 class Grid3D:
@@ -31,12 +32,12 @@ class Grid3D:
     """
 
     # grid boundaries
-    _xmin: float = None
-    _xmax: float = None
-    _ymin: float = None
-    _ymax: float = None
-    _zmin: float = None
-    _zmax: float = None
+    _xmin: Union[float, None] = None
+    _xmax: Union[float, None] = None
+    _ymin: Union[float, None] = None
+    _ymax: Union[float, None] = None
+    _zmin: Union[float, None] = None
+    _zmax: Union[float, None] = None
 
     # resoluton
     _gridres: dict = {}

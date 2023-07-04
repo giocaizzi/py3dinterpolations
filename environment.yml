@@ -22,7 +22,7 @@ dependencies:
   - sphinx_rtd_theme=1.2.2
   - myst-parser=0.18.1
   - docutils=0.16
-  - nbsphinx=0.9.2
+  - nbsphinx<0.9
   # testing
   - pytest
   - pytest-cov

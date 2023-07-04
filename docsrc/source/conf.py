@@ -37,9 +37,10 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
     "sphinx.ext.autosummary",
+    'sphinx_rtd_theme',
     "nbsphinx",
     "myst_parser",
-    "IPython.sphinxext.ipython_console_highlighting",  # fix nbsphinx bug
+    # "IPython.sphinxext.ipython_console_highlighting",  # fix nbsphinx bug
 ]
 autosummary_generate = True
 

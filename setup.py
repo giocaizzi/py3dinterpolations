@@ -8,7 +8,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="py3Dinterpolations",
-    version="0.2.1",
+    version="0.2.2",
     description="quick 3D interpolation with python",
     long_description_content_type="text/markdown",
     long_description=long_description,

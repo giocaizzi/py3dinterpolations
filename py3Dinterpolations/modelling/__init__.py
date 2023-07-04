@@ -17,7 +17,7 @@ def interpolate(
     grid_resolution: float,
     preprocess_kwags: dict = {},
     predict_kwags: dict = {},
-    return_components: bool = False,
+    return_model: bool = False,
 ) -> Union[np.ndarray, Tuple[np.ndarray, Modeler3D, Grid3D, GridData]]:
     """interpolate griddata
 
@@ -36,7 +36,7 @@ def interpolate(
         grid_resolution (float): grid resolution
         preprocess_kwags (dict, optional): preprocessing parameters. Defaults to None.
         predict_kwags (dict, optional): prediction parameters. Defaults to None.
-        return_components (bool, optional): return all components. Defaults to False.
+        return_model (bool, optional): return model. Defaults to False.
 
     Returns:
         Union[np.ndarray, Tuple[np.ndarray, Modeler3D, Grid3D, GridData]]:
@@ -63,7 +63,7 @@ def interpolate(
     predictions = model.predict(**predict_kwags)
 
     # return components if needed
-    if return_components:
-        return predictions, model, grid3d, griddata
+    if return_model:
+        return predictions, model
     else:
         return predictions

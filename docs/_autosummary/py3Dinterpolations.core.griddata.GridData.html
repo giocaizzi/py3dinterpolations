@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>py3Dinterpolations.core.griddata.GridData &mdash; py3Dinterpolations 0.1.3 documentation</title>
+  <title>py3Dinterpolations.core.griddata.GridData &mdash; py3Dinterpolations 0.2.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -36,7 +37,7 @@
             py3Dinterpolations
           </a>
               <div class="version">
-                0.1.3
+                0.2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -116,7 +117,7 @@ Otherwise, custom column names can be provided.</p>
 applied to the data, by storing the relative parameters in the
 <cite>preprocessing_params</cite> attribute.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>pd.DataFrame</em>) – source data</p></li>
 <li><p><strong>ID</strong> (<em>str</em>) – column name of the ID, default: “ID”</p></li>
@@ -133,7 +134,7 @@ applied to the data, by storing the relative parameters in the
 <span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.data" title="Permalink to this definition"></a></dt>
 <dd><p>data in GridData.data standard</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
@@ -146,7 +147,7 @@ applied to the data, by storing the relative parameters in the
 if some Preprocessing is applied this attribute is a dict
 containing the preprocessing parameters</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -157,7 +158,7 @@ containing the preprocessing parameters</p>
 <span class="sig-name descname"><span class="pre">columns</span></span><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.columns" title="Permalink to this definition"></a></dt>
 <dd><p>column names mapping</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -170,6 +171,10 @@ specs (GridDataSpecs): specs of the GridData</p>
 </dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(data[, ID, X, Y, Z, V, ...])</p></td>
 <td><p></p></td>
@@ -178,6 +183,10 @@ specs (GridDataSpecs): specs of the GridData</p>
 </table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#py3Dinterpolations.core.griddata.GridData.columns" title="py3Dinterpolations.core.griddata.GridData.columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">columns</span></code></a></p></td>
 <td><p></p></td>
@@ -201,10 +210,10 @@ specs (GridDataSpecs): specs of the GridData</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numpy_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#py3Dinterpolations.core.griddata.GridData.numpy_data" title="Permalink to this definition"></a></dt>
 <dd><p>get numpy data</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>numpy data of X,Y,Z,V</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
@@ -218,10 +227,10 @@ specs (GridDataSpecs): specs of the GridData</p>
 with the current GridData object
 to get the specs of the GridData</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>specs of the GridData</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="py3Dinterpolations.core.griddata.GridDataSpecs.html#py3Dinterpolations.core.griddata.GridDataSpecs" title="py3Dinterpolations.core.griddata.GridDataSpecs">GridDataSpecs</a></p>
 </dd>
 </dl>

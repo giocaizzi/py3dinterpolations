@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>py3Dinterpolations.modelling.interpolate &mdash; py3Dinterpolations 0.1.3 documentation</title>
+  <title>py3Dinterpolations.modelling.interpolate &mdash; py3Dinterpolations 0.2.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -36,7 +37,7 @@
             py3Dinterpolations
           </a>
               <div class="version">
-                0.1.3
+                0.2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -105,7 +106,7 @@
 <h1>py3Dinterpolations.modelling.interpolate<a class="headerlink" href="#py3dinterpolations-modelling-interpolate" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="py3Dinterpolations.modelling.interpolate">
-<span class="sig-prename descclassname"><span class="pre">py3Dinterpolations.modelling.</span></span><span class="sig-name descname"><span class="pre">interpolate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">griddata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3Dinterpolations.core.griddata.GridData.html#py3Dinterpolations.core.griddata.GridData" title="py3Dinterpolations.core.griddata.GridData"><span class="pre">GridData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocess_kwags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_kwags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="py3Dinterpolations.modelling.modeler.Modeler3D.html#py3Dinterpolations.modelling.modeler.Modeler3D" title="py3Dinterpolations.modelling.modeler.Modeler3D"><span class="pre">Modeler3D</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="py3Dinterpolations.core.grid3d.Grid3D.html#py3Dinterpolations.core.grid3d.Grid3D" title="py3Dinterpolations.core.grid3d.Grid3D"><span class="pre">Grid3D</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="py3Dinterpolations.core.griddata.GridData.html#py3Dinterpolations.core.griddata.GridData" title="py3Dinterpolations.core.griddata.GridData"><span class="pre">GridData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py3Dinterpolations.modelling.interpolate" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">py3Dinterpolations.modelling.</span></span><span class="sig-name descname"><span class="pre">interpolate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">griddata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3Dinterpolations.core.griddata.GridData.html#py3Dinterpolations.core.griddata.GridData" title="py3Dinterpolations.core.griddata.GridData"><span class="pre">GridData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocess_kwags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_kwags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="py3Dinterpolations.modelling.modeler.Modeler3D.html#py3Dinterpolations.modelling.modeler.Modeler3D" title="py3Dinterpolations.modelling.modeler.Modeler3D"><span class="pre">Modeler3D</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="py3Dinterpolations.core.grid3d.Grid3D.html#py3Dinterpolations.core.grid3d.Grid3D" title="py3Dinterpolations.core.grid3d.Grid3D"><span class="pre">Grid3D</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="py3Dinterpolations.core.griddata.GridData.html#py3Dinterpolations.core.griddata.GridData" title="py3Dinterpolations.core.griddata.GridData"><span class="pre">GridData</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#py3Dinterpolations.modelling.interpolate" title="Permalink to this definition"></a></dt>
 <dd><p>interpolate griddata</p>
 <p>Interpolate griddata using a Modeler3D instance that wraps all supported
 models.
@@ -113,7 +114,7 @@ model_name and model_params.</p>
 <p>The 3D grid is retrived from the training data.</p>
 <p>If requested, the griddata is preprocessed using the Preprocessing class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>griddata</strong> (<a class="reference internal" href="py3Dinterpolations.core.griddata.GridData.html#py3Dinterpolations.core.griddata.GridData" title="py3Dinterpolations.core.griddata.GridData"><em>GridData</em></a>) – griddata to interpolate</p></li>
 <li><p><strong>model_name</strong> (<em>str</em>) – model name</p></li>
@@ -124,10 +125,10 @@ model_name and model_params.</p>
 <li><p><strong>return_components</strong> (<em>bool</em><em>, </em><em>optional</em>) – return all components. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>interpolated griddata or all components</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Union[np.ndarray, Tuple[np.ndarray, <a class="reference internal" href="py3Dinterpolations.modelling.modeler.Modeler3D.html#py3Dinterpolations.modelling.modeler.Modeler3D" title="py3Dinterpolations.modelling.modeler.Modeler3D">Modeler3D</a>, <a class="reference internal" href="py3Dinterpolations.core.grid3d.Grid3D.html#py3Dinterpolations.core.grid3d.Grid3D" title="py3Dinterpolations.core.grid3d.Grid3D">Grid3D</a>, <a class="reference internal" href="py3Dinterpolations.core.griddata.GridData.html#py3Dinterpolations.core.griddata.GridData" title="py3Dinterpolations.core.griddata.GridData">GridData</a>]]</p>
 </dd>
 </dl>

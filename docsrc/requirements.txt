@@ -1,7 +1,7 @@
-sphinx
-sphinx_rtd_theme
-myst-parser
-docutils
-nbsphinx
+sphinx==5.3.0
+sphinx_rtd_theme==1.2.2
+myst-parser==1.0.0
+docutils==0.17.1
+nbsphinx==0.9.2
 ipython # for jupyter notebooks rendering
 ipykernel

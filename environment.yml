@@ -17,12 +17,12 @@ dependencies:
   - black-jupyter
   - flake8
   - flake8-rst-docstrings
-  # docs
-  - sphinx
-  - sphinx_rtd_theme
-  - docutils=0.17 # bullet point bug
-  - nbsphinx
-  - myst-parser
+  # docs, updated 5 jul 2023
+  - sphinx=5.3.0
+  - sphinx_rtd_theme=1.2.2 
+  - docutils=0.17.1 # bullet point bug
+  - nbsphinx=0.9.2
+  - myst-parser=1.0.0
   # testing
   - pytest
   - pytest-cov

@@ -5,14 +5,18 @@ Welcome to py3Dinterpolations's documentation!
 This is a python package to compute quick 3D interpolations of spatial data.
 
 Supports the **following interpolation** methods:
+
 - *Ordinary 3D Kriging* : `pykrige <https://github.com/GeoStat-Framework/PyKrige>`_
+- *Inverse distance weighting (IDW)*
 
 Supports **preprocessing** of data:
+
 - *Downsampling*
 - *Normalization* of X,Y,Z coordinates
 - *Standardization* of signal 
 
 **Visualizations**
+
 - 2D with `matplotlib <https://matplotlib.org/stable/>`_
 - 3D with `plotly <https://plotly.com/)>`_
 

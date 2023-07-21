@@ -1,5 +1,5 @@
 ===============================================
-Welcome to py3Dinterpolations's documentation!
+Welcome to py3dinterpolations's documentation!
 ===============================================
 
 This is a python package to compute quick 3D interpolations of spatial data.
@@ -20,7 +20,7 @@ Supports **preprocessing** of data:
 - 2D with `matplotlib <https://matplotlib.org/stable/>`_
 - 3D with `plotly <https://plotly.com/)>`_
 
-The :obj:`py3Dinterpolations` features:
+The :obj:`py3dinterpolations` features:
 
 Different interpolation methods:
 
@@ -58,7 +58,7 @@ Code reference
    :caption: Code reference
    :recursive:
 
-   py3Dinterpolations
+   py3dinterpolations
 
 
 

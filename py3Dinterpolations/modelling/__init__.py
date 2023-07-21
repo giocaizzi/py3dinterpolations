@@ -62,7 +62,7 @@ def interpolate(
     # make predictions
     predictions = model.predict(**predict_kwags)
 
-    # return model 
+    # return model
     if return_model:
         return predictions, model
     else:

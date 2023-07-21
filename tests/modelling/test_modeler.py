@@ -5,9 +5,9 @@ from unittest.mock import patch
 
 import numpy as np
 
-from py3Dinterpolations.core.griddata import GridData
-from py3Dinterpolations.core import create_regulargrid3d_from_griddata
-from py3Dinterpolations.modelling.modeler import Modeler3D
+from py3dinterpolations.core.griddata import GridData
+from py3dinterpolations.core import create_regulargrid3d_from_griddata
+from py3dinterpolations.modelling.modeler import Modeler3D
 
 scenarios = [
     (

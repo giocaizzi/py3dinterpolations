@@ -5,10 +5,10 @@ import pytest
 import numpy as np
 
 # parent class
-from py3Dinterpolations.core.grid3d import Grid3D
+from py3dinterpolations.core.grid3d import Grid3D
 
 # child classes
-from py3Dinterpolations.core.grid3d import RegularGrid3D
+from py3dinterpolations.core.grid3d import RegularGrid3D
 
 # positive values
 TEST_DATA_1 = {

@@ -7,6 +7,7 @@ from ..core.griddata import GridData
 from ..core import create_regulargrid3d_from_griddata
 from ..modelling.modeler import Modeler3D
 from ..modelling.preprocessing import Preprocessing
+from ..modelling.estimator import Estimator
 
 
 def interpolate(
@@ -56,6 +57,55 @@ def interpolate(
         grid3d=grid3d,
         model_name=model_name,
         model_params=model_params,
+    )
+
+    # make predictions
+    predictions = model.predict(**predict_kwags)
+
+    # return model
+    if return_model:
+        return predictions, model
+    else:
+        return predictions
+
+
+def estimate_interpolate(
+        griddata: GridData,
+        model_name: str,
+        estimator_params: dict,
+        grid_resolution: float,
+        preprocess_kwags: dict = {},
+        predict_kwags: dict = {},
+        return_model: bool = False,
+):
+    # at the moment if only krige is supported
+    if model_name != 'ordinary_kriging':
+        raise NotImplementedError
+    
+    # retrive associated grid
+    grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
+
+    # preprocess griddata if needed
+    if preprocess_kwags is not None:
+        # preprocess
+        griddata = Preprocessing(griddata, **preprocess_kwags).preprocess()
+    
+    # estimate
+    est = Estimator(griddata, estimator_params)
+
+    # krige wrapper has a method key that is not needed for the estimator
+    # TODO: find a flexible way to handle this, probably a good way is to use directly the sci-kit wrapper Krige()
+    interpolation_best_params = est.best_params
+    interpolation_best_params.pop('method')
+
+    print(interpolation_best_params)
+
+    # init Modeler3D
+    model = Modeler3D(
+        griddata=griddata,
+        grid3d=grid3d,
+        model_name=model_name,
+        model_params=interpolation_best_params,
     )
 
     # make predictions

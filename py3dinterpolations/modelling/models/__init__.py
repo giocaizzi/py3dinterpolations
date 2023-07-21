@@ -1,6 +1,7 @@
 """models for 3D interpolation"""
 
 import numpy as np
+from typing import Union
 
 # EXTERNAL
 from pykrige.ok3d import OrdinaryKriging3D
@@ -79,7 +80,7 @@ class ModelsWrapper:
         # deterministic models are not
         pass
 
-    def predict(self, *args, **kwargs) -> tuple:
+    def predict(self, *args, **kwargs) -> Union[tuple, np.ndarray]:
         """predict method
 
         Execute predictions for the model.
@@ -90,7 +91,6 @@ class ModelsWrapper:
         """
         if self.model_type == "statistical":
             # returns both interpolated and variance grids
-
             # quickfix for weird behacviour
             # unpack first three args as x, y, z
             x, y, z, *args = args
@@ -98,7 +98,8 @@ class ModelsWrapper:
                 *args, style="grid", xpoints=x, ypoints=y, zpoints=z, **kwargs
             )
         elif self.model_type == "deterministic":
-            # idw does not return variance
+            # idw does not return variance, only a single grid
             return self.model.compute(*args, **kwargs), np.ndarray([])
         else:
+            # if gets here, model not supported
             raise ValueError(f"model {self.model_type} not supported")

@@ -1,7 +1,6 @@
 """model wrapper for interpolation"""
 
 import numpy as np
-from typing import Union
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
@@ -39,7 +38,7 @@ class Modeler3D:
     """
 
     model: ModelsWrapper
-    results: Union[dict, np.ndarray]
+    results: dict
 
     def __init__(
         self,
@@ -82,7 +81,6 @@ class Modeler3D:
             grids_arrays = self.grid3d.normalized_grid
 
         # predict
-        #
         interpolated, variance = self.model.predict(
             grids_arrays["X"],
             grids_arrays["Y"],
@@ -99,7 +97,7 @@ class Modeler3D:
                 variance, self.griddata.preprocessing_params["standardization"]
             )
 
-        # reshape fron zxy to xyz
+        # reshape fron zxy to xyz TODO: solve this
         if self.model._model_name == "ordinary_kriging":
             # reshape pykrige output
             interpolated = _reshape_pykrige(interpolated)

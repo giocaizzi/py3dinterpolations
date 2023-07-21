@@ -58,9 +58,10 @@ class IDW(DeterministicModel):
         based on the Inverse Distance Weighting (IDW) method.
         Might be really slow for large datasets.
 
-        This implementation however offers easy advanced parametrization with:
-        - n_points: number of points to use for the IDW estimation (TODO)
-        - max_distance: maximum distance to use for the IDW estimation (TODO)
+        TODO: Implement parametrization
+            This implementation however offers easy advanced parametrization with:
+            - n_points: number of points to use for the IDW estimation
+            - max_distance: maximum distance to use for the IDW estimation
         """
         nominator = 0
         denominator = 0

@@ -30,6 +30,13 @@ class Modeler:
         grid3d (Grid3D): Grid3D istance
         model (object): model object
         results (dict): dictionary with interpolated and variance grids
+
+    Examples:
+        >>> # modeler
+        >>> modeler = Modeler(griddata, grid3d)
+        >>> # predict
+        >>> interpolated = modeler.predict()
+
     """
 
     model: ModelWrapper

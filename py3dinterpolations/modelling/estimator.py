@@ -37,6 +37,14 @@ class Estimator:
         cv_results (dict): cross validation results,
             ready to be converted to pandas DataFrame
 
+    Examples:
+        >>> # parameters of 3d kriging, both ordinary and universal
+        >>> params = {
+        >>>     "method": ["ordinary3d","universal3d"],
+        >>>     "variogram_model": ["linear", "power", "gaussian"],
+        >>>     "nlags": [2, 4, 6, 8, 10],
+        >>>     "weight": [True, False],
+        >>> }
     """
 
     def __init__(

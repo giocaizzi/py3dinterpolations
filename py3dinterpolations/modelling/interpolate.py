@@ -47,6 +47,30 @@ def interpolate(
         Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
             interpolated griddata, optionally with model
 
+    Raises:
+        ValueError: either model_params or model_params_grid must be passed
+        ValueError: model_params and model_params_grid cannot be passed together
+        NotImplementedError: only RegularGrid3D is supported.
+        NotImplementedError: Parameter search is only supported for ordinary_kriging
+
+    Examples:
+        >>> # interpolate griddata
+        >>> interpolated = interpolate(
+        >>>     griddata,
+        >>>     model_name="ordinary_kriging",
+        >>>     grid_resolution=5,
+        >>>     model_params={
+        >>>         "variogram_model": "linear",
+        >>>         "nlags": 6,
+        >>>         "weight": True,
+        >>>     },
+        >>>     preprocess_kwags={
+        >>>         "downsampling_res": 0.1,
+        >>>         "normalize_xyz": True,
+        >>>         "standardize_v": True,
+        >>>     },
+        >>> )
+
     """
     # check model_params and model_params_grid
     if model_params == {} and model_params_grid == {}:

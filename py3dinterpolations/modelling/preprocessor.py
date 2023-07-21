@@ -34,23 +34,42 @@ class Preprocessor:
         normalize_xyz (bool): whether to normalize X Y Z. Default is True.
         standardize_v (bool): whether to standardize V. Default is True.
         preprocessor_params (dict): dictionary with the parameters of the
-            preprocessing. It is set after calling the preprocess method.
-            It includes:
-                - downsampling: dictionary with the downsampling parameters
-                    - resolution: resolution to downsample data
-                - normalization: dictionary with the normalization parameters
-                    - X: dictionary with the normalization parameters of X
-                        - min: min value of X
-                        - max: max value of X
-                    - Y: dictionary with the normalization parameters of Y
-                        - min: min value of Y
-                        - max: max value of Y
-                    - Z: dictionary with the normalization parameters of Z
-                        - min: min value of Z
-                        - max: max value of Z
-                - standardization: dictionary with the standardization parameters
-                    - mean: mean value of V
-                    - std: std value of V
+            preprocessing. It is set after calling the preprocess method.::
+
+                preprocessor_params = {
+                    "downsampling": {
+                        "resolution": downsampling_res,
+                    },
+                    "normalization": {
+                        "X": {
+                            "min": min_value_of_X,
+                            "max": max_value_of_X,
+                        },
+                        "Y": {
+                            "min": min_value_of_Y,
+                            "max": max_value_of_Y,
+                        },
+                        "Z": {
+                            "min": min_value_of_Z,
+                            "max": max_value_of_Z,
+                        },
+                    },
+                    "standardization": {
+                        "mean": mean_value_of_V,
+                        "std": std_value_of_V,
+                    },
+
+                }
+
+    Examples:
+        >>> # preprocess data
+        >>> preprocessor = Preprocessor(
+        >>>     griddata,
+        >>>     downsampling_res=0.1,
+        >>>     normalize_xyz=True,
+        >>>     standardize_v=True,
+        >>> )
+        >>> griddata = preprocessor.preprocess()
     """
 
     preprocessor_params = {}

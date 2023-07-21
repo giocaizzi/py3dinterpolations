@@ -8,7 +8,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="py3dinterpolations",
-    version="0.2.3",
+    version="0.2.4",
     description="quick 3D interpolation with python",
     long_description_content_type="text/markdown",
     long_description=long_description,
@@ -16,7 +16,7 @@ setup(
     author="giocaizzi",
     author_email="giocaizzi@gmail.com",
     license="MIT",
-    packages=find_packages(include=["py3dinterpolations", "py3dinterpolations/*"]),
+    packages=find_packages(include=["py3dinterpolations", "py3dinterpolations.*"]),
     setup_requires=[],
     tests_require=[],
     install_requires=[

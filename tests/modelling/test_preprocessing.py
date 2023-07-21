@@ -42,17 +42,26 @@ def test_standardize():
 
 
 def test_preprocessing_init(test_data):
+    # test that the preprocessing class is initialized correctly
+    # with the right attributes
+    # and preprocssing is not actually run
     gd = GridData(test_data)
     preprocess = Preprocessing(
         gd,
     )
+    # griddata is set correctly
     assert preprocess.griddata == gd
+    # preprocessing parameters are set correctly
+    assert preprocess.downsampling_res is None
+    assert preprocess.standardize_v is True
+    assert preprocess.normalize_xyz is True
+    # preprocessing is not run
     assert preprocess.preprocessing_params == {}
 
 
 # like this, all scenarios are tested,
 # also the False, False, None
-# original data is at 1 m resolution
+# original data is at 1 m resolution so the 4 m downsampling_res
 PREPROCESSING_COMBINATIONS = list(
     itertools.product([4, None], [True, False], [True, False])
 )
@@ -66,6 +75,8 @@ def test_Preprocessing_preprocess_subcalls(
     downsampling_res, normalize_xyz, standardize_v, test_data
 ):
     """test that the preprocessing class calls the right methods"""
+    # this tests uses PREPROCESSING_COMBINATIONS to test all possible
+    # combinations of downsampling_res, normalize_xyz, standardize_v
     # Create a mock for each of the three methods
     with patch(
         "py3dinterpolations.modelling.preprocessing.Preprocessing._downsample_data"
@@ -106,10 +117,10 @@ def test_Preprocessing_preprocess_subcalls(
 def test_Preprocessing_preprocess_output(
     downsampling_res, normalize_xyz, standardize_v, test_data
 ):
-    """test that the preprocessing class restitute a griddata object
-    with same carachetristics as the original one,
-    if downsample with also less data
-    """
+    """test that the preprocessing class restitute a griddata object"""
+    # with same carachetristics as the original one,
+    # if downsample with also less data
+
     gd = GridData(test_data)
     pp_gd = Preprocessing(
         gd,

@@ -11,6 +11,6 @@ __maintainer__ = __author__
 __email__ = "giocaizzi@gmail.com"
 
 from .core.griddata import GridData
-from .modelling import interpolate
+from .modelling.interpolator import interpolate
 
 __all__ = ["__version__", "GridData", "interpolate"]

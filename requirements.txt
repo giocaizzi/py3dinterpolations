@@ -3,4 +3,4 @@ numpy
 matplotlib
 plotly
 pykrige
-plotly
+scikit-learn

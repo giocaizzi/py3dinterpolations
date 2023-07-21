@@ -23,8 +23,9 @@ setup(
         "pandas",
         "numpy",
         "matplotlib",
-        "pykrige",
         "plotly",
+        "pykrige",
+        "scikit-learn",
     ],
     extras_require={
         "docs": [],

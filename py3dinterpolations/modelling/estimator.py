@@ -15,12 +15,13 @@ class Estimator:
 
     """
 
-    def __init__(self, griddata, params):
+    def __init__(self, griddata, params,scoring = "neg_mean_absolute_error", verbose = 3):
 
         self.estimator = GridSearchCV(
             Krige(),
             params,
-            verbose=3,
+            scoring=scoring, # https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
+            verbose=verbose, # from 1 to 3 to higher level of verbosity
         )
         self.estimator.fit(
             y=griddata.numpy_data[:, 3], # value

@@ -6,7 +6,7 @@ import numpy as np
 from ..core.griddata import GridData
 from ..core import create_regulargrid3d_from_griddata
 from .modeler import Modeler
-from .preprocessing import Preprocessing
+from .preprocessor import Preprocessor
 from .estimator import Estimator
 
 
@@ -32,7 +32,7 @@ def interpolate(
     The 3D grid is retrived from the training data.
     At the moment features only a regular grid.
 
-    If requested, the griddata is preprocessed using the Preprocessing class.
+    If requested, the griddata is preprocessed using the Preprocessor class.
 
 
     Args:
@@ -61,7 +61,7 @@ def interpolate(
     # preprocess griddata if needed
     if preprocess_kwags != {}:
         # preprocessor
-        preprocessor = Preprocessing(griddata, **preprocess_kwags)
+        preprocessor = Preprocessor(griddata, **preprocess_kwags)
         # get new griddata
         griddata = preprocessor.preprocess()
 

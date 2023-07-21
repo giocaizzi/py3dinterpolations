@@ -58,7 +58,7 @@ class Modeler:
     def predict(self, **kwargs) -> np.ndarray:
         """makes predictions considering all past preprocessing
 
-        - if preprocessing was applied, predict on normalized grid
+        - if normalization was applied, predict on normalized grid
         - if standardized data, reverse standardization
         - reshape from zxy to xyz (pykrige output)
 
@@ -68,8 +68,8 @@ class Modeler:
         Returns:
             interpolated (np.ndarray): interpolated grid
         """
-        # make predictions on normalized grid if preprocessing was applied
-        if self.griddata.preprocessing_params == {}:
+        # make predictions on normalized grid if normalization was applied
+        if "normalization" in self.griddata.preprocessor_params.keys():
             grids_arrays = self.grid3d.grid
         else:
             grids_arrays = self.grid3d.normalized_grid
@@ -83,12 +83,12 @@ class Modeler:
         )
 
         # if standardized data, reverse standardization
-        if "standardization" in self.griddata.preprocessing_params:
+        if "standardization" in self.griddata.preprocessor_params:
             interpolated = _reverse_standardized(
-                interpolated, self.griddata.preprocessing_params["standardization"]
+                interpolated, self.griddata.preprocessor_params["standardization"]
             )
             variance = _reverse_standardized(
-                variance, self.griddata.preprocessing_params["standardization"]
+                variance, self.griddata.preprocessor_params["standardization"]
             )
 
         # reshape fron zxy to xyz TODO: solve this

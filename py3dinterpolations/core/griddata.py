@@ -14,7 +14,7 @@ class GridData:
 
     This object keeps track of the transformations (preprocessing)
     applied to the data, by storing the relative parameters in the
-    `preprocessing_params` attribute.
+    `preprocessor_params` attribute.
 
     Args:
         data (pd.DataFrame): source data
@@ -23,13 +23,15 @@ class GridData:
         Y (str): column name of the Y, default: "Y"
         Z (str): column name of the Z, default: "Z"
         V (str): column name of the V, default: "V"
-        preprocessing_params (dict): preprocessing parameters
+        preprocessor_params (dict): preprocessing parameters used
+            by the Preprocessor object that has generated the initiated
+            GridData object, default: {}
 
     Attributes:
         data (pd.DataFrame): data in GridData.data standard
-        preprocessing_params (dict): preprocessing parameters,
-            if some Preprocessing is applied this attribute is a dict
-            containing the preprocessing parameters
+        preprocessor_params (dict): preprocessing parameters used
+            by the Preprocessor object that has generated the initiated
+            GridData object, default: {}
         columns (dict): column names mapping
 
     Properties:
@@ -38,7 +40,7 @@ class GridData:
     """
 
     data = pd.DataFrame()
-    preprocessing_params = {}
+    preprocessor_params = {}
     columns = {}
 
     def __init__(
@@ -49,14 +51,14 @@ class GridData:
         Y: str = "Y",
         Z: str = "Z",
         V: str = "V",
-        preprocessing_params: dict = {},
+        preprocessor_params: dict = {},
     ):
-        # set preprocessing params, if passed
-
-        if isinstance(preprocessing_params, dict):
-            self.preprocessing_params = preprocessing_params
+        # set params of used by the Preprocessor object
+        # this is done with a new object with preprocessed data
+        if isinstance(preprocessor_params, dict):
+            self.preprocessor_params = preprocessor_params
         else:
-            raise ValueError("preprocessing_params must be a dict")
+            raise ValueError("preprocessor_params must be a dict")
 
         # set column names dictionary
         self.columns = {

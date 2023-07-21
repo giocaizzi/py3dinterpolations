@@ -8,8 +8,8 @@ from pandas.testing import assert_series_equal, assert_frame_equal
 
 
 from py3dinterpolations.core.griddata import GridData
-from py3dinterpolations.modelling.preprocessing import Preprocessing
-from py3dinterpolations.modelling.preprocessing import (
+from py3dinterpolations.modelling.preprocessor import Preprocessor
+from py3dinterpolations.modelling.preprocessor import (
     reverse_preprocessing,
     _standardize,
 )
@@ -41,22 +41,22 @@ def test_standardize():
     assert output[1] == {"mean": 5.0, "std": 2.7386127875258306}
 
 
-def test_preprocessing_init(test_data):
-    # test that the preprocessing class is initialized correctly
+def test_Preprocessor_init(test_data):
+    # test that the Preprocessor class is initialized correctly
     # with the right attributes
     # and preprocssing is not actually run
     gd = GridData(test_data)
-    preprocess = Preprocessing(
+    preprocess = Preprocessor(
         gd,
     )
     # griddata is set correctly
     assert preprocess.griddata == gd
-    # preprocessing parameters are set correctly
+    # Preprocessor parameters are set correctly
     assert preprocess.downsampling_res is None
     assert preprocess.standardize_v is True
     assert preprocess.normalize_xyz is True
     # preprocessing is not run
-    assert preprocess.preprocessing_params == {}
+    assert preprocess.preprocessor_params == {}
 
 
 # like this, all scenarios are tested,
@@ -71,23 +71,23 @@ PREPROCESSING_COMBINATIONS = list(
     "downsampling_res, normalize_xyz, standardize_v",
     PREPROCESSING_COMBINATIONS,
 )
-def test_Preprocessing_preprocess_subcalls(
+def test_Preprocessor_preprocess_subcalls(
     downsampling_res, normalize_xyz, standardize_v, test_data
 ):
-    """test that the preprocessing class calls the right methods"""
+    """test that the Preprocessor class calls the right methods"""
     # this tests uses PREPROCESSING_COMBINATIONS to test all possible
     # combinations of downsampling_res, normalize_xyz, standardize_v
     # Create a mock for each of the three methods
     with patch(
-        "py3dinterpolations.modelling.preprocessing.Preprocessing._downsample_data"
+        "py3dinterpolations.modelling.preprocessor.Preprocessor._downsample_data"
     ) as mock_downsample, patch(
-        "py3dinterpolations.modelling.preprocessing.Preprocessing._normalize_xyz"
+        "py3dinterpolations.modelling.preprocessor.Preprocessor._normalize_xyz"
     ) as mock_normalize, patch(
-        "py3dinterpolations.modelling.preprocessing.Preprocessing._standardize_v"
+        "py3dinterpolations.modelling.preprocessor.Preprocessor._standardize_v"
     ) as mock_standardize:
-        # Create a Preprocessing object with different arguments
+        # Create a Preprocessor object with different arguments
         gd = GridData(test_data)
-        pp = Preprocessing(
+        pp = Preprocessor(
             gd,
             downsampling_res=downsampling_res,
             normalize_xyz=normalize_xyz,
@@ -114,15 +114,15 @@ def test_Preprocessing_preprocess_subcalls(
     "downsampling_res, normalize_xyz, standardize_v",
     PREPROCESSING_COMBINATIONS,
 )
-def test_Preprocessing_preprocess_output(
+def test_Preprocessor_preprocess_output(
     downsampling_res, normalize_xyz, standardize_v, test_data
 ):
-    """test that the preprocessing class restitute a griddata object"""
+    """test that the Preprocessor class restitute a griddata object"""
     # with same carachetristics as the original one,
     # if downsample with also less data
 
     gd = GridData(test_data)
-    pp_gd = Preprocessing(
+    pp_gd = Preprocessor(
         gd,
         downsampling_res=downsampling_res,
         normalize_xyz=normalize_xyz,
@@ -152,7 +152,7 @@ def test_reverse_preprocessing(
     downsampling_res, normalize_xyz, standardize_v, test_data
 ):
     gd = GridData(test_data)
-    pp_gd = Preprocessing(
+    pp_gd = Preprocessor(
         gd,
         downsampling_res=downsampling_res,
         normalize_xyz=normalize_xyz,

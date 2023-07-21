@@ -1,4 +1,4 @@
-"""preprocessing objects"""
+"""preprocessor module"""
 
 import pandas as pd
 
@@ -6,10 +6,10 @@ from ..core import GridData
 from typing import Union
 
 
-class Preprocessing:
-    """preprocessing class"""
+class Preprocessor:
+    """Preprocessor class"""
 
-    preprocessing_params = {}
+    preprocessor_params = {}
 
     def __init__(
         self,
@@ -40,25 +40,25 @@ class Preprocessing:
             data = self._standardize_v(data)
 
         # return new object with preprocessed data and parameters
-        return GridData(data, preprocessing_params=self.preprocessing_params)
+        return GridData(data, preprocessor_params=self.preprocessor_params)
 
     def _normalize_xyz(self, data: pd.DataFrame) -> pd.DataFrame:
         df = data.copy()
-        self.preprocessing_params["normalization"] = {}
+        self.preprocessor_params["normalization"] = {}
         for axis in ["X", "Y", "Z"]:
             df[axis], axis_params = _normalize(df[axis])
-            self.preprocessing_params["normalization"][axis] = axis_params
+            self.preprocessor_params["normalization"][axis] = axis_params
         return df
 
     def _standardize_v(self, data: pd.DataFrame) -> pd.DataFrame:
         df = data.copy()
         df["V"], params = _standardize(df["V"])
-        self.preprocessing_params["standardization"] = params
+        self.preprocessor_params["standardization"] = params
         return df
 
     def _downsample_data(self, data: pd.DataFrame) -> pd.DataFrame:
         """downsample data making the average by blocks of given resolution"""
-        self.preprocessing_params["downsampling"] = {
+        self.preprocessor_params["downsampling"] = {
             "resolution": self.downsampling_res
         }
         idfs = []
@@ -77,8 +77,8 @@ class Preprocessing:
             # and taking the mean
             idf = idf.groupby(
                 idf["Z"].apply(
-                    lambda x: self.preprocessing_params["downsampling"]["resolution"]
-                    * round(x / self.preprocessing_params["downsampling"]["resolution"])
+                    lambda x: self.preprocessor_params["downsampling"]["resolution"]
+                    * round(x / self.preprocessor_params["downsampling"]["resolution"])
                 )
             )[["V"]].mean()
             # new downsampled df
@@ -132,28 +132,28 @@ def reverse_preprocessing(griddata: GridData) -> GridData:
     Returns:
         GridData: GridData object with the data with reversed preprocessing
     """
-    if griddata.preprocessing_params is None:
+    if griddata.preprocessor_params is None:
         raise ValueError("No preprocessing has been applied to the data")
     else:
         # get data
         data = griddata.data.copy().reset_index()
-        if "normalization" in griddata.preprocessing_params:
+        if "normalization" in griddata.preprocessor_params:
             # reverse normalization of X Y Z
             # original_value = normalized_value * (max_value - min_value) + min_value
             for axis in ["X", "Y", "Z"]:
                 data[axis] = (
                     data[axis]
                     * (
-                        griddata.preprocessing_params["normalization"][axis]["max"]
-                        - griddata.preprocessing_params["normalization"][axis]["min"]
+                        griddata.preprocessor_params["normalization"][axis]["max"]
+                        - griddata.preprocessor_params["normalization"][axis]["min"]
                     )
-                    + griddata.preprocessing_params["normalization"][axis]["min"]
+                    + griddata.preprocessor_params["normalization"][axis]["min"]
                 )
-        if "standardization" in griddata.preprocessing_params:
+        if "standardization" in griddata.preprocessor_params:
             # reverse standardization of V
             data["V"] = (
-                data["V"] * griddata.preprocessing_params["standardization"]["std"]
-                + griddata.preprocessing_params["standardization"]["mean"]
+                data["V"] * griddata.preprocessor_params["standardization"]["std"]
+                + griddata.preprocessor_params["standardization"]["mean"]
             )
             # return
         return GridData(data)

@@ -5,7 +5,7 @@ import numpy as np
 
 from ..core.griddata import GridData
 from ..core import create_regulargrid3d_from_griddata
-from ..modelling.modeler import Modeler3D
+from ..modelling.modeler import Modeler
 from ..modelling.preprocessing import Preprocessing
 from ..modelling.estimator import Estimator
 
@@ -19,10 +19,10 @@ def interpolate(
     preprocess_kwags: dict = {},
     predict_kwags: dict = {},
     return_model: bool = False,
-) -> Union[np.ndarray, Tuple[np.ndarray, Modeler3D]]:
+) -> Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
     """interpolate griddata
 
-    Interpolate griddata using a Modeler3D instance that wraps all supported
+    Interpolate griddata using a Modeler instance that wraps all supported
     models. The moedel is selected with the argument `model_name`.
 
     If the `model_params` is passed, then the model is initialized with those
@@ -45,7 +45,7 @@ def interpolate(
         return_model (bool, optional): return model. Defaults to False.
 
     Returns:
-        Union[np.ndarray, Tuple[np.ndarray, Modeler3D]]:
+        Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
             interpolated griddata, optionally with model
 
     """
@@ -82,8 +82,8 @@ def interpolate(
         model_params = est.best_params
         model_params.pop("method")
 
-    # init Modeler3D
-    model = Modeler3D(
+    # init Modeler
+    model = Modeler(
         griddata=griddata,
         grid3d=grid3d,
         model_name=model_name,

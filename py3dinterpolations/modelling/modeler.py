@@ -7,8 +7,8 @@ from ..core.grid3d import Grid3D
 from .models import ModelsWrapper
 
 
-class Modeler3D:
-    """modeler3d class for 3d modelling
+class Modeler:
+    """modeler class for 3d modelling
 
     This class applies a model defined within the ModelsWrapper class to a Grid3D instance.cond
 

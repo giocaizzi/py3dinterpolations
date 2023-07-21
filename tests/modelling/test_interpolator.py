@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 from py3dinterpolations.core.griddata import GridData
 from py3dinterpolations.modelling.interpolator import interpolate
-from py3dinterpolations.modelling.modeler import Modeler3D
+from py3dinterpolations.modelling.modeler import Modeler
 
 
 def test_interpolate_model_params_no_preprocessing(test_data):
@@ -43,7 +43,7 @@ def test_interpolate_return_model(test_data):
     )
     assert isinstance(interpolated, np.ndarray)
     assert model is not None
-    assert isinstance(model, Modeler3D)
+    assert isinstance(model, Modeler)
 
 
 def test_interpolate_model_params_preprocessing(test_data):

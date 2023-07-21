@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 
 from ..core.griddata import GridData
-from ..modelling.modeler import Modeler3D
+from ..modelling.modeler import Modeler
 from ..modelling.preprocessing import reverse_preprocessing
 
 
@@ -87,7 +87,7 @@ def plot_model_epsilon(model) -> None:
 
 
 def plot_3d_model(
-    modeler: Modeler3D, plot_points: bool = False, scale_points=1.0, **kwargs
+    modeler: Modeler, plot_points: bool = False, scale_points=1.0, **kwargs
 ) -> go.Figure:
     """plot 3d model"""
     data = [

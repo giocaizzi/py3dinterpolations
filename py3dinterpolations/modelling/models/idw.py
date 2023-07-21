@@ -60,7 +60,7 @@ class IDW(DeterministicModel):
 
         TODO:
             This implementation however offers easy advanced parametrization with:
-            - n_points: number of points to use for the IDW estimation 
+            - n_points: number of points to use for the IDW estimation
             - max_distance: maximum distance to use for the IDW estimation
         """
         nominator = 0

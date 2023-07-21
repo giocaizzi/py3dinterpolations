@@ -97,7 +97,7 @@ class Modeler3D:
                 variance, self.griddata.preprocessing_params["standardization"]
             )
 
-        # reshape fron zxy to xyz 
+        # reshape fron zxy to xyz
         # TODO: solve this
         if self.model._model_name == "ordinary_kriging":
             # reshape pykrige output

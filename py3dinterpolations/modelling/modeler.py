@@ -8,21 +8,15 @@ from .models import ModelsWrapper
 
 
 class Modeler3D:
-    """modeler for wrapping 3d models from different libraries
+    """modeler3d class for 3d modelling
+
+    This class applies a model defined within the ModelsWrapper class to a Grid3D instance.cond
 
     Currently supports:
         Statistical:
             - Ordinary Kriging : `ordinary_kriging` (pykrige)
         Deterministic:
             - Inverse Distance Weighting : `idw`
-
-
-    This class is designed to allow future of sklearn models.
-
-    Defines a fit and a predict method, to be called
-    when interpolating.
-
-    Ensures correct input and output.
 
     Args:
         griddata (GridData): GridData istance

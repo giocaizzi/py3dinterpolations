@@ -7,9 +7,9 @@ import pandas as pd
 from pandas.testing import assert_series_equal, assert_frame_equal
 
 
-from py3Dinterpolations.core.griddata import GridData
-from py3Dinterpolations.modelling.preprocessing import Preprocessing
-from py3Dinterpolations.modelling.preprocessing import (
+from py3dinterpolations.core.griddata import GridData
+from py3dinterpolations.modelling.preprocessing import Preprocessing
+from py3dinterpolations.modelling.preprocessing import (
     reverse_preprocessing,
     _standardize,
 )
@@ -68,11 +68,11 @@ def test_Preprocessing_preprocess_subcalls(
     """test that the preprocessing class calls the right methods"""
     # Create a mock for each of the three methods
     with patch(
-        "py3Dinterpolations.modelling.preprocessing.Preprocessing._downsample_data"
+        "py3dinterpolations.modelling.preprocessing.Preprocessing._downsample_data"
     ) as mock_downsample, patch(
-        "py3Dinterpolations.modelling.preprocessing.Preprocessing._normalize_xyz"
+        "py3dinterpolations.modelling.preprocessing.Preprocessing._normalize_xyz"
     ) as mock_normalize, patch(
-        "py3Dinterpolations.modelling.preprocessing.Preprocessing._standardize_v"
+        "py3dinterpolations.modelling.preprocessing.Preprocessing._standardize_v"
     ) as mock_standardize:
         # Create a Preprocessing object with different arguments
         gd = GridData(test_data)

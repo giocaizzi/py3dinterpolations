@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from py3Dinterpolations.modelling.models.idw import IDW
+from py3dinterpolations.modelling.models.idw import IDW
 
 
 def test_simple_idw():

@@ -4,7 +4,7 @@ import pytest
 
 import numpy as np
 
-from py3Dinterpolations.modelling.models import get_model_type
+from py3dinterpolations.modelling.models import get_model_type
 
 
 def test_get_model_type():

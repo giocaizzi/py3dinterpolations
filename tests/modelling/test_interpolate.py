@@ -70,6 +70,7 @@ def test_interpolate_model_params_preprocessing(test_data):
     mock.assert_called_once()
     assert isinstance(interpolated, np.ndarray)
 
+
 def test_interpolate_model_params_model_params_grid_neither(test_data):
     "test interpolate with model_params and model_params_grid"
     # test that value error is raised
@@ -82,6 +83,7 @@ def test_interpolate_model_params_model_params_grid_neither(test_data):
             model_name="ordinary_kriging",
             grid_resolution=5,
         )
+
 
 def test_interpolate_model_params_model_params_grid_both(test_data):
     "test interpolate with model_params and model_params_grid"

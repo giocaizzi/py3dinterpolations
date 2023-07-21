@@ -4,13 +4,14 @@ import numpy as np
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from .models import ModelsWrapper
+from .models import ModelWrapper
 
 
 class Modeler:
     """modeler class for 3d modelling
 
-    This class applies a model defined within the ModelsWrapper class to a Grid3D instance.cond
+    This class applies a model defined within the ModelWrapper
+    class to a Grid3D instance
 
     Currently supports:
         Statistical:
@@ -31,7 +32,7 @@ class Modeler:
         results (dict): dictionary with interpolated and variance grids
     """
 
-    model: ModelsWrapper
+    model: ModelWrapper
     results: dict
 
     def __init__(
@@ -46,7 +47,7 @@ class Modeler:
         self.grid3d = grid3d
 
         # model
-        self.model = ModelsWrapper(
+        self.model = ModelWrapper(
             model_name,
             self.griddata.numpy_data[:, 0],  # x
             self.griddata.numpy_data[:, 1],  # y

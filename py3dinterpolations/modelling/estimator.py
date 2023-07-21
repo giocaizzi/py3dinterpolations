@@ -19,7 +19,8 @@ class Estimator:
         self.estimator = GridSearchCV(
             Krige(),
             params,
-            scoring=scoring,  # https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
+            scoring=scoring,
+            # https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
             verbose=verbose,  # from 1 to 3 to higher level of verbosity
         )
         self.estimator.fit(

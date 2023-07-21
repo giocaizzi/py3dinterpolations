@@ -7,7 +7,51 @@ from typing import Union
 
 
 class Preprocessor:
-    """Preprocessor class"""
+    """Preprocessor class
+
+    Preprocess data before interpolation. Preprocessing includes:
+        - Downsampling, by taking the mean of blocks of given resolution
+        - Normalization of X Y Z
+        - Standardization of V
+
+    By calling the preprocess method, the data is preprocessed and a new
+    GridData object is returned with the preprocessed data and the
+    preprocessing parameters set.
+
+    Args:
+        griddata (GridData): GridData object to preprocess
+        downsampling_res (Union[float, None]): resolution to downsample data
+            by taking the mean of blocks of given resolution. If None, no
+            downsampling is applied. Default is None.
+        normalize_xyz (bool): whether to normalize X Y Z. Default is True.
+        standardize_v (bool): whether to standardize V. Default is True.
+
+    Attributes:
+        griddata (GridData): GridData object to preprocess
+        downsampling_res (Union[float, None]): resolution to downsample data
+            by taking the mean of blocks of given resolution. If None, no
+            downsampling is applied. Default is None.
+        normalize_xyz (bool): whether to normalize X Y Z. Default is True.
+        standardize_v (bool): whether to standardize V. Default is True.
+        preprocessor_params (dict): dictionary with the parameters of the
+            preprocessing. It is set after calling the preprocess method.
+            It includes:
+                - downsampling: dictionary with the downsampling parameters
+                    - resolution: resolution to downsample data
+                - normalization: dictionary with the normalization parameters
+                    - X: dictionary with the normalization parameters of X
+                        - min: min value of X
+                        - max: max value of X
+                    - Y: dictionary with the normalization parameters of Y
+                        - min: min value of Y
+                        - max: max value of Y
+                    - Z: dictionary with the normalization parameters of Z
+                        - min: min value of Z
+                        - max: max value of Z
+                - standardization: dictionary with the standardization parameters
+                    - mean: mean value of V
+                    - std: std value of V
+    """
 
     preprocessor_params = {}
 
@@ -24,6 +68,13 @@ class Preprocessor:
         self.standardize_v = standardize_v
 
     def preprocess(self) -> GridData:
+        """preprocess data
+
+        Returns:
+            GridData: new GridData object with the preprocessed data
+                and prerpocessing parameters set
+
+        """
         # get data
         data = self.griddata.data.copy().reset_index()[["ID", "X", "Y", "Z", "V"]]
 
@@ -43,6 +94,14 @@ class Preprocessor:
         return GridData(data, preprocessor_params=self.preprocessor_params)
 
     def _normalize_xyz(self, data: pd.DataFrame) -> pd.DataFrame:
+        """apply normalization to X Y Z
+
+        Args:
+            data (pd.DataFrame): data to normalize
+
+        Returns:
+            pd.DataFrame: normalized data
+        """
         df = data.copy()
         self.preprocessor_params["normalization"] = {}
         for axis in ["X", "Y", "Z"]:
@@ -51,16 +110,25 @@ class Preprocessor:
         return df
 
     def _standardize_v(self, data: pd.DataFrame) -> pd.DataFrame:
+        """apply standardization to V"""
         df = data.copy()
         df["V"], params = _standardize(df["V"])
         self.preprocessor_params["standardization"] = params
         return df
 
     def _downsample_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """downsample data making the average by blocks of given resolution"""
-        self.preprocessor_params["downsampling"] = {
-            "resolution": self.downsampling_res
-        }
+        """downsample data making the average by blocks of given resolution
+
+        TODO: add option to downsample by selecting the statistic
+            taking the median, or the max
+
+        Args:
+            data (pd.DataFrame): data to downsample
+
+        Returns:
+            pd.DataFrame: downsampled data
+        """
+        self.preprocessor_params["downsampling"] = {"resolution": self.downsampling_res}
         idfs = []
         # loop over unique ids
         for id in self.griddata.data.index.get_level_values("ID").unique():
@@ -93,6 +161,14 @@ class Preprocessor:
 
 
 def _standardize(series: pd.Series) -> tuple:
+    """standardize series to have mean 0 and std 1
+
+    Args:
+        series (pd.Series): series to standardize
+
+    Returns:
+        tuple: standardized series and standardization parameters
+    """
     series = series.copy()
     # save standardization parameters
     params = {
@@ -105,6 +181,14 @@ def _standardize(series: pd.Series) -> tuple:
 
 
 def _normalize(series: pd.Series) -> tuple:
+    """normalize series between 0 and 1
+
+    Args:
+        series (pd.Series): series to normalize
+
+    Returns:
+        tuple: normalized series and normalization parameters
+    """
     series = series.copy()
     # save normalization parameters
     params = {

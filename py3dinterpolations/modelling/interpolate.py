@@ -23,17 +23,16 @@ def interpolate(
     """interpolate griddata
 
     Interpolate griddata using a Modeler instance that wraps all supported
-    models. The moedel is selected with the argument `model_name`.
+    models. The model is selected with the argument `model_name`.
 
     If the `model_params` is passed, then the model is initialized with those
     parameters. Otherwise, to make a search for the best parameters, use the
     `model_params_grid` argument.
 
-    The 3D grid is retrived from the training data.
+    The 3D grid for interpolation is retrived from the training data.
     At the moment features only a regular grid.
 
     If requested, the griddata is preprocessed using the Preprocessor class.
-
 
     Args:
         griddata (GridData): griddata to interpolate
@@ -55,8 +54,11 @@ def interpolate(
     if model_params != {} and model_params_grid != {}:
         raise ValueError("model_params and model_params_grid cannot be passed together")
 
-    # retrive associated grid
-    grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
+    if isinstance(grid_resolution, float):
+        # retrive associated grid
+        grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
+    else:
+        raise NotImplementedError("only RegularGrid3D is supported.")
 
     # preprocess griddata if needed
     if preprocess_kwags != {}:

@@ -33,7 +33,7 @@ def get_model_type(inner_key: str):
     raise ValueError(f"model {inner_key} not supported")
 
 
-class ModelsWrapper:
+class ModelWrapper:
     """model wrappper
 
     This class is designed to allow wrapping of different models

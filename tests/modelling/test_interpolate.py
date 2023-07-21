@@ -5,7 +5,7 @@ import numpy as np
 from unittest.mock import patch
 
 from py3dinterpolations.core.griddata import GridData
-from py3dinterpolations.modelling.interpolator import interpolate
+from py3dinterpolations.modelling.interpolate import interpolate
 from py3dinterpolations.modelling.modeler import Modeler
 
 
@@ -53,7 +53,7 @@ def test_interpolate_model_params_preprocessing(test_data):
     gd = GridData(test_data)
     # mock preprocessing preprocess method
     with patch(
-        "py3dinterpolations.modelling.interpolator.Preprocessing.preprocess",
+        "py3dinterpolations.modelling.interpolate.Preprocessing.preprocess",
         return_value=gd,
     ) as mock:
         interpolated = interpolate(

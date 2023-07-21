@@ -5,9 +5,9 @@ import numpy as np
 
 from ..core.griddata import GridData
 from ..core import create_regulargrid3d_from_griddata
-from ..modelling.modeler import Modeler
-from ..modelling.preprocessing import Preprocessing
-from ..modelling.estimator import Estimator
+from .modeler import Modeler
+from .preprocessing import Preprocessing
+from .estimator import Estimator
 
 
 def interpolate(

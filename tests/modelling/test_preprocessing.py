@@ -158,4 +158,4 @@ def test_reverse_preprocessing(
     else:
         pytest.skip("NOT IMPLEMENTED YET")
 
-    # todo: assert something if downsampling is not None
+    # TODO: assert something if downsampling is not None

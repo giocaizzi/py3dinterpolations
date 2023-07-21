@@ -98,7 +98,8 @@ class Modeler3D:
             )
 
         # reshape fron zxy to xyz
-        # TODO: solve this
+        # TODO: reshape_pykrige
+        #   pykrige should not require a reshape
         if self.model._model_name == "ordinary_kriging":
             # reshape pykrige output
             interpolated = _reshape_pykrige(interpolated)

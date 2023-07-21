@@ -48,13 +48,14 @@ def interpolate(
             interpolated griddata, optionally with model
 
     """
+    # check model_params and model_params_grid
     if model_params == {} and model_params_grid == {}:
         raise ValueError("either model_params or model_params_grid must be passed")
-
     if model_params != {} and model_params_grid != {}:
         raise ValueError("model_params and model_params_grid cannot be passed together")
 
-    if isinstance(grid_resolution, float):
+    # check grid_resolution is of supported type
+    if isinstance(grid_resolution, float) or isinstance(grid_resolution, int):
         # retrive associated grid
         grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
     else:

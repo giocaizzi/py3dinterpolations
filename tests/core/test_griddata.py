@@ -3,7 +3,7 @@
 import pytest
 from unittest.mock import patch
 
-from py3Dinterpolations.core.griddata import GridData
+from py3dinterpolations.core.griddata import GridData
 
 import pandas as pd
 

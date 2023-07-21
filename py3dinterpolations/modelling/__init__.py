@@ -4,7 +4,6 @@ from typing import Union, Tuple
 import numpy as np
 
 from ..core.griddata import GridData
-from ..core.grid3d import Grid3D
 from ..core import create_regulargrid3d_from_griddata
 from ..modelling.modeler import Modeler3D
 from ..modelling.preprocessing import Preprocessing
@@ -18,7 +17,7 @@ def interpolate(
     preprocess_kwags: dict = {},
     predict_kwags: dict = {},
     return_model: bool = False,
-) -> Union[np.ndarray, Tuple[np.ndarray, Modeler3D, Grid3D, GridData]]:
+) -> Union[np.ndarray, Tuple[np.ndarray, Modeler3D]]:
     """interpolate griddata
 
     Interpolate griddata using a Modeler3D instance that wraps all supported
@@ -39,8 +38,8 @@ def interpolate(
         return_model (bool, optional): return model. Defaults to False.
 
     Returns:
-        Union[np.ndarray, Tuple[np.ndarray, Modeler3D, Grid3D, GridData]]:
-            interpolated griddata or all components
+        Union[np.ndarray, Tuple[np.ndarray, Modeler3D]]:
+            interpolated griddata, optionally with model
 
     """
     # retrive associated grid

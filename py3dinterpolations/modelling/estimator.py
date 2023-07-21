@@ -1,5 +1,7 @@
 """cross validation module"""
 
+from ..core.griddata import GridData
+
 from sklearn.model_selection import GridSearchCV
 
 from pykrige.rk import Krige  # scikit-learn wrapper for pykrige
@@ -8,20 +10,47 @@ from pykrige.rk import Krige  # scikit-learn wrapper for pykrige
 class Estimator:
     """class for estimation of model parameters.
 
+    Runs a parameter estimation looking for the best `scoring` method.
+    The `scoring` attribute can be any of the scoring methods supported by
+    scikit-learn.
+    See https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
+
+    Get the best parameters with the `best_params` attribute.
+    Get the best score with the `best_score` attribute.
+    Get the cross validation results with the `cv_results` attribute.
+
+    Verbose level can be set from 0 to 3 to higher level of verbosity.
+
     Note:
         At the moment only pykrige.Krige is supported.
 
     Args:
+        griddata (GridData): griddata to interpolate
+        params (dict): parameters to search
+        scoring (str, optional): scoring method. Defaults to "neg_mean_absolute_error".
+        verbose (int, optional): verbosity level. Defaults to 3.
+
+    Attributes:
+        estimator (GridSearchCV): estimator object
+        best_params (dict): best parameters
+        best_score (float): best score
+        cv_results (dict): cross validation results,
+            ready to be converted to pandas DataFrame
 
     """
 
-    def __init__(self, griddata, params, scoring="neg_mean_absolute_error", verbose=3):
+    def __init__(
+        self,
+        griddata: GridData,
+        params: dict,
+        scoring: str = "neg_mean_absolute_error",
+        verbose: int = 3,
+    ):
         self.estimator = GridSearchCV(
             Krige(),
             params,
             scoring=scoring,
-            # https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
-            verbose=verbose,  # from 1 to 3 to higher level of verbosity
+            verbose=verbose,
         )
         self.estimator.fit(
             y=griddata.numpy_data[:, 3],  # value

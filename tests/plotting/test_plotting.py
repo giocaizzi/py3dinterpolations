@@ -6,7 +6,7 @@ from unittest.mock import patch
 from matplotlib.figure import Figure
 
 from py3dinterpolations.core.griddata import GridData
-from py3dinterpolations.modelling.preprocessing import Preprocessing
+from py3dinterpolations.modelling.preprocessor import Preprocessor
 from py3dinterpolations.plotting.plotting import plot_downsampling
 
 
@@ -16,7 +16,7 @@ from py3dinterpolations.plotting.plotting import plot_downsampling
 # to make the test independent of the method
 def test_plot_downsampling(test_data):
     gd = GridData(test_data)
-    preprocessed_gd = Preprocessing(
+    preprocessed_gd = Preprocessor(
         griddata=gd,
         normalize_xyz=True,
         standardize_v=True,

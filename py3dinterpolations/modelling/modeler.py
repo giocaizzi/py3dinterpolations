@@ -4,25 +4,20 @@ import numpy as np
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from .models import ModelsWrapper
+from .models import ModelWrapper
 
 
-class Modeler3D:
-    """modeler for wrapping 3d models from different libraries
+class Modeler:
+    """modeler class for 3d modelling
+
+    This class applies a model defined within the ModelWrapper
+    class to a Grid3D instance
 
     Currently supports:
         Statistical:
             - Ordinary Kriging : `ordinary_kriging` (pykrige)
         Deterministic:
             - Inverse Distance Weighting : `idw`
-
-
-    This class is designed to allow future of sklearn models.
-
-    Defines a fit and a predict method, to be called
-    when interpolating.
-
-    Ensures correct input and output.
 
     Args:
         griddata (GridData): GridData istance
@@ -35,9 +30,16 @@ class Modeler3D:
         grid3d (Grid3D): Grid3D istance
         model (object): model object
         results (dict): dictionary with interpolated and variance grids
+
+    Examples:
+        >>> # modeler
+        >>> modeler = Modeler(griddata, grid3d)
+        >>> # predict
+        >>> interpolated = modeler.predict()
+
     """
 
-    model: ModelsWrapper
+    model: ModelWrapper
     results: dict
 
     def __init__(
@@ -52,7 +54,7 @@ class Modeler3D:
         self.grid3d = grid3d
 
         # model
-        self.model = ModelsWrapper(
+        self.model = ModelWrapper(
             model_name,
             self.griddata.numpy_data[:, 0],  # x
             self.griddata.numpy_data[:, 1],  # y
@@ -64,7 +66,7 @@ class Modeler3D:
     def predict(self, **kwargs) -> np.ndarray:
         """makes predictions considering all past preprocessing
 
-        - if preprocessing was applied, predict on normalized grid
+        - if normalization was applied, predict on normalized grid
         - if standardized data, reverse standardization
         - reshape from zxy to xyz (pykrige output)
 
@@ -74,8 +76,8 @@ class Modeler3D:
         Returns:
             interpolated (np.ndarray): interpolated grid
         """
-        # make predictions on normalized grid if preprocessing was applied
-        if self.griddata.preprocessing_params == {}:
+        # make predictions on normalized grid if normalization was applied
+        if "normalization" in self.griddata.preprocessor_params.keys():
             grids_arrays = self.grid3d.grid
         else:
             grids_arrays = self.grid3d.normalized_grid
@@ -89,12 +91,12 @@ class Modeler3D:
         )
 
         # if standardized data, reverse standardization
-        if "standardization" in self.griddata.preprocessing_params:
+        if "standardization" in self.griddata.preprocessor_params:
             interpolated = _reverse_standardized(
-                interpolated, self.griddata.preprocessing_params["standardization"]
+                interpolated, self.griddata.preprocessor_params["standardization"]
             )
             variance = _reverse_standardized(
-                variance, self.griddata.preprocessing_params["standardization"]
+                variance, self.griddata.preprocessor_params["standardization"]
             )
 
         # reshape fron zxy to xyz

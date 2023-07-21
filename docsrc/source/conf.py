@@ -17,15 +17,15 @@ sys.path.insert(0, os.path.abspath("../.."))
 
 
 # -- Project information -----------------------------------------------------
-project = "py3Dinterpolations"
+project = "py3dinterpolations"
 copyright = "2023, giocaizzi"
 author = "giocaizzi"
 
 # The full version, including alpha/beta/rc tags
-import py3Dinterpolations
+import py3dinterpolations
 
-release = py3Dinterpolations.__version__
-version = py3Dinterpolations.__version__
+release = py3dinterpolations.__version__
+version = py3dinterpolations.__version__
 
 # -- General configuration ---------------------------------------------------
 

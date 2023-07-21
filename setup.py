@@ -38,7 +38,7 @@ setup(
         "Programming Language :: Python :: 3.10",
     ],
     project_urls={
-        # "Documentation": "https://giocaizzi.github.io/py3Dinterpolations/",
+        "Documentation": "https://giocaizzi.github.io/py3Dinterpolations/",
         "Bug Reports": "https://github.com/giocaizzi/py3Dinterpolations/issues",
         "Source": "https://github.com/giocaizzi/py3Dinterpolations",
     },

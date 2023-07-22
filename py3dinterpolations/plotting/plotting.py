@@ -250,7 +250,7 @@ def plot_2d_along_axis(
                     )
             # subplot label
             val = modeler.grid3d.grid["Z"][i]
-            ax.set_title(f"{axis_name} = {val}÷{val+modeler.grid3d.gridres} m")
+            ax.set_title(f"{axis_name} = {val}÷{val+modeler.grid3d.gridres.resolutions} m")
         # suptitle
         fig.suptitle(f"Along {axis_name} axis.")
 

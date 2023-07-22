@@ -115,7 +115,7 @@
 <p>Normalizing the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates ensures that all the coordinates are within a similar range, which can help prevent one coordinate from dominating the kriging interpolation process. It is especially useful when the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates have different scales or units.</p>
 <p>Standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values by centering them around 0 and giving them equal variances can help ensure that the kriging algorithm is not influenced by the absolute magnitude of <code class="docutils literal notranslate"><span class="pre">V</span></code>. This can be beneficial if the <code class="docutils literal notranslate"><span class="pre">V</span></code> values have a large range or if you want to focus more on the relative differences between <code class="docutils literal notranslate"><span class="pre">V</span></code> values rather than their absolute values.</p>
 <p>By normalizing the XYZ coordinates and standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values, you align the scales of the different variables and make them more comparable, which can improve the performance of the kriging algorithm.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -126,14 +126,6 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Matplotlib is building the font cache; this may take a moment.
-</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:

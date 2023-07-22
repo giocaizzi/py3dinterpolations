@@ -115,20 +115,25 @@
 <p>Normalizing the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates ensures that all the coordinates are within a similar range, which can help prevent one coordinate from dominating the kriging interpolation process. It is especially useful when the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> coordinates have different scales or units.</p>
 <p>Standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values by centering them around 0 and giving them equal variances can help ensure that the kriging algorithm is not influenced by the absolute magnitude of <code class="docutils literal notranslate"><span class="pre">V</span></code>. This can be beneficial if the <code class="docutils literal notranslate"><span class="pre">V</span></code> values have a large range or if you want to focus more on the relative differences between <code class="docutils literal notranslate"><span class="pre">V</span></code> values rather than their absolute values.</p>
 <p>By normalizing the XYZ coordinates and standardizing the <code class="docutils literal notranslate"><span class="pre">V</span></code> values, you align the scales of the different variables and make them more comparable, which can improve the performance of the kriging algorithm.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
-<span class="o">%</span><span class="k">autoreload</span> 2
-
-<span class="kn">from</span> <span class="nn">py3dinterpolations.core.griddata</span> <span class="kn">import</span> <span class="n">GridData</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">py3dinterpolations.core.griddata</span> <span class="kn">import</span> <span class="n">GridData</span>
 <span class="kn">from</span> <span class="nn">py3dinterpolations.modelling.preprocessor</span> <span class="kn">import</span> <span class="n">Preprocessor</span>
 <span class="kn">from</span> <span class="nn">py3dinterpolations.plotting.plotting</span> <span class="kn">import</span> <span class="n">plot_downsampling</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Matplotlib is building the font cache; this may take a moment.
+</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:

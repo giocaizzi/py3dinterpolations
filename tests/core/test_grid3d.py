@@ -73,9 +73,9 @@ def test_grid3d_init_ands_proprieties(kwargs):
 
     # assert that the mesh is the same as the grid
     # numpy conventions with xyz
-    # In the 3-D case with inputs of length M, N and P, 
+    # In the 3-D case with inputs of length M, N and P,
     #  outputs are of shape (N, M, P) for ‘xy’ indexing
-    assert np.all(g3d.grid["X"] == g3d.mesh["X"][0, :, 0]) 
+    assert np.all(g3d.grid["X"] == g3d.mesh["X"][0, :, 0])
     assert np.all(g3d.grid["Y"] == g3d.mesh["Y"][:, 0, 0])
     assert np.all(g3d.grid["Z"] == g3d.mesh["Z"][0, 0, :])
 

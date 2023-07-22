@@ -1,7 +1,6 @@
 """grid3d object"""
 
 import numpy as np
-from typing import Union
 
 from py3dinterpolations.core.griddata import GridData
 
@@ -15,23 +14,23 @@ class GridAxis:
         self._grid = np.arange(self._min, self._max, self._res)
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @property
-    def min(self):
+    def min(self) -> float:
         return self._min
 
     @property
-    def max(self):
+    def max(self) -> float:
         return self._max
 
     @property
-    def res(self):
+    def res(self) -> float:
         return self._res
 
     @property
-    def grid(self):
+    def grid(self) -> np.ndarray:
         return self._grid
 
 
@@ -156,11 +155,11 @@ class Grid3D:
         """
         normalized_grid = {}
         for axis in ["X", "Y", "Z"]:
-            normalized_grid[axis] = (
-                self.grid[axis] - self.grid[axis].min()
-            ) / (self.grid[axis].max() - self.grid[axis].min())
+            normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
+                self.grid[axis].max() - self.grid[axis].min()
+            )
         return normalized_grid
-    
+
     @property
     def gridres(self) -> dict:
         """get grid resolution"""

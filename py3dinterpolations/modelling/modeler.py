@@ -83,6 +83,9 @@ class Modeler:
             grids_arrays = self.grid3d.grid
 
         # predict
+        # pykrige ordinarykrigin3d class returns a tuple
+        # X : N, Y : M, Z : L
+        # shape (L, M, N)
         interpolated, variance = self.model.predict(
             grids_arrays["X"],
             grids_arrays["Y"],
@@ -98,14 +101,6 @@ class Modeler:
             variance = _reverse_standardized(
                 variance, self.griddata.preprocessor_params["standardization"]
             )
-
-        # reshape fron zxy to xyz
-        # TODO: reshape_pykrige
-        #   pykrige should not require a reshape
-        if self.model._model_name == "ordinary_kriging":
-            # reshape pykrige output
-            interpolated = _reshape_pykrige(interpolated)
-            variance = _reshape_pykrige(variance)
 
         # save results
         self.results = {
@@ -126,8 +121,3 @@ def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray
     considers that data could be none, in which case returns an empty array
     """
     return data * standardization["std"] + standardization["mean"]
-
-
-def _reshape_pykrige(ndarray: np.ndarray) -> np.ndarray:
-    """reshape pykrige output to match the grid3d shape"""
-    return np.einsum("ZXY->XYZ", ndarray)

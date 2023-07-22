@@ -8,6 +8,8 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 import plotly.graph_objs as go
 
+import numpy as np
+
 from ..core.griddata import GridData
 from ..modelling.modeler import Modeler
 from ..modelling.preprocessor import reverse_preprocessing
@@ -100,12 +102,16 @@ def plot_3d_model(
 
     gd_reversed = reverse_preprocessing(modeler.griddata)
 
+    # pyplot convention of indexing
+    # zyx -> xyz
+    values = np.einsum("ZXY->XYZ", modeler.results["interpolated"])
+
     data = [
         go.Volume(
             x=modeler.grid3d.mesh["X"].flatten(),
             y=modeler.grid3d.mesh["Y"].flatten(),
             z=modeler.grid3d.mesh["Z"].flatten(),
-            value=modeler.results["interpolated"].flatten(),
+            value=values.flatten(),
             opacityscale=[(0, 0), (1, 1)],
             cmin=gd_reversed.specs.vmin,
             cmax=gd_reversed.specs.vmax,
@@ -227,12 +233,13 @@ def plot_2d_model(
     for ax, i in zip(axes, range(len(axis_data))):
         # results is respahed #18
         # numpy convetion of indexing
+        # pykrige output zyx
         if axis == "Z":
-            matrix = modeler.results["interpolated"][:, :, i]
-        elif axis == "Y":
             matrix = modeler.results["interpolated"][i, :, :]
-        elif axis == "X":
+        elif axis == "Y":
             matrix = modeler.results["interpolated"][:, i, :]
+        elif axis == "X":
+            matrix = modeler.results["interpolated"][:, :, i]
         else:
             raise NotImplementedError(
                 f"axis {axis} not implemented. Choose from {SLICING_AXIS.keys()}"
@@ -242,18 +249,10 @@ def plot_2d_model(
             matrix.squeeze(),  # remove singleton dimensions
             origin="lower",
             extent=[
-                modeler.grid3d.get_axis(
-                    SLICING_AXIS[axis]["X'"]
-                ).min,  # X' min
-                modeler.grid3d.get_axis(
-                    SLICING_AXIS[axis]["X'"]
-                ).max,  # X' max
-                modeler.grid3d.get_axis(
-                    SLICING_AXIS[axis]["Y'"]
-                ).min,  # Y' min
-                modeler.grid3d.get_axis(
-                    SLICING_AXIS[axis]["Y'"]
-                ).max,  # Y' max
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["X'"]).min,  # X' min
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["X'"]).max,  # X' max
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["Y'"]).min,  # Y' min
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["Y'"]).max,  # Y' max
             ],
             cmap="plasma",
             norm=norm,

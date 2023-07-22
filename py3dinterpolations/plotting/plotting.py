@@ -221,12 +221,14 @@ def plot_2d_model(
 
     # loop over axes
     for ax, i in zip(axes, range(len(axis_data))):
+        # results is respahed #18
+        # numpy convetion of indexing
         if axis == "Z":
             matrix = modeler.results["interpolated"][:, :, i]
         elif axis == "Y":
-            matrix = modeler.results["interpolated"][:, i, :]
-        elif axis == "X":
             matrix = modeler.results["interpolated"][i, :, :]
+        elif axis == "X":
+            matrix = modeler.results["interpolated"][:, i, :]
         else:
             raise NotImplementedError(
                 f"axis {axis} not implemented. Choose from {SLICING_AXIS.keys()}"
@@ -236,10 +238,18 @@ def plot_2d_model(
             matrix.squeeze(),  # remove singleton dimensions
             origin="lower",
             extent=[
-                modeler.grid3d.get_axis(SLICING_AXIS[axis]["X'"]).min,  # X' min
-                modeler.grid3d.get_axis(SLICING_AXIS[axis]["X'"]).max,  # X' max
-                modeler.grid3d.get_axis(SLICING_AXIS[axis]["Y'"]).min,  # Y' min
-                modeler.grid3d.get_axis(SLICING_AXIS[axis]["Y'"]).max,  # Y' max
+                modeler.grid3d.get_axis(
+                    SLICING_AXIS[axis]["X'"]
+                ).min,  # X' min
+                modeler.grid3d.get_axis(
+                    SLICING_AXIS[axis]["X'"]
+                ).max,  # X' max
+                modeler.grid3d.get_axis(
+                    SLICING_AXIS[axis]["Y'"]
+                ).min,  # Y' min
+                modeler.grid3d.get_axis(
+                    SLICING_AXIS[axis]["Y'"]
+                ).max,  # Y' max
             ],
             cmap="plasma",
             norm=norm,

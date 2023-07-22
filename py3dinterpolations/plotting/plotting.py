@@ -142,6 +142,7 @@ def plot_2d_along_axis(
     modeler: Modeler,
     axis: str = "Z",
     plot_points: bool = False,
+    annotate_points: bool = False,
     figure_width: float = 8,
 ):
     """plot 2d along axis
@@ -224,14 +225,21 @@ def plot_2d_along_axis(
                 cmap="plasma",
                 norm=norm,
             )
+            # slice griddata
+            from_value = modeler.grid3d.grid["Z"][i]
+            to_value = from_value + modeler.grid3d.gridres.resolutions
+            
             # plot points
             if plot_points:
+                points_df = gd_reversed.data.copy().reset_index()
+
                 # get points conatined in each grid cell
-                points = modeler.griddata[
-                    (modeler.griddata[axis_name] >= i)
-                    & (modeler.griddata[axis_name] < i + 1)
+                points = points_df[
+                    (points_df[axis_name] >= from_value)
+                    & (points_df[axis_name] < to_value)
                 ].copy()
-                # sort by value
+
+                # sort by value to plot highest values on top
                 points.sort_values(by=["V"], inplace=True)
                 ax.scatter(
                     points["X"],
@@ -239,20 +247,22 @@ def plot_2d_along_axis(
                     c=points["V"],
                     cmap="jet",
                     norm=norm,
+                    s=figure_width/2,
                 )
+                if annotate_points:
                 # annotate points
-                for idx, row in points.iterrows():
-                    ax.annotate(
-                        "{:.0f}".format(row["V"]),
-                        xy=(row["X"], row["Y"]),
-                        xytext=(2, 2),
-                        textcoords="offset points",
-                    )
+                    for idx, row in points.iterrows():
+                        ax.annotate(
+                            "{:.0f}".format(row["V"]),
+                            xy=(row["X"], row["Y"]),
+                            xytext=(2, 2),
+                            textcoords="offset points",
+                            fontsize=figure_width/2,
+                        )
             # subplot label
-            val = modeler.grid3d.grid["Z"][i]
-            ax.set_title(f"{axis_name} = {val}÷{val+modeler.grid3d.gridres.resolutions} m")
+            ax.set_title(f"{axis_name} = {from_value}÷{to_value} m")
         # suptitle
-        fig.suptitle(f"Along {axis_name} axis.")
+        fig.suptitle(f"Along {axis_name} axis")
 
         # if write:
         #     ## write grid

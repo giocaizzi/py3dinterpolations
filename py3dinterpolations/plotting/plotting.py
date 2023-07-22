@@ -278,7 +278,7 @@ def plot_2d_model(
                 points[SLICING_AXIS[axis]["X'"]],
                 points[SLICING_AXIS[axis]["Y'"]],
                 c=points["V"],
-                cmap="jet",
+                cmap="plasma",
                 norm=norm,
                 s=figure_width / 2,
             )

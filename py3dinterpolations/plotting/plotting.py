@@ -13,7 +13,7 @@ from ..modelling.modeler import Modeler
 from ..modelling.preprocessor import reverse_preprocessing
 
 
-def number_of_plots(n: int, n_cols: int = 4) -> tuple:
+def _number_of_plots(n: int, n_cols: int = 4) -> tuple:
     """Determine number of rows and columns
     for plotting with respect to remainder of division."""
     n_rows = (n + n_cols - 1) // n_cols
@@ -37,7 +37,7 @@ def plot_downsampling(
     unique_ids = df["ID"].unique().tolist()
 
     # determine number of axes
-    num_rows, num_cols = number_of_plots(len(unique_ids))
+    num_rows, num_cols = _number_of_plots(len(unique_ids))
     # Create the figure
     fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 10), dpi=300)
     fig.subplots_adjust(wspace=0.3, hspace=0.7)
@@ -154,7 +154,7 @@ SLICING_AXIS = {
 }
 
 
-def plot_2d_along_axis(
+def plot_2d_model(
     modeler: Modeler,
     axis: str = "Z",
     plot_points: bool = False,
@@ -182,7 +182,7 @@ def plot_2d_along_axis(
     axis_data = modeler.grid3d.grid[axis]
 
     # determine number of axes
-    num_rows, num_cols = number_of_plots(len(axis_data), n_cols=2)
+    num_rows, num_cols = _number_of_plots(len(axis_data), n_cols=2)
 
     # figure with gridspec
     figure_height_ratio = 1.25

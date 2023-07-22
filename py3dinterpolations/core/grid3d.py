@@ -230,11 +230,11 @@ def create_regulargrid3d_from_griddata(
         gridres (float): grid resolution
     """
     return RegularGrid3D(
-        x_min=griddata.X.min,
-        x_max=griddata.X.max,
-        y_min=griddata.Y.min,
-        y_max=griddata.Y.max,
-        z_min=griddata.Z.min,
-        z_max=griddata.Z.max,
+        x_min=griddata.specs.xmin,
+        x_max=griddata.specs.xmax,
+        y_min=griddata.specs.ymin,
+        y_max=griddata.specs.ymax,
+        z_min=griddata.specs.zmin,
+        z_max=griddata.specs.zmax,
         gridres=gridres,
     )

@@ -12,5 +12,9 @@ __email__ = "giocaizzi@gmail.com"
 
 from .core.griddata import GridData
 from .modelling.interpolate import interpolate
+from .plotting.plotting import (
+    plot_3d_model,
+    plot_2d_model,
+)
 
 __all__ = ["__version__", "GridData", "interpolate"]

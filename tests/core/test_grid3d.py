@@ -5,7 +5,7 @@ import pytest
 import numpy as np
 
 # parent class
-from py3dinterpolations.core.grid3d import Grid3D
+from py3dinterpolations.core.grid3d import Grid3D,GridRes
 
 # child classes
 from py3dinterpolations.core.grid3d import RegularGrid3D
@@ -98,7 +98,7 @@ def test_grid3d_gridres_setter(kwargs):
     g3d = Grid3D(**kwargs)
     # gridres setter
     g3d.gridres = GRIDRES
-    assert g3d.gridres == GRIDRES
+    assert isinstance(g3d.gridres, GridRes)
 
 
 # test grid3d gridding

@@ -4,6 +4,34 @@ import numpy as np
 from typing import Union
 
 
+class GridRes:
+    """class for grid resolution"""
+
+    def __init__(self, resolutions: dict):
+        if set(resolutions.keys()) != {"X", "Y", "Z"}:
+            raise ValueError(
+                "Grid resolution must be a dictionary with keys X, Y, Z."
+            )
+        self._resolutions = resolutions
+
+    def __getitem__(self, key):
+        return getattr(self, "_resolutions")[key]
+
+    @property
+    def resolutions(self):
+        values = list(self._resolutions.values())
+        if self._resolutions == {}:
+            return self._resolutions
+        elif all(value == values[0] for value in values):
+            return values[0]
+        else:
+            return self._resolutions
+
+    @resolutions.setter
+    def resolutions(self, resolutions: dict):
+        self._gridres = resolutions
+
+
 class Grid3D:
     """base class for 3D grids
 
@@ -103,17 +131,29 @@ class Grid3D:
         Returns:
             tuple: bounding box (xmin, xmax, ymin, ymax, zmin, zmax)
         """
-        return (self._xmin, self._xmax, self._ymin, self._ymax, self._zmin, self._zmax)
+        return (
+            self._xmin,
+            self._xmax,
+            self._ymin,
+            self._ymax,
+            self._zmin,
+            self._zmax,
+        )
 
     @property
-    def gridres(self) -> dict:
-        """get grid resolution"""
+    def gridres(self) -> Union[float, dict]:
+        """get grid resolution
+
+        Returns:
+            Union[float, dict]: grid resolution as float if equal in X, Y, Z,
+                else as dictionary
+        """
         return self._gridres
 
     @gridres.setter
-    def gridres(self, gridres: dict) -> None:
+    def gridres(self, resolutions: dict) -> None:
         """set grid resolution"""
-        self._gridres = gridres
+        self._gridres = GridRes(resolutions)
 
     @property
     def results(self) -> dict:
@@ -181,9 +221,9 @@ class Grid3D:
         else:
             # normalize grid
             for axis in ["X", "Y", "Z"]:
-                normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
-                    self.grid[axis].max() - self.grid[axis].min()
-                )
+                normalized_grid[axis] = (
+                    self.grid[axis] - self.grid[axis].min()
+                ) / (self.grid[axis].max() - self.grid[axis].min())
             return normalized_grid
 
     @property

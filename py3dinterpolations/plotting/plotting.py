@@ -1,4 +1,4 @@
->>>"""plotting methods"""
+"""plotting methods"""
 from matplotlib import ticker
 from matplotlib.figure import Figure
 from matplotlib import gridspec
@@ -250,7 +250,7 @@ def plot_2d_along_axis(
                     )
             # subplot label
             val = modeler.grid3d.grid["Z"][i]
-            ax.set_title(f"{axis_name} = {val} m")
+            ax.set_title(f"{axis_name} = {val}÷{val+modeler.grid3d.gridres} m")
         # suptitle
         fig.suptitle(f"Along {axis_name} axis.")
 

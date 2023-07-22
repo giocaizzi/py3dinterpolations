@@ -16,6 +16,7 @@ PARAMS = {
     "weight": [True, False],
 }
 
+
 @pytest.mark.skip
 def test_Estimator(test_data):
     """test Estimator class initialization"""

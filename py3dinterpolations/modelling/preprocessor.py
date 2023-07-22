@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from ..core import GridData
+from ..core.griddata import GridData
 from typing import Union
 
 

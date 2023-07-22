@@ -97,6 +97,9 @@ def plot_3d_model(
     volume_kwargs={},
 ) -> go.Figure:
     """plot 3d model"""
+
+    gd_reversed = reverse_preprocessing(modeler.griddata)
+
     data = [
         go.Volume(
             x=modeler.grid3d.mesh["X"].flatten(),
@@ -104,6 +107,8 @@ def plot_3d_model(
             z=modeler.grid3d.mesh["Z"].flatten(),
             value=modeler.results["interpolated"].flatten(),
             opacityscale=[(0, 0), (1, 1)],
+            cmin=gd_reversed.specs.vmin,
+            cmax=gd_reversed.specs.vmax,
             **volume_kwargs,
         ),
     ]
@@ -111,7 +116,6 @@ def plot_3d_model(
     if plot_points:
         # get correct points, if preprocessing was applied
         if modeler.griddata.preprocessor_params:
-            gd_reversed = reverse_preprocessing(modeler.griddata)
             points = gd_reversed.data.copy().reset_index()
         else:
             points = modeler.griddata.data.copy().reset_index()

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dinterpolations.modelling.preprocessor.Preprocessor &mdash; py3dinterpolations 0.4.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="py3dinterpolations.plotting" href="py3dinterpolations.plotting.html" />
+    <link rel="prev" title="py3dinterpolations.modelling.preprocessor.reverse_preprocessing" href="py3dinterpolations.modelling.preprocessor.reverse_preprocessing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            py3dinterpolations
+          </a>
+              <div class="version">
+                0.4.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/preprocessing.html">Preprocessing data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/estimator.html">Parameter estimation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/kriging.html">Kriging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/idw.html">Inverse Distance Weighting (IDW)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="py3dinterpolations.html">py3dinterpolations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="py3dinterpolations.core.html">py3dinterpolations.core</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="py3dinterpolations.modelling.html">py3dinterpolations.modelling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="py3dinterpolations.modelling.estimator.html">py3dinterpolations.modelling.estimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py3dinterpolations.modelling.interpolate.html">py3dinterpolations.modelling.interpolate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py3dinterpolations.modelling.modeler.html">py3dinterpolations.modelling.modeler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py3dinterpolations.modelling.models.html">py3dinterpolations.modelling.models</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="py3dinterpolations.modelling.preprocessor.html">py3dinterpolations.modelling.preprocessor</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="py3dinterpolations.modelling.preprocessor.reverse_preprocessing.html">py3dinterpolations.modelling.preprocessor.reverse_preprocessing</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">py3dinterpolations.modelling.preprocessor.Preprocessor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="py3dinterpolations.plotting.html">py3dinterpolations.plotting</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">py3dinterpolations</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="py3dinterpolations.html">py3dinterpolations</a></li>
+          <li class="breadcrumb-item"><a href="py3dinterpolations.modelling.html">py3dinterpolations.modelling</a></li>
+          <li class="breadcrumb-item"><a href="py3dinterpolations.modelling.preprocessor.html">py3dinterpolations.modelling.preprocessor</a></li>
+      <li class="breadcrumb-item active">py3dinterpolations.modelling.preprocessor.Preprocessor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/py3dinterpolations.modelling.preprocessor.Preprocessor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="py3dinterpolations-modelling-preprocessor-preprocessor">
+<h1>py3dinterpolations.modelling.preprocessor.Preprocessor<a class="headerlink" href="#py3dinterpolations-modelling-preprocessor-preprocessor" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py3dinterpolations.modelling.preprocessor.</span></span><span class="sig-name descname"><span class="pre">Preprocessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">griddata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dinterpolations.core.griddata.GridData.html#py3dinterpolations.core.griddata.GridData" title="py3dinterpolations.core.griddata.GridData"><span class="pre">GridData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">downsampling_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_xyz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize_v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Preprocessor class</p>
+<dl class="simple">
+<dt>Preprocess data before interpolation. Preprocessing includes:</dt><dd><ul class="simple">
+<li><p>Downsampling, by taking the mean of blocks of given resolution</p></li>
+<li><p>Normalization of X Y Z</p></li>
+<li><p>Standardization of V</p></li>
+</ul>
+</dd>
+</dl>
+<p>By calling the preprocess method, the data is preprocessed and a new
+GridData object is returned with the preprocessed data and the
+preprocessing parameters set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>griddata</strong> (<a class="reference internal" href="py3dinterpolations.core.griddata.GridData.html#py3dinterpolations.core.griddata.GridData" title="py3dinterpolations.core.griddata.GridData"><em>GridData</em></a>) – GridData object to preprocess</p></li>
+<li><p><strong>downsampling_res</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>None</em><em>]</em>) – resolution to downsample data
+by taking the mean of blocks of given resolution. If None, no
+downsampling is applied. Default is None.</p></li>
+<li><p><strong>normalize_xyz</strong> (<em>bool</em>) – whether to normalize X Y Z. Default is True.</p></li>
+<li><p><strong>standardize_v</strong> (<em>bool</em>) – whether to standardize V. Default is True.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor.griddata">
+<span class="sig-name descname"><span class="pre">griddata</span></span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.griddata" title="Permalink to this definition"></a></dt>
+<dd><p>GridData object to preprocess</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="py3dinterpolations.core.griddata.GridData.html#py3dinterpolations.core.griddata.GridData" title="py3dinterpolations.core.griddata.GridData">GridData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor.downsampling_res">
+<span class="sig-name descname"><span class="pre">downsampling_res</span></span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.downsampling_res" title="Permalink to this definition"></a></dt>
+<dd><p>resolution to downsample data
+by taking the mean of blocks of given resolution. If None, no
+downsampling is applied. Default is None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[float, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor.normalize_xyz">
+<span class="sig-name descname"><span class="pre">normalize_xyz</span></span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.normalize_xyz" title="Permalink to this definition"></a></dt>
+<dd><p>whether to normalize X Y Z. Default is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor.standardize_v">
+<span class="sig-name descname"><span class="pre">standardize_v</span></span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.standardize_v" title="Permalink to this definition"></a></dt>
+<dd><p>whether to standardize V. Default is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor.preprocessor_params">
+<span class="sig-name descname"><span class="pre">preprocessor_params</span></span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.preprocessor_params" title="Permalink to this definition"></a></dt>
+<dd><p>dictionary with the parameters of the
+preprocessing. It is set after calling the preprocess method.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessor_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;downsampling&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="n">downsampling_res</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;normalization&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="n">min_value_of_X</span><span class="p">,</span>
+            <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="n">max_value_of_X</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="n">min_value_of_Y</span><span class="p">,</span>
+            <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="n">max_value_of_Y</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="n">min_value_of_Z</span><span class="p">,</span>
+            <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="n">max_value_of_Z</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;standardization&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">mean_value_of_V</span><span class="p">,</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">std_value_of_V</span><span class="p">,</span>
+    <span class="p">},</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># preprocess data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">preprocessor</span> <span class="o">=</span> <span class="n">Preprocessor</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">griddata</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">downsampling_res</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">normalize_xyz</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">standardize_v</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">griddata</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>(griddata[, downsampling_res, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.preprocess" title="py3dinterpolations.modelling.preprocessor.Preprocessor.preprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preprocess</span></code></a>()</p></td>
+<td><p>preprocess data</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.preprocessor_params" title="py3dinterpolations.modelling.preprocessor.Preprocessor.preprocessor_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preprocessor_params</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dinterpolations.modelling.preprocessor.Preprocessor.preprocess">
+<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="py3dinterpolations.core.griddata.GridData.html#py3dinterpolations.core.griddata.GridData" title="py3dinterpolations.core.griddata.GridData"><span class="pre">GridData</span></a></span></span><a class="headerlink" href="#py3dinterpolations.modelling.preprocessor.Preprocessor.preprocess" title="Permalink to this definition"></a></dt>
+<dd><p>preprocess data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>new GridData object with the preprocessed data</dt><dd><p>and prerpocessing parameters set</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="py3dinterpolations.core.griddata.GridData.html#py3dinterpolations.core.griddata.GridData" title="py3dinterpolations.core.griddata.GridData">GridData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="py3dinterpolations.modelling.preprocessor.reverse_preprocessing.html" class="btn btn-neutral float-left" title="py3dinterpolations.modelling.preprocessor.reverse_preprocessing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="py3dinterpolations.plotting.html" class="btn btn-neutral float-right" title="py3dinterpolations.plotting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, giocaizzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

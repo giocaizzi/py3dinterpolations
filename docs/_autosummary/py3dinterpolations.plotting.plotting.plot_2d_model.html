@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>py3dinterpolations.plotting.plotting.plot_2d_model &mdash; py3dinterpolations 0.4.0 documentation</title>
+  <title>py3dinterpolations.plotting.plotting.plot_2d_model &mdash; py3dinterpolations 0.4.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,7 +37,7 @@
             py3dinterpolations
           </a>
               <div class="version">
-                0.4.0
+                0.4.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -62,6 +62,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="py3dinterpolations.html">py3dinterpolations</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="py3dinterpolations.core.html">py3dinterpolations.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="py3dinterpolations.modelling.html">py3dinterpolations.modelling</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="py3dinterpolations.plotting.html">py3dinterpolations.plotting</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="py3dinterpolations.plotting.plotting.html">py3dinterpolations.plotting.plotting</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">py3dinterpolations.plotting.plotting.plot_2d_model</a></li>
@@ -106,12 +107,12 @@
 <h1>py3dinterpolations.plotting.plotting.plot_2d_model<a class="headerlink" href="#py3dinterpolations-plotting-plotting-plot-2d-model" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="py3dinterpolations.plotting.plotting.plot_2d_model">
-<span class="sig-prename descclassname"><span class="pre">py3dinterpolations.plotting.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_2d_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modeler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Modeler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py3dinterpolations.plotting.plotting.plot_2d_model" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">py3dinterpolations.plotting.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_2d_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modeler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dinterpolations.modelling.modeler.Modeler.html#py3dinterpolations.modelling.modeler.Modeler" title="py3dinterpolations.modelling.modeler.Modeler"><span class="pre">Modeler</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py3dinterpolations.plotting.plotting.plot_2d_model" title="Permalink to this definition"></a></dt>
 <dd><p>plot 2d along axis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>modeler</strong> (<em>Modeler</em>) – modeler object</p></li>
+<li><p><strong>modeler</strong> (<a class="reference internal" href="py3dinterpolations.modelling.modeler.Modeler.html#py3dinterpolations.modelling.modeler.Modeler" title="py3dinterpolations.modelling.modeler.Modeler"><em>Modeler</em></a>) – modeler object</p></li>
 <li><p><strong>axis</strong> (<em>str</em><em>, </em><em>optional</em>) – axis along which to plot. Defaults to “Z”.</p></li>
 <li><p><strong>plot_points</strong> (<em>bool</em><em>, </em><em>optional</em>) – plot points. Defaults to False.</p></li>
 <li><p><strong>figure_width</strong> (<em>float</em><em>, </em><em>optional</em>) – figure width in inches. Less than

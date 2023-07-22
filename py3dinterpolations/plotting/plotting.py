@@ -236,17 +236,18 @@ def plot_2d_model(
             matrix.squeeze(),  # remove singleton dimensions
             origin="lower",
             extent=[
-                modeler.grid3d.xmin,
-                modeler.grid3d.xmax,
-                modeler.grid3d.ymin,
-                modeler.grid3d.ymax,
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["X'"]).min,  # X' min
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["X'"]).max,  # X' max
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["Y'"]).min,  # Y' min
+                modeler.grid3d.get_axis(SLICING_AXIS[axis]["Y'"]).max,  # Y' max
             ],
             cmap="plasma",
             norm=norm,
         )
         # slice griddata
         from_value = modeler.grid3d.grid[axis][i]
-        to_value = from_value + modeler.grid3d.gridres.resolutions
+        # works only for regular grids
+        to_value = from_value + modeler.grid3d.gridres
 
         # plot points
         if plot_points:

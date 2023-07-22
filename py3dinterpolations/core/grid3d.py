@@ -111,6 +111,16 @@ class Grid3D:
         """get results"""
         return self._results
 
+    def get_axis(self, axis: str):
+        if axis == "X":
+            return self.X
+        elif axis == "Y":
+            return self.Y
+        elif axis == "Z":
+            return self.Z
+        else:
+            raise ValueError("Invalid axis.")
+
     @results.setter
     def results(self, results: dict) -> None:
         """set results"""
@@ -146,35 +156,22 @@ class Grid3D:
         """
         normalized_grid = {}
         for axis in ["X", "Y", "Z"]:
-            normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
-                self.grid[axis].max() - self.grid[axis].min()
-            )
+            normalized_grid[axis] = (
+                self.grid[axis] - self.grid[axis].min()
+            ) / (self.grid[axis].max() - self.grid[axis].min())
         return normalized_grid
-
-
-class Grid3DAxisProperties:
-    """class for accessing a properties of a GridAxis from a Grid3D object"""
-
-    def __init__(self, grid3d: Grid3D, target_property: str):
-        self._grid3d = grid3d
-        self._target_property = target_property
-
-    def __getitem__(self, key):
-        return getattr(self._grid3d, self._target_property)[key]
-
+    
     @property
-    def propriety(self):
-        values = list(self._resolutions.values())
-        if self._grid3d._target_property == {}:
-            return self._resolutions
-        elif all(value == values[0] for value in values):
-            return values[0]
+    def gridres(self) -> dict:
+        """get grid resolution"""
+        if self.X.res == self.Y.res == self.Z.res:
+            return self.X.res
         else:
-            return self._resolutions
-
-    @propriety.setter
-    def propriety(self, propriety: dict):
-        self._gridres = propriety
+            return {
+                "X": self.X.res,
+                "Y": self.Y.res,
+                "Z": self.Z.res,
+            }
 
 
 class RegularGrid3D(Grid3D):

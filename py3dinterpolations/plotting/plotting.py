@@ -1,4 +1,4 @@
-"""plotting methods"""
+>>>"""plotting methods"""
 from matplotlib import ticker
 from matplotlib.figure import Figure
 from matplotlib import gridspec
@@ -142,7 +142,29 @@ def plot_2d_along_axis(
     modeler: Modeler,
     axis: str = "Z",
     plot_points: bool = False,
+    figure_width: float = 8,
 ):
+    """plot 2d along axis
+    
+    Args:
+        modeler (Modeler): modeler object
+        axis (str, optional): axis along which to plot. Defaults to "Z".
+        plot_points (bool, optional): plot points. Defaults to False.
+        figure_width (float, optional): figure width in inches. Less than 
+            8 results in weird looks. Defaults to 8.
+    
+    Returns:
+        Figure: matplotlib figure
+    
+    Raises:
+        NotImplementedError: if axis is not "Z"
+    
+    Example:
+        >>> fig2 = plot_2d_along_axis(
+        >>>    model,
+        >>>    plot_points=True,
+        >>> )
+        """
     if axis != "Z":
         raise NotImplementedError("Only z-axis is implemented")
     else:
@@ -153,8 +175,10 @@ def plot_2d_along_axis(
         num_rows, num_cols = number_of_plots(len(axis), n_cols=2)
 
         # figure with gridspec
-        figure_ratio = 0.8
-        fig = plt.figure(dpi=300, figsize=(8, 8 / figure_ratio))
+        figure_height_ratio = 1.25
+        fig = plt.figure(
+            dpi=300, figsize=(figure_width, figure_width * figure_height_ratio)
+        )
         gs = gridspec.GridSpec(
             num_rows,
             num_cols + 1,
@@ -204,12 +228,17 @@ def plot_2d_along_axis(
             if plot_points:
                 # get points conatined in each grid cell
                 points = modeler.griddata[
-                    (modeler.griddata[axis_name] >= i) & (modeler.griddata[axis_name] < i + 1)
+                    (modeler.griddata[axis_name] >= i)
+                    & (modeler.griddata[axis_name] < i + 1)
                 ].copy()
                 # sort by value
                 points.sort_values(by=["V"], inplace=True)
                 ax.scatter(
-                    points["X"], points["Y"], c=points["V"], cmap="jet", norm=norm
+                    points["X"],
+                    points["Y"],
+                    c=points["V"],
+                    cmap="jet",
+                    norm=norm,
                 )
                 # annotate points
                 for idx, row in points.iterrows():
@@ -245,7 +274,5 @@ def plot_2d_along_axis(
         # Hide empty subplots
         if len(axis) < num_rows * num_cols:
             for i in range(len(axis), num_rows * num_cols):
-                row = i // num_cols
-                col = i % num_cols
-                axes[row, col].set_visible(False)
+                axes[i].set_visible(False)
         return fig

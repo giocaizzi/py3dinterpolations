@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 
 from ..core.griddata import GridData
-from ..modelling.modeler import Modeler3D
-from ..modelling.preprocessing import reverse_preprocessing
+from ..modelling.modeler import Modeler
+from ..modelling.preprocessor import reverse_preprocessing
 
 
 def plot_downsampling(
@@ -15,8 +15,8 @@ def plot_downsampling(
     downsampled_griddata: GridData,
 ) -> Figure:
     if (
-        "normalization" in downsampled_griddata.preprocessing_params
-        or "standardization" in downsampled_griddata.preprocessing_params
+        "normalization" in downsampled_griddata.preprocessor_params
+        or "standardization" in downsampled_griddata.preprocessor_params
     ):
         downsampled_griddata = reverse_preprocessing(downsampled_griddata)
     # get data
@@ -87,7 +87,7 @@ def plot_model_epsilon(model) -> None:
 
 
 def plot_3d_model(
-    modeler: Modeler3D, plot_points: bool = False, scale_points=1.0, **kwargs
+    modeler: Modeler, plot_points: bool = False, scale_points=1.0, **kwargs
 ) -> go.Figure:
     """plot 3d model"""
     data = [
@@ -103,7 +103,7 @@ def plot_3d_model(
 
     if plot_points:
         # get correct points, if preprocessing was applied
-        if modeler.griddata.preprocessing_params:
+        if modeler.griddata.preprocessor_params:
             gd_reversed = reverse_preprocessing(modeler.griddata)
             points = gd_reversed.data.copy().reset_index()
         else:

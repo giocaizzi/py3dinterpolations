@@ -25,7 +25,7 @@ py3dinterpolations.core.griddata.GridData
       ~GridData.columns
       ~GridData.data
       ~GridData.numpy_data
-      ~GridData.preprocessing_params
+      ~GridData.preprocessor_params
       ~GridData.specs
    
    

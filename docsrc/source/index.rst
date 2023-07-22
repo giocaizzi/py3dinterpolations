@@ -4,33 +4,26 @@ Welcome to py3dinterpolations's documentation!
 
 This is a python package to compute quick 3D interpolations of spatial data.
 
-Supports the **following interpolation** methods:
+Supports **deterministic and interpolation** methods:
 
 - *Ordinary 3D Kriging* : `pykrige <https://github.com/GeoStat-Framework/PyKrige>`_
 - *Inverse distance weighting (IDW)*
 
+Features **parameters estimation**:
+
+- GridSearchCV for Kriging : execute a exahustive search over specified parameter values for an estimator.
+  See `scikit-learn <https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html>`_
+
 Supports **preprocessing** of data:
 
-- *Downsampling*
-- *Normalization* of X,Y,Z coordinates
-- *Standardization* of signal 
+- *Downsampling* - reduce the number of points by using statistical methods by blocks
+- *Normalization* of X,Y,Z coordinates reducing effect of magnitude of coordinates. 
+- *Standardization* of signal - standard distribution of signal, reducing effect of magnitude of signal.
 
-**Visualizations**
+**Visualizations** in 2D and 3D:
 
 - 2D with `matplotlib <https://matplotlib.org/stable/>`_
 - 3D with `plotly <https://plotly.com/)>`_
-
-The :obj:`py3dinterpolations` features:
-
-Different interpolation methods:
-
-- Kriging (wrapping :obj:`pykrige`)
-- Inverse distance weighting 
-
-Preprocessing tools:
-- *Downsampling* of data
-- *Normalization* of coordinates
-- *Standardization* of data values
 
 
 .. toctree::
@@ -39,6 +32,7 @@ Preprocessing tools:
 
    examples/quickstart.ipynb
    examples/preprocessing.ipynb
+   examples/estimator.ipynb
 
 .. toctree::
    :maxdepth: 2

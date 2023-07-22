@@ -7,7 +7,7 @@ import numpy as np
 
 from py3dinterpolations.core.griddata import GridData
 from py3dinterpolations.core import create_regulargrid3d_from_griddata
-from py3dinterpolations.modelling.modeler import Modeler3D
+from py3dinterpolations.modelling.modeler import Modeler
 
 scenarios = [
     (
@@ -23,15 +23,15 @@ scenarios = [
 
 
 @pytest.mark.parametrize("model_name,model_params", scenarios)
-# test init of Modeler3D
-def test_Modeler3D_init(model_name, model_params, test_data):
+# test init of Modeler
+def test_Modeler_init(model_name, model_params, test_data):
     """test that the correct model is initialised"""
 
     # quick testing without mocking, should be improved
 
     gd = GridData(test_data)
     g3d = create_regulargrid3d_from_griddata(gd, 5)
-    m3d = Modeler3D(
+    m3d = Modeler(
         griddata=gd,
         grid3d=g3d,
         model_name=model_name,

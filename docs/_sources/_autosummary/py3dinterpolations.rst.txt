@@ -29,6 +29,5 @@
    :recursive:
 
    py3dinterpolations.core
-   py3dinterpolations.modelling
    py3dinterpolations.plotting
 

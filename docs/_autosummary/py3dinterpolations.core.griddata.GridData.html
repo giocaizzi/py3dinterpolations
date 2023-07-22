@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>py3dinterpolations.core.griddata.GridData &mdash; py3dinterpolations 0.2.4 documentation</title>
+  <title>py3dinterpolations.core.griddata.GridData &mdash; py3dinterpolations 0.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,7 +37,7 @@
             py3dinterpolations
           </a>
               <div class="version">
-                0.2.4
+                0.3.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,7 +50,7 @@
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/quickstart.html">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/preprocessing.html">Preprocessing data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
 <ul>
@@ -70,7 +70,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="py3dinterpolations.modelling.html">py3dinterpolations.modelling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="py3dinterpolations.plotting.html">py3dinterpolations.plotting</a></li>
 </ul>
 </li>
@@ -107,7 +106,7 @@
 <h1>py3dinterpolations.core.griddata.GridData<a class="headerlink" href="#py3dinterpolations-core-griddata-griddata" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="py3dinterpolations.core.griddata.GridData">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py3dinterpolations.core.griddata.</span></span><span class="sig-name descname"><span class="pre">GridData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'V'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py3dinterpolations.core.griddata.GridData" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py3dinterpolations.core.griddata.</span></span><span class="sig-name descname"><span class="pre">GridData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'V'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessor_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py3dinterpolations.core.griddata.GridData" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>GridData class</p>
 <p>Class for 3D grid data.</p>
@@ -115,7 +114,7 @@
 Otherwise, custom column names can be provided.</p>
 <p>This object keeps track of the transformations (preprocessing)
 applied to the data, by storing the relative parameters in the
-<cite>preprocessing_params</cite> attribute.</p>
+<cite>preprocessor_params</cite> attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -125,7 +124,9 @@ applied to the data, by storing the relative parameters in the
 <li><p><strong>Y</strong> (<em>str</em>) – column name of the Y, default: “Y”</p></li>
 <li><p><strong>Z</strong> (<em>str</em>) – column name of the Z, default: “Z”</p></li>
 <li><p><strong>V</strong> (<em>str</em>) – column name of the V, default: “V”</p></li>
-<li><p><strong>preprocessing_params</strong> (<em>dict</em>) – preprocessing parameters</p></li>
+<li><p><strong>preprocessor_params</strong> (<em>dict</em>) – preprocessing parameters used
+by the Preprocessor object that has generated the initiated
+GridData object, default: {}</p></li>
 </ul>
 </dd>
 </dl>
@@ -141,11 +142,11 @@ applied to the data, by storing the relative parameters in the
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="py3dinterpolations.core.griddata.GridData.preprocessing_params">
-<span class="sig-name descname"><span class="pre">preprocessing_params</span></span><a class="headerlink" href="#py3dinterpolations.core.griddata.GridData.preprocessing_params" title="Permalink to this definition"></a></dt>
-<dd><p>preprocessing parameters,
-if some Preprocessing is applied this attribute is a dict
-containing the preprocessing parameters</p>
+<dt class="sig sig-object py" id="py3dinterpolations.core.griddata.GridData.preprocessor_params">
+<span class="sig-name descname"><span class="pre">preprocessor_params</span></span><a class="headerlink" href="#py3dinterpolations.core.griddata.GridData.preprocessor_params" title="Permalink to this definition"></a></dt>
+<dd><p>preprocessing parameters used
+by the Preprocessor object that has generated the initiated
+GridData object, default: {}</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>dict</p>
@@ -197,7 +198,7 @@ specs (GridDataSpecs): specs of the GridData</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#py3dinterpolations.core.griddata.GridData.numpy_data" title="py3dinterpolations.core.griddata.GridData.numpy_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy_data</span></code></a></p></td>
 <td><p>get numpy data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#py3dinterpolations.core.griddata.GridData.preprocessing_params" title="py3dinterpolations.core.griddata.GridData.preprocessing_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preprocessing_params</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dinterpolations.core.griddata.GridData.preprocessor_params" title="py3dinterpolations.core.griddata.GridData.preprocessor_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preprocessor_params</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#py3dinterpolations.core.griddata.GridData.specs" title="py3dinterpolations.core.griddata.GridData.specs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">specs</span></code></a></p></td>

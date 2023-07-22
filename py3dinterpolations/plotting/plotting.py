@@ -1,7 +1,10 @@
 """plotting methods"""
 from matplotlib import ticker
 from matplotlib.figure import Figure
+from matplotlib import gridspec
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+
 
 import plotly.graph_objs as go
 
@@ -9,11 +12,12 @@ from ..core.griddata import GridData
 from ..modelling.modeler import Modeler
 from ..modelling.preprocessor import reverse_preprocessing
 
-def number_of_plots(n: int,n_cols:int=4) -> tuple:
-    """determine number of rows and columns for plotting"""
-    n_rows = int(n / n_cols) + 1
-    return n_rows, n_cols
 
+def number_of_plots(n: int, n_cols: int = 4) -> tuple:
+    """Determine number of rows and columns
+    for plotting with respect to remainder of division."""
+    n_rows = (n + n_cols - 1) // n_cols
+    return n_rows, n_cols
 
 
 def plot_downsampling(
@@ -86,13 +90,11 @@ def plot_downsampling(
     return fig
 
 
-def plot_model_epsilon(model) -> None:
-    """plot model epsilon native pykrige method"""
-    model.plot_epsilon_residuals()
-
-
 def plot_3d_model(
-    modeler: Modeler, plot_points: bool = False, scale_points=1.0, **kwargs
+    modeler: Modeler,
+    plot_points: bool = False,
+    scale_points=1.0,
+    volume_kwargs={},
 ) -> go.Figure:
     """plot 3d model"""
     data = [
@@ -102,7 +104,7 @@ def plot_3d_model(
             z=modeler.grid3d.mesh["Z"].flatten(),
             value=modeler.results["interpolated"].flatten(),
             opacityscale=[(0, 0), (1, 1)],
-            **kwargs,
+            **volume_kwargs,
         ),
     ]
 
@@ -138,47 +140,112 @@ def plot_3d_model(
 
 def plot_2d_along_axis(
     modeler: Modeler,
-    axis: str = "z",
+    axis: str = "Z",
+    plot_points: bool = False,
 ):
-    if axis != "z":
+    if axis != "Z":
         raise NotImplementedError("Only z-axis is implemented")
     else:
-            # determine number of axes
-        num_rows, num_cols = number_of_plots(len(modeler.grid3d.grid["Z"]))
-        fig, axes = plt.subplots(num_rows, num_cols figsize=(120, 120))
-        # norm = plt.Normalize(
-        #     modeler.griddata.specs.vmin, modeler.griddata.specs.vmax
-        # )
-        for ax, i in zip(axes, range(len(axes))):
+        axis = modeler.grid3d.grid["Z"]
+        axis_name = "Z"
+
+        # determine number of axes
+        num_rows, num_cols = number_of_plots(len(axis), n_cols=2)
+
+        # figure with gridspec
+        figure_ratio = 0.8
+        fig = plt.figure(dpi=300, figsize=(8, 8 / figure_ratio))
+        gs = gridspec.GridSpec(
+            num_rows,
+            num_cols + 1,
+            width_ratios=[1] * num_cols + [0.1],
+        )
+        # Create regular subplots in the first n_cols columns
+        axes = []
+        for row in range(num_rows):
+            for col in range(num_cols):
+                axes.append(plt.subplot(gs[row, col]))
+        # Create the single subplot in the rightmost column
+        colorbar_ax = plt.subplot(gs[:, -1])
+        # disable visibility of spines and ticks
+        colorbar_ax.spines["top"].set_visible(False)
+        colorbar_ax.spines["bottom"].set_visible(False)
+        colorbar_ax.spines["left"].set_visible(False)
+        colorbar_ax.spines["right"].set_visible(False)
+        colorbar_ax.set_xticks([])
+        colorbar_ax.set_yticks([])
+        colorbar_ax.set_xticklabels([])
+        colorbar_ax.set_yticklabels([])
+        # inset axes
+        colorbar_inset_ax = inset_axes(
+            colorbar_ax, width="100%", height="50%", loc="center"
+        )
+
+        # scale colors on overall vmin and vmax, before preprocessing
+        gd_reversed = reverse_preprocessing(modeler.griddata)
+        norm = plt.Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
+
+        # loop over axes
+        for ax, i in zip(axes, range(len(axis))):
+            # plot interpolated
             img = ax.imshow(
-                modeler.results["interpolated"][i, :, :],
+                modeler.results["interpolated"][:, :, i],
                 origin="lower",
-                extent=[xmin, xmax, ymin, ymax],
-                cmap="jet",
+                extent=[
+                    modeler.grid3d.xmin,
+                    modeler.grid3d.xmax,
+                    modeler.grid3d.ymin,
+                    modeler.grid3d.ymax,
+                ],
+                cmap="plasma",
                 norm=norm,
             )
-            ax.set_title(f"Z = {i+0.5} da p.c.")
-            points = griddata[
-                (griddata["Z"] >= i) & (griddata["Z"] < i + 1)
-            ].copy()
-            points.sort_values(by=[colname], inplace=True)
-            ax.scatter(
-                points["X"], points["Y"], c=points[colname], cmap="jet", norm=norm
-            )
-            for idx, row in points.iterrows():
-                ax.annotate(
-                    "{:.0f}".format(row[colname]),
-                    xy=(row["X"], row["Y"]),
-                    xytext=(2, 2),
-                    textcoords="offset points",
+            # plot points
+            if plot_points:
+                # get points conatined in each grid cell
+                points = modeler.griddata[
+                    (modeler.griddata[axis_name] >= i) & (modeler.griddata[axis_name] < i + 1)
+                ].copy()
+                # sort by value
+                points.sort_values(by=["V"], inplace=True)
+                ax.scatter(
+                    points["X"], points["Y"], c=points["V"], cmap="jet", norm=norm
                 )
-            fig.colorbar(img, ax=ax, format="%.0f")
-            # if write:
-            #     ## write grid
-            #     write_asc_grid(
-            #         gridx,
-            #         gridy,
-            #         interpolated_original[i, :, :],
-            #         filename=f"{foldername}/Z_{i+0.5}.asc",
-            #     )
-            return fig
+                # annotate points
+                for idx, row in points.iterrows():
+                    ax.annotate(
+                        "{:.0f}".format(row["V"]),
+                        xy=(row["X"], row["Y"]),
+                        xytext=(2, 2),
+                        textcoords="offset points",
+                    )
+            # subplot label
+            val = modeler.grid3d.grid["Z"][i]
+            ax.set_title(f"{axis_name} = {val} m")
+        # suptitle
+        fig.suptitle(f"Along {axis_name} axis.")
+
+        # if write:
+        #     ## write grid
+        #     write_asc_grid(
+        #         gridx,
+        #         gridy,
+        #         interpolated_original[i, :, :],
+        #         filename=f"{foldername}/Z_{i+0.5}.asc",
+        #     )
+
+        # colorbar
+        plt.colorbar(
+            img,
+            cax=colorbar_inset_ax,
+            format="%.0f",
+            fraction=0.1,
+        )
+
+        # Hide empty subplots
+        if len(axis) < num_rows * num_cols:
+            for i in range(len(axis), num_rows * num_cols):
+                row = i // num_cols
+                col = i % num_cols
+                axes[row, col].set_visible(False)
+        return fig

@@ -1,7 +1,37 @@
 """grid3d object"""
 
 import numpy as np
-from typing import Union
+
+from py3dinterpolations.core.griddata import GridData
+
+
+class GridAxis:
+    def __init__(self, name: str, min: float, max: float, res: float):
+        self._name = name
+        self._min = min
+        self._max = max
+        self._res = res
+        self._grid = np.arange(self._min, self._max, self._res)
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def min(self) -> float:
+        return self._min
+
+    @property
+    def max(self) -> float:
+        return self._max
+
+    @property
+    def res(self) -> float:
+        return self._res
+
+    @property
+    def grid(self) -> np.ndarray:
+        return self._grid
 
 
 class Grid3D:
@@ -14,36 +44,33 @@ class Grid3D:
         - RegularGrid3D : regular 3D grid with equal spacing in X, Y, Z
 
     Args:
-        xmin (float): minimum x value
-        xmax (float): maximum x value
-        ymin (float): minimum y value
-        ymax (float): maximum y value
-        zmin (float): minimum z value
-        zmax (float): maximum z value
+        x_min (float): minimum value in X
+        x_max (float): maximum value in X
+        x_res (float): resolution in X
+        y_min (float): minimum value in Y
+        y_max (float): maximum value in Y
+        y_res (float): resolution in Y
+        z_min (float): minimum value in Z
+        z_max (float): maximum value in Z
+        z_res (float): resolution in Z
 
     Attributes:
-        grid (dict): dictionary with `X`, `Y`, `Z` grid arrays
+        X (GridAxis): X axis
+        Y (GridAxis): Y axis
+        Z (GridAxis): Z axis
         mesh (dict): dictionary with `X`, `Y`, `Z` mesh arrays
+        results (dict): dictionary with `interpolated`, `variance` results
 
     Properties:
-        bbox (tuple): bounding box (xmin, xmax, ymin, ymax, zmin, zmax)
         gridres (dict): grid resolution
         n_cells (int): number of cells
     """
 
-    # grid boundaries
-    _xmin: Union[float, None] = None
-    _xmax: Union[float, None] = None
-    _ymin: Union[float, None] = None
-    _ymax: Union[float, None] = None
-    _zmin: Union[float, None] = None
-    _zmax: Union[float, None] = None
+    X: GridAxis = None
+    Y: GridAxis = None
+    Z: GridAxis = None
 
-    # resoluton
-    _gridres: dict = {}
-
-    # grid and mesh
-    grid: dict = {}
+    # associated mesh
     mesh: dict = {}
 
     # results
@@ -51,74 +78,47 @@ class Grid3D:
 
     def __init__(
         self,
-        xmin: float,
-        xmax: float,
-        ymin: float,
-        ymax: float,
-        zmin: float,
-        zmax: float,
+        x_min: float,
+        x_max: float,
+        x_res: float,
+        y_min: float,
+        y_max: float,
+        y_res: float,
+        z_min: float,
+        z_max: float,
+        z_res: float,
     ):
         """initialize grid"""
-        self._xmin = xmin
-        self._xmax = xmax
-        self._ymin = ymin
-        self._ymax = ymax
-        self._zmin = zmin
-        self._zmax = zmax
+        self._X = GridAxis("X", x_min, x_max, x_res)
+        self._Y = GridAxis("Y", y_min, y_max, y_res)
+        self._Z = GridAxis("Z", z_min, z_max, z_res)
 
     @property
-    def xmin(self) -> float:
-        """get xmin"""
-        return self._xmin
+    def X(self):
+        return self._X
 
     @property
-    def xmax(self) -> float:
-        """get xmax"""
-        return self._xmax
+    def Y(self):
+        return self._Y
 
     @property
-    def ymin(self) -> float:
-        """get ymin"""
-        return self._ymin
-
-    @property
-    def ymax(self) -> float:
-        """get ymax"""
-        return self._ymax
-
-    @property
-    def zmin(self) -> float:
-        """get zmin"""
-        return self._zmin
-
-    @property
-    def zmax(self) -> float:
-        """get zmax"""
-        return self._zmax
-
-    @property
-    def bbox(self) -> tuple:
-        """get bounding box
-
-        Returns:
-            tuple: bounding box (xmin, xmax, ymin, ymax, zmin, zmax)
-        """
-        return (self._xmin, self._xmax, self._ymin, self._ymax, self._zmin, self._zmax)
-
-    @property
-    def gridres(self) -> dict:
-        """get grid resolution"""
-        return self._gridres
-
-    @gridres.setter
-    def gridres(self, gridres: dict) -> None:
-        """set grid resolution"""
-        self._gridres = gridres
+    def Z(self):
+        return self._Z
 
     @property
     def results(self) -> dict:
         """get results"""
         return self._results
+
+    def get_axis(self, axis: str):
+        if axis == "X":
+            return self.X
+        elif axis == "Y":
+            return self.Y
+        elif axis == "Z":
+            return self.Z
+        else:
+            raise ValueError("Invalid axis.")
 
     @results.setter
     def results(self, results: dict) -> None:
@@ -128,42 +128,23 @@ class Grid3D:
         else:
             raise NotImplementedError("Results type not implemented.")
 
-    def _set_baseclass_attributes(self) -> None:
-        """set base class attributes
+    @property
+    def grid(self) -> dict:
+        """get grid"""
+        return {
+            "X": self.X.grid,
+            "Y": self.Y.grid,
+            "Z": self.Z.grid,
+        }
 
-        This method is called by the child classes
-        to set the base class attributes,  i.e.
-        the grid, mesh, normalized grid.
-        """
-        self._set_grid()
-        self._set_mesh()
-
-    def _set_grid(self) -> None:
-        """set 3d grid
-
-        Create the grid arrays, stored in a dictionary.
-        """
-        # grid arrays
-        if self.gridres == {}:
-            raise AttributeError("Grid resolution is empty.")
-        else:
-            self.grid = {
-                "X": np.arange(self._xmin, self._xmax, self.gridres["X"]),
-                "Y": np.arange(self._ymin, self._ymax, self.gridres["Y"]),
-                "Z": np.arange(self._zmin, self._zmax, self.gridres["Z"]),
-            }
-
-    def _set_mesh(self) -> None:
-        """set 3d mesh
-
-        Create the mesh arrays, stored in a dictionary.
-        """
-        if self.grid == {}:
-            raise AttributeError("Grid is empty.")
-        else:
-            self.mesh["X"], self.mesh["Y"], self.mesh["Z"] = np.meshgrid(
-                self.grid["X"], self.grid["Y"], self.grid["Z"], indexing="xy"
-            )
+    @property
+    def mesh(self) -> dict:
+        """get mesh"""
+        mesh_array = {}
+        mesh_array["X"], mesh_array["Y"], mesh_array["Z"] = np.meshgrid(
+            self.grid["X"], self.grid["Y"], self.grid["Z"], indexing="xy"
+        )
+        return mesh_array
 
     @property
     def normalized_grid(self) -> dict:
@@ -171,60 +152,25 @@ class Grid3D:
 
         Returns:
             dict: dictionary with normalized `X`, `Y`, `Z` grid arrays
-
-        Raises:
-            AttributeError: if grid is not set
         """
         normalized_grid = {}
-        if self.grid == {}:
-            raise AttributeError("Grid is empty.")
-        else:
-            # normalize grid
-            for axis in ["X", "Y", "Z"]:
-                normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
-                    self.grid[axis].max() - self.grid[axis].min()
-                )
-            return normalized_grid
-
-    @property
-    def relative_grid_size(self) -> dict:
-        """get grid relative size
-
-        Returns:
-            dict: dictionary with grid relative sizes
-
-        Raises:
-            AttributeError: if grid is not set
-        """
-        grid_relative_size = {}
-        if self.grid == {}:
-            raise AttributeError("Grid is empty.")
-        else:
-            grid_relative_size = {
-                "X": len(self.grid["X"]),
-                "Y": len(self.grid["Y"]),
-                "Z": len(self.grid["Z"]),
-            }
-            return grid_relative_size
-
-    @property
-    def n_cells(self) -> int:
-        """get number of cells on xyz
-
-        Returns:
-            int: number of cells
-
-        Raises:
-            AttributeError: if grid is not set
-        """
-        if self.grid == {}:
-            raise AttributeError("Grid is empty.")
-        else:
-            return (
-                self.grid_relative_size["X"]
-                * self.grid_relative_size["Y"]
-                * self.grid_relative_size["Z"]
+        for axis in ["X", "Y", "Z"]:
+            normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
+                self.grid[axis].max() - self.grid[axis].min()
             )
+        return normalized_grid
+
+    @property
+    def gridres(self) -> dict:
+        """get grid resolution"""
+        if self.X.res == self.Y.res == self.Z.res:
+            return self.X.res
+        else:
+            return {
+                "X": self.X.res,
+                "Y": self.Y.res,
+                "Z": self.Z.res,
+            }
 
 
 class RegularGrid3D(Grid3D):
@@ -234,24 +180,57 @@ class RegularGrid3D(Grid3D):
     with equal spacing in X, Y, Z.
 
     Args:
+        x_min (float): minimum value in X
+        x_max (float): maximum value in X
+        y_min (float): minimum value in Y
+        y_max (float): maximum value in Y
+        z_min (float): minimum value in Z
+        z_max (float): maximum value in Z
         gridres (float): grid resolution, equal in X, Y, Z
-        \\**kwargs: keyword arguments for Grid3D base class
     """
 
     def __init__(
         self,
-        gridres: float = 1.0,
-        **kwargs,
+        x_min: float,
+        x_max: float,
+        y_min: float,
+        y_max: float,
+        z_min: float,
+        z_max: float,
+        gridres: float,
     ):
         """initialize regular grid"""
-
+        kwargs = {
+            "x_min": x_min,
+            "x_max": x_max,
+            "x_res": gridres,
+            "y_min": y_min,
+            "y_max": y_max,
+            "y_res": gridres,
+            "z_min": z_min,
+            "z_max": z_max,
+            "z_res": gridres,
+        }
         # initialize base class
         super().__init__(**kwargs)
 
-        # grid resolution is fixed
-        self.gridres = {
-            "X": gridres,
-            "Y": gridres,
-            "Z": gridres,
-        }
-        self._set_baseclass_attributes()
+
+def create_regulargrid3d_from_griddata(
+    griddata: GridData,
+    gridres: float,
+) -> RegularGrid3D:
+    """create RegularGrid3D from GridData
+
+    Args:
+        griddata (GridData): GridData object
+        gridres (float): grid resolution
+    """
+    return RegularGrid3D(
+        x_min=griddata.specs.xmin,
+        x_max=griddata.specs.xmax,
+        y_min=griddata.specs.ymin,
+        y_max=griddata.specs.ymax,
+        z_min=griddata.specs.zmin,
+        z_max=griddata.specs.zmax,
+        gridres=gridres,
+    )

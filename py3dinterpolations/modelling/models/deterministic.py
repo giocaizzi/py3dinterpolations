@@ -2,6 +2,8 @@
 
 import numpy as np
 
+# TODO: make this a custom sklearn class
+
 
 class DeterministicModel:
     """base class for all deterministic models

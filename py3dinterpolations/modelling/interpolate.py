@@ -4,7 +4,7 @@ from typing import Union, Tuple
 import numpy as np
 
 from ..core.griddata import GridData
-from ..core import create_regulargrid3d_from_griddata
+from ..core.grid3d import create_regulargrid3d_from_griddata
 from .modeler import Modeler
 from .preprocessor import Preprocessor
 from .estimator import Estimator

@@ -93,7 +93,7 @@ class IDW(DeterministicModel):
     def compute(
         self, gridx: np.ndarray, gridy: np.ndarray, gridz: np.ndarray
     ) -> np.ndarray:
-        meshx, meshy, meshz = np.meshgrid(gridx, gridy, gridz, indexing="xy")
+        meshx, meshy, meshz = np.meshgrid(gridx, gridy, gridz, indexing="ij")
 
         # Create a new mesh to store the coordinates
         new_mesh = np.zeros_like(meshx)
@@ -109,4 +109,9 @@ class IDW(DeterministicModel):
                         z=meshz[i, j, k],
                         power=self.power,
                     )
+
+        # quickfix for grid in shape outputting a gird in (zyx)
+        # pykrige outputs zyx
+        new_mesh = np.einsum("xyz->zyx", new_mesh)
+
         return new_mesh

@@ -9,6 +9,12 @@ from ..core.griddata import GridData
 from ..modelling.modeler import Modeler
 from ..modelling.preprocessor import reverse_preprocessing
 
+def number_of_plots(n: int,n_cols:int=4) -> tuple:
+    """determine number of rows and columns for plotting"""
+    n_rows = int(n / n_cols) + 1
+    return n_rows, n_cols
+
+
 
 def plot_downsampling(
     original_griddata: GridData,
@@ -27,8 +33,7 @@ def plot_downsampling(
     unique_ids = df["ID"].unique().tolist()
 
     # determine number of axes
-    num_rows = int(len(unique_ids) / 4) + 1
-    num_cols = 4
+    num_rows, num_cols = number_of_plots(len(unique_ids))
     # Create the figure
     fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 10), dpi=300)
     fig.subplots_adjust(wspace=0.3, hspace=0.7)
@@ -129,3 +134,51 @@ def plot_3d_model(
     fig = go.Figure(data=data)
     fig.update_scenes(aspectmode="data")
     return fig
+
+
+def plot_2d_along_axis(
+    modeler: Modeler,
+    axis: str = "z",
+):
+    if axis != "z":
+        raise NotImplementedError("Only z-axis is implemented")
+    else:
+            # determine number of axes
+        num_rows, num_cols = number_of_plots(len(modeler.grid3d.grid["Z"]))
+        fig, axes = plt.subplots(num_rows, num_cols figsize=(120, 120))
+        # norm = plt.Normalize(
+        #     modeler.griddata.specs.vmin, modeler.griddata.specs.vmax
+        # )
+        for ax, i in zip(axes, range(len(axes))):
+            img = ax.imshow(
+                modeler.results["interpolated"][i, :, :],
+                origin="lower",
+                extent=[xmin, xmax, ymin, ymax],
+                cmap="jet",
+                norm=norm,
+            )
+            ax.set_title(f"Z = {i+0.5} da p.c.")
+            points = griddata[
+                (griddata["Z"] >= i) & (griddata["Z"] < i + 1)
+            ].copy()
+            points.sort_values(by=[colname], inplace=True)
+            ax.scatter(
+                points["X"], points["Y"], c=points[colname], cmap="jet", norm=norm
+            )
+            for idx, row in points.iterrows():
+                ax.annotate(
+                    "{:.0f}".format(row[colname]),
+                    xy=(row["X"], row["Y"]),
+                    xytext=(2, 2),
+                    textcoords="offset points",
+                )
+            fig.colorbar(img, ax=ax, format="%.0f")
+            # if write:
+            #     ## write grid
+            #     write_asc_grid(
+            #         gridx,
+            #         gridy,
+            #         interpolated_original[i, :, :],
+            #         filename=f"{foldername}/Z_{i+0.5}.asc",
+            #     )
+            return fig

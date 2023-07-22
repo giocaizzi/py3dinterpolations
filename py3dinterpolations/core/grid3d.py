@@ -150,11 +150,6 @@ class Grid3D:
 
     @property
     def normalized_grid(self) -> dict:
-        """get normalized grid
-
-        Returns:
-            dict: dictionary with normalized `X`, `Y`, `Z` grid arrays
-        """
         normalized_grid = {}
         for axis in ["X", "Y", "Z"]:
             normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
@@ -164,7 +159,6 @@ class Grid3D:
 
     @property
     def gridres(self) -> dict:
-        """get grid resolution"""
         if self.X.res == self.Y.res == self.Z.res:
             return self.X.res
         else:

@@ -20,7 +20,7 @@ Supports **preprocessing** of data:
 - *Normalization* of X,Y,Z coordinates reducing effect of magnitude of coordinates. 
 - *Standardization* of signal - standard distribution of signal, reducing effect of magnitude of signal.
 
-**Visualizations**
+**Visualizations** in 2D and 3D:
 
 - 2D with `matplotlib <https://matplotlib.org/stable/>`_
 - 3D with `plotly <https://plotly.com/)>`_

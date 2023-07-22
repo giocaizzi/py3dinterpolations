@@ -138,6 +138,22 @@ def plot_3d_model(
     return fig
 
 
+SLICING_AXIS = {
+    "X": {
+        "X'": "Y",
+        "Y'": "Z",
+    },
+    "Y": {
+        "X'": "X",
+        "Y'": "Z",
+    },
+    "Z": {
+        "X'": "X",
+        "Y'": "Y",
+    },
+}
+
+
 def plot_2d_along_axis(
     modeler: Modeler,
     axis: str = "Z",
@@ -146,143 +162,148 @@ def plot_2d_along_axis(
     figure_width: float = 8,
 ):
     """plot 2d along axis
-    
+
     Args:
         modeler (Modeler): modeler object
         axis (str, optional): axis along which to plot. Defaults to "Z".
         plot_points (bool, optional): plot points. Defaults to False.
-        figure_width (float, optional): figure width in inches. Less than 
+        figure_width (float, optional): figure width in inches. Less than
             8 results in weird looks. Defaults to 8.
-    
+
     Returns:
         Figure: matplotlib figure
-    
-    Raises:
-        NotImplementedError: if axis is not "Z"
-    
+
     Example:
         >>> fig2 = plot_2d_along_axis(
         >>>    model,
         >>>    plot_points=True,
         >>> )
-        """
-    if axis != "Z":
-        raise NotImplementedError("Only z-axis is implemented")
-    else:
-        axis = modeler.grid3d.grid["Z"]
-        axis_name = "Z"
+    """
+    axis_data = modeler.grid3d.grid[axis]
 
-        # determine number of axes
-        num_rows, num_cols = number_of_plots(len(axis), n_cols=2)
+    # determine number of axes
+    num_rows, num_cols = number_of_plots(len(axis_data), n_cols=2)
 
-        # figure with gridspec
-        figure_height_ratio = 1.25
-        fig = plt.figure(
-            dpi=300, figsize=(figure_width, figure_width * figure_height_ratio)
-        )
-        gs = gridspec.GridSpec(
-            num_rows,
-            num_cols + 1,
-            width_ratios=[1] * num_cols + [0.1],
-        )
-        # Create regular subplots in the first n_cols columns
-        axes = []
-        for row in range(num_rows):
-            for col in range(num_cols):
-                axes.append(plt.subplot(gs[row, col]))
-        # Create the single subplot in the rightmost column
-        colorbar_ax = plt.subplot(gs[:, -1])
-        # disable visibility of spines and ticks
-        colorbar_ax.spines["top"].set_visible(False)
-        colorbar_ax.spines["bottom"].set_visible(False)
-        colorbar_ax.spines["left"].set_visible(False)
-        colorbar_ax.spines["right"].set_visible(False)
-        colorbar_ax.set_xticks([])
-        colorbar_ax.set_yticks([])
-        colorbar_ax.set_xticklabels([])
-        colorbar_ax.set_yticklabels([])
-        # inset axes
-        colorbar_inset_ax = inset_axes(
-            colorbar_ax, width="100%", height="50%", loc="center"
-        )
+    # figure with gridspec
+    figure_height_ratio = 1.25
+    fig = plt.figure(
+        dpi=300, figsize=(figure_width, figure_width * figure_height_ratio)
+    )
+    gs = gridspec.GridSpec(
+        num_rows,
+        num_cols + 1,
+        width_ratios=[1] * num_cols + [0.1],
+    )
+    # Create regular subplots in the first n_cols columns
+    axes = []
+    for row in range(num_rows):
+        for col in range(num_cols):
+            axes.append(plt.subplot(gs[row, col]))
+    # Create the single subplot in the rightmost column
+    colorbar_ax = plt.subplot(gs[:, -1])
+    # disable visibility of spines and ticks
+    colorbar_ax.spines["top"].set_visible(False)
+    colorbar_ax.spines["bottom"].set_visible(False)
+    colorbar_ax.spines["left"].set_visible(False)
+    colorbar_ax.spines["right"].set_visible(False)
+    colorbar_ax.set_xticks([])
+    colorbar_ax.set_yticks([])
+    colorbar_ax.set_xticklabels([])
+    colorbar_ax.set_yticklabels([])
+    # inset axes
+    colorbar_inset_ax = inset_axes(
+        colorbar_ax, width="100%", height="50%", loc="center"
+    )
 
-        # scale colors on overall vmin and vmax, before preprocessing
-        gd_reversed = reverse_preprocessing(modeler.griddata)
-        norm = plt.Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
+    # scale colors on overall vmin and vmax, before preprocessing
+    gd_reversed = reverse_preprocessing(modeler.griddata)
+    norm = plt.Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
 
-        # loop over axes
-        for ax, i in zip(axes, range(len(axis))):
-            # plot interpolated
-            img = ax.imshow(
-                modeler.results["interpolated"][:, :, i],
-                origin="lower",
-                extent=[
-                    modeler.grid3d.xmin,
-                    modeler.grid3d.xmax,
-                    modeler.grid3d.ymin,
-                    modeler.grid3d.ymax,
-                ],
-                cmap="plasma",
-                norm=norm,
+    # loop over axes
+    for ax, i in zip(axes, range(len(axis_data))):
+        if axis == "Z":
+            matrix = modeler.results["interpolated"][:, :, i]
+        elif axis == "Y":
+            matrix = modeler.results["interpolated"][:, i, :]
+        elif axis == "X":
+            matrix = modeler.results["interpolated"][i, :, :]
+        else:
+            raise NotImplementedError(
+                f"axis {axis} not implemented. Choose from {SLICING_AXIS.keys()}"
             )
-            # slice griddata
-            from_value = modeler.grid3d.grid["Z"][i]
-            to_value = from_value + modeler.grid3d.gridres.resolutions
-            
-            # plot points
-            if plot_points:
-                points_df = gd_reversed.data.copy().reset_index()
-
-                # get points conatined in each grid cell
-                points = points_df[
-                    (points_df[axis_name] >= from_value)
-                    & (points_df[axis_name] < to_value)
-                ].copy()
-
-                # sort by value to plot highest values on top
-                points.sort_values(by=["V"], inplace=True)
-                ax.scatter(
-                    points["X"],
-                    points["Y"],
-                    c=points["V"],
-                    cmap="jet",
-                    norm=norm,
-                    s=figure_width/2,
-                )
-                if annotate_points:
-                # annotate points
-                    for idx, row in points.iterrows():
-                        ax.annotate(
-                            "{:.0f}".format(row["V"]),
-                            xy=(row["X"], row["Y"]),
-                            xytext=(2, 2),
-                            textcoords="offset points",
-                            fontsize=figure_width/2,
-                        )
-            # subplot label
-            ax.set_title(f"{axis_name} = {from_value}÷{to_value} m")
-        # suptitle
-        fig.suptitle(f"Along {axis_name} axis")
-
-        # if write:
-        #     ## write grid
-        #     write_asc_grid(
-        #         gridx,
-        #         gridy,
-        #         interpolated_original[i, :, :],
-        #         filename=f"{foldername}/Z_{i+0.5}.asc",
-        #     )
-
-        # colorbar
-        plt.colorbar(
-            img,
-            cax=colorbar_inset_ax,
-            format="%.0f",
-            fraction=0.1,
+        # plot interpolated
+        img = ax.imshow(
+            matrix.squeeze(),  # remove singleton dimensions
+            origin="lower",
+            extent=[
+                modeler.grid3d.xmin,
+                modeler.grid3d.xmax,
+                modeler.grid3d.ymin,
+                modeler.grid3d.ymax,
+            ],
+            cmap="plasma",
+            norm=norm,
         )
+        # slice griddata
+        from_value = modeler.grid3d.grid[axis][i]
+        to_value = from_value + modeler.grid3d.gridres.resolutions
 
-        # Hide empty subplots
-        if len(axis) < num_rows * num_cols:
-            for i in range(len(axis), num_rows * num_cols):
-                axes[i].set_visible(False)
-        return fig
+        # plot points
+        if plot_points:
+            points_df = gd_reversed.data.copy().reset_index()
+
+            # get points conatined in each grid cell
+            points = points_df[
+                (points_df[axis] >= from_value) & (points_df[axis] < to_value)
+            ].copy()
+
+            # sort by value to plot highest values on top
+            points.sort_values(by=["V"], inplace=True)
+            ax.scatter(
+                points[SLICING_AXIS[axis]["X'"]],
+                points[SLICING_AXIS[axis]["Y'"]],
+                c=points["V"],
+                cmap="jet",
+                norm=norm,
+                s=figure_width / 2,
+            )
+            if annotate_points:
+                # annotate points
+                for idx, row in points.iterrows():
+                    ax.annotate(
+                        "{:.0f}".format(row["V"]),
+                        xy=(
+                            row[SLICING_AXIS[axis]["X'"]],
+                            row[SLICING_AXIS[axis]["Y'"]],
+                        ),
+                        xytext=(2, 2),
+                        textcoords="offset points",
+                        fontsize=figure_width / 2,
+                    )
+        # subplot label
+        ax.set_title(f"{axis} = {from_value}÷{to_value} m")
+    # suptitle
+    fig.suptitle(f"Along {axis} axis")
+
+    # if write:
+    #     ## write grid
+    #     write_asc_grid(
+    #         gridx,
+    #         gridy,
+    #         interpolated_original[i, :, :],
+    #         filename=f"{foldername}/Z_{i+0.5}.asc",
+    #     )
+
+    # colorbar
+    plt.colorbar(
+        img,
+        cax=colorbar_inset_ax,
+        format="%.0f",
+        fraction=0.1,
+    )
+
+    # Hide empty subplots
+    if len(axis_data) < num_rows * num_cols:
+        for i in range(len(axis_data), num_rows * num_cols):
+            axes[i].set_visible(False)
+    return fig

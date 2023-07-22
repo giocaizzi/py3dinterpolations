@@ -107,7 +107,6 @@ class Grid3D:
 
     @property
     def results(self) -> dict:
-        """get results"""
         return self._results
 
     def get_axis(self, axis: str):
@@ -122,7 +121,6 @@ class Grid3D:
 
     @results.setter
     def results(self, results: dict) -> None:
-        """set results"""
         if list(results.keys()) == ["interpolated", "variance"]:
             self._results = results
         else:

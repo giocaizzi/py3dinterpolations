@@ -78,9 +78,9 @@ class Modeler:
         """
         # make predictions on normalized grid if normalization was applied
         if "normalization" in self.griddata.preprocessor_params.keys():
-            grids_arrays = self.grid3d.grid
-        else:
             grids_arrays = self.grid3d.normalized_grid
+        else:
+            grids_arrays = self.grid3d.grid
 
         # predict
         interpolated, variance = self.model.predict(

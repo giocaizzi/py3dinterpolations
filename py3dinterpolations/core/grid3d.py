@@ -58,7 +58,10 @@ class Grid3D:
         X (GridAxis): X axis
         Y (GridAxis): Y axis
         Z (GridAxis): Z axis
+        grid (dict): dictionary with `X`, `Y`, `Z` grid arrays
+        normalized_grid (dict): dictionary with normalized `X`, `Y`, `Z` grid arrays
         mesh (dict): dictionary with `X`, `Y`, `Z` mesh arrays
+        gridres (dict): grid resolution
         results (dict): dictionary with `interpolated`, `variance` results
 
     Properties:
@@ -105,12 +108,18 @@ class Grid3D:
     def Z(self):
         return self._Z
 
-    @property
-    def results(self) -> dict:
-        """get results"""
-        return self._results
+    def get_axis(self, axis: str) -> GridAxis:
+        """get grid axis
 
-    def get_axis(self, axis: str):
+        Args:
+            axis (str): axis name, one of `X`, `Y`, `Z`
+
+        Returns:
+            GridAxis: grid axis
+
+        Raises:
+            ValueError: invalid axis
+        """
         if axis == "X":
             return self.X
         elif axis == "Y":
@@ -120,9 +129,12 @@ class Grid3D:
         else:
             raise ValueError("Invalid axis.")
 
+    @property
+    def results(self) -> dict:
+        return self._results
+
     @results.setter
     def results(self, results: dict) -> None:
-        """set results"""
         if list(results.keys()) == ["interpolated", "variance"]:
             self._results = results
         else:
@@ -130,7 +142,6 @@ class Grid3D:
 
     @property
     def grid(self) -> dict:
-        """get grid"""
         return {
             "X": self.X.grid,
             "Y": self.Y.grid,
@@ -138,21 +149,7 @@ class Grid3D:
         }
 
     @property
-    def mesh(self) -> dict:
-        """get mesh"""
-        mesh_array = {}
-        mesh_array["X"], mesh_array["Y"], mesh_array["Z"] = np.meshgrid(
-            self.grid["X"], self.grid["Y"], self.grid["Z"], indexing="xy"
-        )
-        return mesh_array
-
-    @property
     def normalized_grid(self) -> dict:
-        """get normalized grid
-
-        Returns:
-            dict: dictionary with normalized `X`, `Y`, `Z` grid arrays
-        """
         normalized_grid = {}
         for axis in ["X", "Y", "Z"]:
             normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
@@ -162,7 +159,6 @@ class Grid3D:
 
     @property
     def gridres(self) -> dict:
-        """get grid resolution"""
         if self.X.res == self.Y.res == self.Z.res:
             return self.X.res
         else:
@@ -171,6 +167,14 @@ class Grid3D:
                 "Y": self.Y.res,
                 "Z": self.Z.res,
             }
+
+    @property
+    def mesh(self) -> dict:
+        mesh_array = {}
+        mesh_array["X"], mesh_array["Y"], mesh_array["Z"] = np.meshgrid(
+            self.grid["X"], self.grid["Y"], self.grid["Z"], indexing="xy"
+        )
+        return mesh_array
 
 
 class RegularGrid3D(Grid3D):

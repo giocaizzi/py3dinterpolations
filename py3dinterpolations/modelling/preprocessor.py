@@ -2,6 +2,8 @@
 
 import pandas as pd
 
+from py3dinterpolations.modelling.utils import _normalize, _standardize
+
 from ..core.griddata import GridData
 from typing import Union
 
@@ -184,49 +186,9 @@ class Preprocessor:
             idf["ID"] = id
             idf.reset_index(inplace=True)  # reset index resulting from groupby
             idfs.append(idf)
-    
+
         # return downsampled grid data
         return pd.concat(idfs)
-
-
-def _standardize(series: pd.Series) -> tuple:
-    """standardize series to have mean 0 and std 1
-
-    Args:
-        series (pd.Series): series to standardize
-
-    Returns:
-        tuple: standardized series and standardization parameters
-    """
-    series = series.copy()
-    # save standardization parameters
-    params = {
-        "mean": series.mean(),
-        "std": series.std(),
-    }
-    # standardize
-    series = (series - params["mean"]) / (params["std"])
-    return series, params
-
-
-def _normalize(series: pd.Series) -> tuple:
-    """normalize series between 0 and 1
-
-    Args:
-        series (pd.Series): series to normalize
-
-    Returns:
-        tuple: normalized series and normalization parameters
-    """
-    series = series.copy()
-    # save normalization parameters
-    params = {
-        "min": series.min(),
-        "max": series.max(),
-    }
-    # normalize
-    series = (series - params["min"]) / (params["max"] - params["min"])
-    return series, params
 
 
 def reverse_preprocessing(griddata: GridData) -> GridData:

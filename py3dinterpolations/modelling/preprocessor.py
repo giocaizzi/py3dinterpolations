@@ -135,7 +135,7 @@ class Preprocessor:
         self.preprocessor_params["standardization"] = params
         return df
 
-    def _downsample_data(self, data: pd.DataFrame) -> pd.DataFrame:
+    def _downsample_data(self, data: pd.DataFrame, statistic="mean") -> pd.DataFrame:
         """downsample data making the average by blocks of given resolution
 
         TODO: add option to downsample by selecting the statistic
@@ -143,11 +143,17 @@ class Preprocessor:
 
         Args:
             data (pd.DataFrame): data to downsample
+            statistic (str): statistic to take when downsampling.
+                Must be a valid method of pandas.DataFrame.groupby,
+                eg. "mean", "median", "max", etc. Default is "mean".
 
         Returns:
             pd.DataFrame: downsampled data
         """
+        # save downsampling parameters
         self.preprocessor_params["downsampling"] = {"resolution": self.downsampling_res}
+
+        # downsample by grouping in blocks of given resolution
         idfs = []
         # loop over unique ids
         for id in self.griddata.data.index.get_level_values("ID").unique():
@@ -155,11 +161,14 @@ class Preprocessor:
             idf = self.griddata.data.loc[
                 self.griddata.data.index.get_level_values("ID") == id
             ].reset_index()
+
             # save x,y values
             x = idf["X"][0]
             y = idf["Y"][0]
+
             # extract z
             idf = idf[["Z", "V"]]
+
             # downsample by grouping in blocks of given resolution
             # and taking the mean
             idf = idf.groupby(
@@ -167,15 +176,16 @@ class Preprocessor:
                     lambda x: self.preprocessor_params["downsampling"]["resolution"]
                     * round(x / self.preprocessor_params["downsampling"]["resolution"])
                 )
-            )[["V"]].mean()
+            )[["V"]].apply(statistic)
+
             # new downsampled df
             idf["X"] = x
             idf["Y"] = y
             idf["ID"] = id
             idf.reset_index(inplace=True)  # reset index resulting from groupby
             idfs.append(idf)
+    
         # return downsampled grid data
-
         return pd.concat(idfs)
 
 

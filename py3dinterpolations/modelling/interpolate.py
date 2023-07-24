@@ -20,7 +20,6 @@ def interpolate(
     preprocess_kwags: dict = {},
     predict_kwags: dict = {},
     return_model: bool = False,
-    return_model_params: bool = False,
     return_donwsampling_chart: bool = False,
 ) -> Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
     """interpolate griddata
@@ -51,14 +50,12 @@ def interpolate(
             Defaults to {}.
         return_model (bool, optional): return model.
             Defaults to False.
-        return_model_params (bool, optional): return model parameters.
-            Defaults to False.
         return_donwsampling_chart (bool,optional): return downsampling chart.
             Defaults to False.
 
     Returns:
-        Union[np.ndarray, Tuple[np.ndarray, Modeler, dict, matplotlib.figure.Figure]]:
-            interpolated griddata, optionally with model, model parameters and
+        Union[np.ndarray, Tuple[np.ndarray, Modeler, matplotlib.figure.Figure]]:
+            interpolated griddata, optionally with model and
             downsampling chart.
 
     Raises:
@@ -144,9 +141,6 @@ def interpolate(
     # return model
     if return_model:
         returning.append(model)
-    # return model_params
-    if return_model_params:
-        returning.append(model_params)
     # return downsampling chart
     if return_donwsampling_chart:
         returning.append(plot_downsampling(griddata_original, griddata))

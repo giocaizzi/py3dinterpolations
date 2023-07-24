@@ -82,7 +82,7 @@ def test_Preprocessor_preprocess_output(
 
     def compare_floats(a, b, eps=1e-10):
         return abs(a - b) < eps
-    
+
     # standardize means that mean is 0 and std is 1
     if standardize_v:
         # V is standardized

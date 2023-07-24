@@ -100,15 +100,11 @@ class Preprocessor:
 
         """
         # get data
-        data = self.griddata.data.copy().reset_index()[
-            ["ID", "X", "Y", "Z", "V"]
-        ]
+        data = self.griddata.data.copy().reset_index()[["ID", "X", "Y", "Z", "V"]]
 
         # first dowmsample
         if self.downsampling_res is not None:
-            data = self._downsample_data(
-                data, statistic=self.downsampling_method
-            )
+            data = self._downsample_data(data, statistic=self.downsampling_method)
 
         # normalize
         if self.normalize_xyz:
@@ -144,9 +140,7 @@ class Preprocessor:
         self.preprocessor_params["standardization"] = params
         return df
 
-    def _downsample_data(
-        self, data: pd.DataFrame, statistic="mean"
-    ) -> pd.DataFrame:
+    def _downsample_data(self, data: pd.DataFrame, statistic="mean") -> pd.DataFrame:
         """downsample data making the average by blocks of given resolution
 
         Args:
@@ -159,9 +153,7 @@ class Preprocessor:
             pd.DataFrame: downsampled data
         """
         # save downsampling parameters
-        self.preprocessor_params["downsampling"] = {
-            "resolution": self.downsampling_res
-        }
+        self.preprocessor_params["downsampling"] = {"resolution": self.downsampling_res}
 
         # downsample by grouping in blocks of given resolution
         idfs = []
@@ -183,15 +175,8 @@ class Preprocessor:
             # and taking the mean
             idf = idf.groupby(
                 idf["Z"].apply(
-                    lambda x: self.preprocessor_params["downsampling"][
-                        "resolution"
-                    ]
-                    * round(
-                        x
-                        / self.preprocessor_params["downsampling"][
-                            "resolution"
-                        ]
-                    )
+                    lambda x: self.preprocessor_params["downsampling"]["resolution"]
+                    * round(x / self.preprocessor_params["downsampling"]["resolution"])
                 )
             )[["V"]].apply(statistic)
 
@@ -234,22 +219,15 @@ def reverse_preprocessing(griddata: GridData) -> GridData:
                 data[axis] = (
                     data[axis]
                     * (
-                        griddata.preprocessor_params["normalization"][axis][
-                            "max"
-                        ]
-                        - griddata.preprocessor_params["normalization"][axis][
-                            "min"
-                        ]
+                        griddata.preprocessor_params["normalization"][axis]["max"]
+                        - griddata.preprocessor_params["normalization"][axis]["min"]
                     )
-                    + griddata.preprocessor_params["normalization"][axis][
-                        "min"
-                    ]
+                    + griddata.preprocessor_params["normalization"][axis]["min"]
                 )
         if "standardization" in griddata.preprocessor_params:
             # reverse standardization of V
             data["V"] = (
-                data["V"]
-                * griddata.preprocessor_params["standardization"]["std"]
+                data["V"] * griddata.preprocessor_params["standardization"]["std"]
                 + griddata.preprocessor_params["standardization"]["mean"]
             )
             # return

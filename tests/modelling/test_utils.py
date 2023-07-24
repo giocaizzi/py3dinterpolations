@@ -35,8 +35,8 @@ def test_standardize():
         return abs(a - b) < eps
 
     # standardized output
-    assert compare_floats(output[0].mean(),0.0)
-    assert compare_floats(output[0].std(),1.0)
+    assert compare_floats(output[0].mean(), 0.0)
+    assert compare_floats(output[0].std(), 1.0)
 
     # tuple of type
     assert isinstance(output[1], dict)

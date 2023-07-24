@@ -134,9 +134,12 @@ def interpolate(
     predictions = model.predict(**predict_kwags)
 
     # Depending on the arguments, return different things
-    # bydefault only predictions are returned
-    # then progressively add other things
-    returning = [predictions]
+    # bydefault only predictions are returned (np.ndarray)
+    # else return a list progressively adding the things
+    if any([return_model, return_donwsampling_chart]):
+        returning = [predictions]
+    else:
+        returning = predictions
 
     # return model
     if return_model:

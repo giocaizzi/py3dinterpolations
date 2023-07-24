@@ -12,6 +12,8 @@ from py3dinterpolations.modelling.modeler import Modeler
 def test_interpolate_model_params_no_preprocessing(test_data):
     """test interpolate with model_params"""
     # test basic interpolate function call
+    # without any further specification of return, it 
+    # should return the interpolated grid
     gd = GridData(test_data)
     interpolated = interpolate(
         griddata=gd,

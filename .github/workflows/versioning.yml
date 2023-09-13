@@ -13,27 +13,33 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
 
-      - name: Verify __version__ Update in __init__.py
-        run: |
-          old_version=$(git show HEAD:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
-          new_version=$(cat ./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
 
-          if [ "$old_version" != "$new_version" ]; then
-            echo "The __version__ variable has been updated."
-          else
-            echo "Error: The __version__ variable has not been updated in package init."
-            exit 1
+
+      - name: Verify versions
+        run: |
+
+          folder_changes=$(git diff HEAD^ HEAD --name-only | grep '^./py3dinterpolations/')
+
+          if [ -n "$folder_changes" ]; then
+            old_version=$(git show HEAD:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
+            new_version=$(cat ./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
+
+            if [ "$old_version" != "$new_version" ]; then
+              echo "The __version__ variable has been updated."
+            else
+              echo "Error: The __version__ variable has not been updated in package init."
+              exit 1
+            fi
+
+            old_version=$(git show HEAD:./setup.py | grep -oP 'version="\K[^"]+')
+            new_version=$(cat ./setup.py | grep -oP 'version="\K[^"]+')
+  
+            if [ "$old_version" != "$new_version" ]; then
+              echo "The version variable has been updated."
+            else
+              echo "Error: The version variable has not been updated in setup.py."
+              exit 1
+            fi
           fi
 
-      - name: Verify __version__ Update in setup.py
-        run: |
-          old_version=$(git show HEAD:./setup.py | grep -oP 'version="\K[^"]+')
-          new_version=$(cat ./setup.py | grep -oP 'version="\K[^"]+')
-
-          if [ "$old_version" != "$new_version" ]; then
-            echo "The version variable has been updated."
-          else
-            echo "Error: The version variable has not been updated in setup.py."
-            exit 1
-          fi
 

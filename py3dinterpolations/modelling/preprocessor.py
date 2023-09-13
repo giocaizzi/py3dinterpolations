@@ -6,7 +6,6 @@ from ..modelling.utils import _normalize, _standardize
 from ..core.griddata import GridData
 
 from typing import Union
-import numpy as np
 
 
 class Preprocessor:
@@ -183,7 +182,7 @@ class Preprocessor:
                     lambda x: self.preprocessor_params["downsampling"]["resolution"]
                     * round(x / self.preprocessor_params["downsampling"]["resolution"])
                 )
-            )[["V"]].apply(_downsampling_method,downsampling_func=statistic)
+            )[["V"]].apply(_downsampling_method, downsampling_func=statistic)
             print(idf)
             # new downsampled df
             idf["X"] = x
@@ -197,7 +196,9 @@ class Preprocessor:
         return pd.concat(idfs)
 
 
-def _downsampling_method(grouped_df:pd.DataFrame, downsampling_func: Union[str, object]) -> pd.DataFrame:
+def _downsampling_method(
+    grouped_df: pd.DataFrame, downsampling_func: Union[str, object]
+) -> pd.DataFrame:
     """allow to choose different downsampling methods
 
     Apply downsampling method to grouped dataframe via the apply method of

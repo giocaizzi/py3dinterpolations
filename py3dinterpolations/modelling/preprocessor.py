@@ -2,10 +2,11 @@
 
 import pandas as pd
 
-from py3dinterpolations.modelling.utils import _normalize, _standardize
-
+from ..modelling.utils import _normalize, _standardize
 from ..core.griddata import GridData
+
 from typing import Union
+import numpy as np
 
 
 class Preprocessor:
@@ -33,7 +34,13 @@ class Preprocessor:
         downsampling_res (Union[float, None]): resolution to downsample data
             by taking the mean of blocks of given resolution. If None, no
             downsampling is applied. Default is None.
-        downsampling_method (str): statistic to take when downsampling.
+        downsampling_method (str or numpy function): statistic to take when
+            downsampling. ::
+
+                downsampling_method = "mean"
+                # OR
+                downsampling_method = np.mean
+
         normalize_xyz (bool): whether to normalize X Y Z. Default is True.
         standardize_v (bool): whether to standardize V. Default is True.
         preprocessor_params (dict): dictionary with the parameters of the
@@ -81,7 +88,7 @@ class Preprocessor:
         self,
         griddata: GridData,
         downsampling_res: Union[float, None] = None,
-        downsampling_method: str = "mean",
+        downsampling_method: Union[str, object] = np.mean,
         normalize_xyz: bool = True,
         standardize_v: bool = True,
     ):

@@ -50,8 +50,10 @@ class Modeler:
         model_params: dict = {},
     ):
         # griddata and grid3d
-        self.griddata = griddata
-        self.grid3d = grid3d
+        self._griddata = griddata
+        self._grid3d = grid3d
+        self._model_name = model_name
+        self._model_params = model_params
 
         # model
         self.model = ModelWrapper(
@@ -62,6 +64,22 @@ class Modeler:
             self.griddata.numpy_data[:, 3],  # value
             **model_params,
         )
+
+    @property
+    def griddata(self) -> GridData:
+        return self._griddata
+
+    @property
+    def grid3d(self) -> Grid3D:
+        return self._grid3d
+
+    @property
+    def model_name(self) -> str:
+        return self._model_name
+
+    @property
+    def model_params(self) -> dict:
+        return self._model_params
 
     def predict(self, **kwargs) -> np.ndarray:
         """makes predictions considering all past preprocessing

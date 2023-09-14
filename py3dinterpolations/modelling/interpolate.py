@@ -8,6 +8,7 @@ from ..core.grid3d import create_regulargrid3d_from_griddata
 from .modeler import Modeler
 from .preprocessor import Preprocessor
 from .estimator import Estimator
+from ..plotting.plotting import plot_downsampling
 
 
 def interpolate(
@@ -19,6 +20,7 @@ def interpolate(
     preprocess_kwags: dict = {},
     predict_kwags: dict = {},
     return_model: bool = False,
+    return_donwsampling_chart: bool = False,
 ) -> Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
     """interpolate griddata
 
@@ -38,14 +40,23 @@ def interpolate(
         griddata (GridData): griddata to interpolate
         model_name (str): model name
         grid_resolution (float): grid resolution
-        model_params (dict, optional): model parameters. Defaults to {}.
-        preprocess_kwags (dict, optional): preprocessing parameters. Defaults to {}.
-        predict_kwags (dict, optional): prediction parameters. Defaults to {}.
-        return_model (bool, optional): return model. Defaults to False.
+        model_params (dict, optional): model parameters.
+            Defaults to {}.
+        model_params_grid (dict, optional): model parameters grid over which to
+            search for the best parameters. Defaults to {}.
+        preprocess_kwags (dict, optional): preprocessing parameters.
+            Defaults to {}.
+        predict_kwags (dict, optional): prediction parameters.
+            Defaults to {}.
+        return_model (bool, optional): return model.
+            Defaults to False.
+        return_donwsampling_chart (bool,optional): return downsampling chart.
+            Defaults to False.
 
     Returns:
-        Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
-            interpolated griddata, optionally with model
+        Union[np.ndarray, Tuple[np.ndarray, Modeler, matplotlib.figure.Figure]]:
+            interpolated griddata, optionally with model and
+            downsampling chart.
 
     Raises:
         ValueError: either model_params or model_params_grid must be passed
@@ -87,6 +98,8 @@ def interpolate(
 
     # preprocess griddata if needed
     if preprocess_kwags != {}:
+        # save original griddata
+        griddata_original = griddata
         # preprocessor
         preprocessor = Preprocessor(griddata, **preprocess_kwags)
         # get new griddata
@@ -120,8 +133,19 @@ def interpolate(
     # make predictions
     predictions = model.predict(**predict_kwags)
 
+    # Depending on the arguments, return different things
+    # bydefault only predictions are returned (np.ndarray)
+    # else return a list progressively adding the things
+    if any([return_model, return_donwsampling_chart]):
+        returning = [predictions]
+    else:
+        returning = predictions
+
     # return model
     if return_model:
-        return predictions, model
-    else:
-        return predictions
+        returning.append(model)
+    # return downsampling chart
+    if return_donwsampling_chart:
+        returning.append(plot_downsampling(griddata_original, griddata))
+
+    return returning

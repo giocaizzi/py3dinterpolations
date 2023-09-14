@@ -2,9 +2,8 @@ name: Versioning Checks
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
+    branches:
+      - main 
 
 jobs:
   check-version-update:

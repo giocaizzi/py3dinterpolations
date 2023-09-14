@@ -69,12 +69,12 @@ class Grid3D:
         n_cells (int): number of cells
     """
 
-    X: GridAxis = None
-    Y: GridAxis = None
-    Z: GridAxis = None
+    _X: GridAxis = None
+    _Y: GridAxis = None
+    _Z: GridAxis = None
 
     # associated mesh
-    mesh: dict = {}
+    _mesh: dict = {}
 
     # results
     _results: dict = {}

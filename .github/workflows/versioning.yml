@@ -20,6 +20,10 @@ jobs:
           # Get the commit hashes for the base and head branches
           BASE_SHA=$(git rev-parse origin/${{ github.base_ref }})
           HEAD_SHA=$(git rev-parse origin/${{ github.head_ref }})
+          echo "Base ref: ${{ github.base_ref }}"
+          echo "Base SHA: ${BASE_SHA}"
+          echo "Head ref: ${{ github.head_ref }}"
+          echo "Head SHA: ${HEAD_SHA}"
 
           # Check if there are changes in the specific folder
           CHANGED_FILES=$(git diff --name-only $BASE_SHA $HEAD_SHA './py3dinterpolations/')

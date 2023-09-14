@@ -25,6 +25,7 @@ jobs:
           echo "Base SHA: ${BASE_SHA}"
           echo "Head ref: ${{ github.head_ref }}"
           echo "Head SHA: ${HEAD_SHA}"
+          echo "HEAD: $(git rev-parse HEAD)"
 
           # Check if there are changes in the specific folder
           CHANGED_FILES=$(git diff --name-only $BASE_SHA $HEAD_SHA './py3dinterpolations/')
@@ -36,7 +37,7 @@ jobs:
             head_version=$(git show HEAD:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
             echo "Head version: ${head_version}"
 
-            base_version=$(git show ${{ github.base_ref }}:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
+            base_version=$(git show ${BASE_SHA}:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
             echo "Base version: ${base_version}"
 
             if [ "$base_version" != "$head_version" ]; then

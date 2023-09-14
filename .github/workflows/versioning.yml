@@ -26,10 +26,20 @@ jobs:
 
           if [[ -n "$CHANGED_FILES" ]]; then
             echo "There are changes in the py3dinterpolations folder"
-            exit 0
+
+            old_version=$(git show ${{ github.base_ref }}:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
+            new_version=$(git show ${{ github.head_ref }}:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
+
+            if [ "$old_version" != "$new_version" ]; then
+              echo "The __version__ variable has been updated."
+              exit 0
+            else
+              echo "Error: The __version__ variable has not been updated in package init."
+              exit 1
+            fi
           else
             echo "There are no changes in the py3dinterpolations folder"
-            exit 1
+            exit 0
           fi
 
 

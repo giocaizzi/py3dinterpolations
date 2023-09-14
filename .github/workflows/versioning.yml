@@ -27,7 +27,7 @@ jobs:
           if [[ -n "$CHANGED_FILES" ]]; then
             echo "There are changes in the py3dinterpolations folder"
 
-            old_version=$(git show ./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
+            old_version=$(git show py3dinterpolations/py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')
             echo "Old version: ${old_version}"
 
             new_version=$(git show HEAD:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')

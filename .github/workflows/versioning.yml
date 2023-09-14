@@ -43,7 +43,7 @@ jobs:
             echo "Base version: ${base_init_version}"
 
             if [ "$base_init_version" != "$head_init_version" ]; then
-              echo "The __version__ variable has been updated."
+              echo "The __version__ variable has been updated in package init."
             else
               echo "Error: The __version__ variable has not been updated in package init."
               exit 1
@@ -59,7 +59,7 @@ jobs:
             echo "Base version: ${base_setup_version}"
 
             if [ "$head_setup_version" != "$base_setup_version" ]; then
-              echo "The version variable have both been updated."
+              echo "The version variable have both been updated in setup.py."
             else
               echo "Error: The version variable has not been updated in setup.py."
               exit 1

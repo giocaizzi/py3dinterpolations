@@ -2,7 +2,6 @@
 
 # Version
 __version__ = "0.4.2"
-__change__=""
 
 # Credits
 __author__ = "Giorgio Caizzi"

@@ -1,7 +1,7 @@
 """quick 3D interpolation with python"""
 
 # Version
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 ___change__=""
 
 # Credits

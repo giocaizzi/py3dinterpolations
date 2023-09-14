@@ -44,7 +44,6 @@ jobs:
 
             if [ "$base_init_version" != "$head_init_version" ]; then
               echo "The __version__ variable has been updated."
-              exit 0
             else
               echo "Error: The __version__ variable has not been updated in package init."
               exit 1
@@ -61,7 +60,6 @@ jobs:
 
             if [ "$head_setup_version" == "$base_setup_version" ]; then
               echo "The version variable have both been updated."
-              exit 0
             else
               echo "Error: The version variable has not been updated in setup.py."
               exit 1
@@ -72,13 +70,10 @@ jobs:
 
             if [ "$head_init_version" == "$head_setup_version" ]; then
               echo "The versions are equal."
-              exit 0
             else
               echo "Error: The versions are not equal."
               exit 1
             fi
-
-
           else
             echo "There are no changes in the py3dinterpolations folder"
             exit 0

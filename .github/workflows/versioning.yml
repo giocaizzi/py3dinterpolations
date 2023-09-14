@@ -17,7 +17,7 @@ jobs:
 
       - name: Verify versions
         run: |
-          folder_changes=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }} './py3dinterpolations/')
+          folder_changes=$(git diff --name-only ${{ github.base_ref }}..${{ github.head_ref }} './py3dinterpolations/')
 
           if [ -n "$folder_changes" ]; then
             old_version=$(git show ${{ github.base_ref }}:./py3dinterpolations/__init__.py | grep -oP '__version__ = "\K[^"]+')

@@ -58,7 +58,7 @@ jobs:
             base_setup_version=$(git show ${BASE_SHA}:./setup.py | grep -oP 'version="\K[^"]+')
             echo "Base version: ${base_setup_version}"
 
-            if [ "$head_setup_version" == "$base_setup_version" ]; then
+            if [ "$head_setup_version" != "$base_setup_version" ]; then
               echo "The version variable have both been updated."
             else
               echo "Error: The version variable has not been updated in setup.py."

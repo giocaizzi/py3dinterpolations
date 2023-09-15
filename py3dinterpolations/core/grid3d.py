@@ -175,6 +175,14 @@ class Grid3D:
             self.grid["X"], self.grid["Y"], self.grid["Z"], indexing="xy"
         )
         return mesh_array
+    
+    @property
+    def normalized_mesh(self) -> dict:
+        mesh_array = {}
+        mesh_array["X"], mesh_array["Y"], mesh_array["Z"] = np.meshgrid(
+            self.normalized_grid["X"], self.normalized_grid["Y"], self.normalized_grid["Z"], indexing="xy"
+        )
+        return mesh_array
 
 
 class RegularGrid3D(Grid3D):

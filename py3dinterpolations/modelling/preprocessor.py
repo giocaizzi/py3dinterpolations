@@ -183,12 +183,10 @@ class Preprocessor:
                     * round(x / self.preprocessor_params["downsampling"]["resolution"])
                 )
             )[["V"]].apply(_downsampling_method, downsampling_func=statistic)
-            print(idf)
             # new downsampled df
             idf["X"] = x
             idf["Y"] = y
             idf["ID"] = id
-            print(idf)
             idf.reset_index(inplace=True)  # reset index resulting from groupby
             idfs.append(idf)
 

@@ -1,7 +1,7 @@
 """quick 3D interpolation with python"""
 
 # Version
-__version__ = "0.4.4"
+__version__ = "0.4.5"
 
 # Credits
 __author__ = "Giorgio Caizzi"

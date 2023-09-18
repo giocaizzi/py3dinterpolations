@@ -153,9 +153,9 @@ class Grid3D:
     def normalized_grid(self) -> dict:
         normalized_grid = {}
         for axis in ["X", "Y", "Z"]:
-            normalized_grid[axis] = (
-                self.grid[axis] - self.grid[axis].min()
-            ) / (self.grid[axis].max() - self.grid[axis].min())
+            normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
+                self.grid[axis].max() - self.grid[axis].min()
+            )
         return normalized_grid
 
     @property

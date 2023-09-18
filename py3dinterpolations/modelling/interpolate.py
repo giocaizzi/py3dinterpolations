@@ -14,7 +14,7 @@ from ..plotting.plotting import plot_downsampling
 def interpolate(
     griddata: GridData,
     model_name: str,
-    grid_resolution: Union[float,dict],
+    grid_resolution: Union[float, dict],
     model_params: dict = {},
     model_params_grid: dict = {},
     preprocess_kwags: dict = {},

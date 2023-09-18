@@ -4,7 +4,7 @@ from typing import Union, Tuple
 import numpy as np
 
 from ..core.griddata import GridData
-from ..core.grid3d import create_regulargrid3d_from_griddata
+from ..core.grid3d import create_grid3d_from_griddata
 from .modeler import Modeler
 from .preprocessor import Preprocessor
 from .estimator import Estimator
@@ -14,7 +14,7 @@ from ..plotting.plotting import plot_downsampling
 def interpolate(
     griddata: GridData,
     model_name: str,
-    grid_resolution: float,
+    grid_resolution: Union[float,dict],
     model_params: dict = {},
     model_params_grid: dict = {},
     preprocess_kwags: dict = {},
@@ -92,9 +92,7 @@ def interpolate(
     # check grid_resolution is of supported type
     if isinstance(grid_resolution, float) or isinstance(grid_resolution, int):
         # retrive associated grid
-        grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
-    else:
-        raise NotImplementedError("only RegularGrid3D is supported.")
+        grid3d = create_grid3d_from_griddata(griddata, grid_resolution)
 
     # preprocess griddata if needed
     if preprocess_kwags != {}:

@@ -1,6 +1,7 @@
 """grid3d object"""
 
 import numpy as np
+from typing import Union
 
 from py3dinterpolations.core.griddata import GridData
 
@@ -152,9 +153,9 @@ class Grid3D:
     def normalized_grid(self) -> dict:
         normalized_grid = {}
         for axis in ["X", "Y", "Z"]:
-            normalized_grid[axis] = (self.grid[axis] - self.grid[axis].min()) / (
-                self.grid[axis].max() - self.grid[axis].min()
-            )
+            normalized_grid[axis] = (
+                self.grid[axis] - self.grid[axis].min()
+            ) / (self.grid[axis].max() - self.grid[axis].min())
         return normalized_grid
 
     @property
@@ -230,22 +231,84 @@ class RegularGrid3D(Grid3D):
         super().__init__(**kwargs)
 
 
-def create_regulargrid3d_from_griddata(
+class IrregularGrid3D(Grid3D):
+    """class for irregular 3D grids
+
+    Class for a irregular 3D grid
+    with different spacing in X, Y, Z.
+
+    Args:
+        x_min (float): minimum value in X
+        x_max (float): maximum value in X
+        y_min (float): minimum value in Y
+        y_max (float): maximum value in Y
+        z_min (float): minimum value in Z
+        z_max (float): maximum value in Z
+        gridres (dict): grid resolution, different in X, Y, Z
+    """
+
+    def __init__(
+        self,
+        x_min: float,
+        x_max: float,
+        y_min: float,
+        y_max: float,
+        z_min: float,
+        z_max: float,
+        gridres: dict,
+    ):
+        """initialize irregular grid"""
+        kwargs = {
+            "x_min": x_min,
+            "x_max": x_max,
+            "x_res": gridres["X"],
+            "y_min": y_min,
+            "y_max": y_max,
+            "y_res": gridres["Y"],
+            "z_min": z_min,
+            "z_max": z_max,
+            "z_res": gridres["Z"],
+        }
+        # initialize base class
+        super().__init__(**kwargs)
+
+
+def create_grid3d_from_griddata(
     griddata: GridData,
-    gridres: float,
-) -> RegularGrid3D:
-    """create RegularGrid3D from GridData
+    gridres: Union[float, dict],
+) -> Union[RegularGrid3D, IrregularGrid3D]:
+    """create Grid3D from GridData
+
+    Create a Grid3D object from a GridData object.
+    Depending if `gridres` is a float or a dict,
+    a RegularGrid3D or a IrregularGrid3D
+    object is created.
 
     Args:
         griddata (GridData): GridData object
-        gridres (float): grid resolution
+        gridres (float, dict): grid resolution
+
+    Returns:
     """
-    return RegularGrid3D(
-        x_min=griddata.specs.xmin,
-        x_max=griddata.specs.xmax,
-        y_min=griddata.specs.ymin,
-        y_max=griddata.specs.ymax,
-        z_min=griddata.specs.zmin,
-        z_max=griddata.specs.zmax,
-        gridres=gridres,
-    )
+    if isinstance(gridres, float) or isinstance(gridres, int):
+        return RegularGrid3D(
+            x_min=griddata.specs.xmin,
+            x_max=griddata.specs.xmax,
+            y_min=griddata.specs.ymin,
+            y_max=griddata.specs.ymax,
+            z_min=griddata.specs.zmin,
+            z_max=griddata.specs.zmax,
+            gridres=gridres,
+        )
+    elif isinstance(gridres, dict):
+        return IrregularGrid3D(
+            x_min=griddata.specs.xmin,
+            x_max=griddata.specs.xmax,
+            y_min=griddata.specs.ymin,
+            y_max=griddata.specs.ymax,
+            z_min=griddata.specs.zmin,
+            z_max=griddata.specs.zmax,
+            gridres=gridres,
+        )
+    else:
+        raise ValueError("Invalid grid resolution.")

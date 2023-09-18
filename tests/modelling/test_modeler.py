@@ -6,7 +6,7 @@ from unittest.mock import patch
 import numpy as np
 
 from py3dinterpolations.core.griddata import GridData
-from py3dinterpolations.core.grid3d import create_regulargrid3d_from_griddata
+from py3dinterpolations.core.grid3d import create_grid3d_from_griddata
 from py3dinterpolations.modelling.modeler import Modeler
 
 scenarios = [
@@ -30,7 +30,7 @@ def test_Modeler_init(model_name, model_params, test_data):
     # quick testing without mocking, should be improved
 
     gd = GridData(test_data)
-    g3d = create_regulargrid3d_from_griddata(gd, 5)
+    g3d = create_grid3d_from_griddata(gd, 5)
     m3d = Modeler(
         griddata=gd,
         grid3d=g3d,

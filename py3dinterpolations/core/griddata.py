@@ -2,6 +2,7 @@
 
 import pandas as pd
 import numpy as np
+from shapely.geometry import MultiPoint, Polygon
 
 
 class GridData:
@@ -93,7 +94,6 @@ class GridData:
         df.set_index(["ID", "X", "Y", "Z"], inplace=True)
         df["V"] = df["V"].astype(float).copy()
         df.sort_index(inplace=True, ascending=False)
-
         return df
 
     @property
@@ -120,6 +120,17 @@ class GridData:
             np.ndarray: numpy data of X,Y,Z,V
         """
         return self.data.reset_index()[["X", "Y", "Z", "V"]].to_numpy()
+
+    @property
+    def hull(self) -> Polygon:
+        """get hull
+
+        Returns:
+            gpd.GeoDataFrame: hull of the data
+        """
+        return MultiPoint(
+            self.data.reset_index()[["X", "Y"]].drop_duplicates().to_numpy()
+        ).convex_hull
 
 
 class GridDataSpecs:

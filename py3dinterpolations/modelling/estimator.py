@@ -1,6 +1,7 @@
 """cross validation module"""
 
 from ..core.griddata import GridData
+from .models import SUPPORTED_MODELS
 
 from sklearn.model_selection import GridSearchCV
 
@@ -50,12 +51,13 @@ class Estimator:
     def __init__(
         self,
         griddata: GridData,
+        model_name,
         params: dict,
         scoring: str = "neg_mean_absolute_error",
         verbose: int = 3,
     ):
         self.estimator = GridSearchCV(
-            Krige(),
+            SUPPORTED_MODELS[model_name](),
             params,
             scoring=scoring,
             verbose=verbose,

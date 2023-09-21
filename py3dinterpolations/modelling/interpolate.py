@@ -96,20 +96,19 @@ def interpolate(
 
     if model_params == {}:
         # implemented only for ordinary_kriging
-        if model_name != "ordinary_kriging":
-            raise NotImplementedError(
-                "Parameter search is only supported for ordinary_kriging"
-            )
+        # if model_name != "ordinary_kriging":
+        #     raise NotImplementedError(
+        #         "Parameter search is only supported for ordinary_kriging"
+        #     )
 
         # estimate
-        est = Estimator(griddata, model_params_grid)
+        est = Estimator(griddata,model_name, model_params_grid)
 
         # TODO: krige wrapper, method key param
         #   that is not needed for the estimator
         #   find a flexible way to handle this, probably a good way is to use directly
         #   the sci-kit wrapper Krige()
         model_params = est.best_params
-        model_params.pop("method")
 
     # init Modeler
     model = Modeler(

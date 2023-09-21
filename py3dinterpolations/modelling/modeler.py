@@ -58,10 +58,8 @@ class Modeler:
         # model
         self.model = ModelWrapper(
             model_name,
-            self.griddata.numpy_data[:, 0],  # x
-            self.griddata.numpy_data[:, 1],  # y
-            self.griddata.numpy_data[:, 2],  # z
-            self.griddata.numpy_data[:, 3],  # value
+            self.griddata.numpy_data[:, 0:3],  # X
+            self.griddata.numpy_data[:, 3],  # value Y
             **model_params,
         )
 
@@ -95,34 +93,59 @@ class Modeler:
             interpolated (np.ndarray): interpolated grid
         """
         # make predictions on normalized grid if normalization was applied
+        # "GRID" prediction
         if "normalization" in self.griddata.preprocessor_params.keys():
             grids_arrays = self.grid3d.normalized_grid
         else:
             grids_arrays = self.grid3d.grid
 
-        # predict
+        # point prediction
+        if "normalization" in self.griddata.preprocessor_params.keys():
+            mesh = self.grid3d.normalized_mesh
+        else:
+            mesh = self.grid3d.mesh
+
+        # harcdcoded for skleran
+        prediction_points = np.concatenate(
+        (
+            mesh["X"].reshape(-1,1),
+            mesh["Y"].reshape(-1,1),
+            mesh["Z"].reshape(-1,1)
+        ),axis=1
+        )
+
+        # predict values
         # pykrige ordinarykrigin3d class returns a tuple
         # X : N, Y : M, Z : L
         # shape (L, M, N)
-        interpolated, variance = self.model.predict(
-            grids_arrays["X"],
-            grids_arrays["Y"],
-            grids_arrays["Z"],
+        interpolated = self.model.predict(
+            prediction_points,
             **kwargs,
         )
+        # probability
+        if hasattr(self.model.model,"predict_proba"):
+            probabiliy = self.model.model.predict_proba(
+                prediction_points,
+                **kwargs,
+            )
+            # some classificators returns array
+            probabiliy = probabiliy.max(axis=1)
+
+        else:
+            probabiliy = None
+
+        # variance
+        variance = None
 
         # if standardized data, reverse standardization
         if "standardization" in self.griddata.preprocessor_params:
             interpolated = _reverse_standardized(
                 interpolated, self.griddata.preprocessor_params["standardization"]
             )
-            variance = _reverse_standardized(
-                variance, self.griddata.preprocessor_params["standardization"]
-            )
-
         # save results
         self.results = {
             "interpolated": interpolated,
+            "probability":probabiliy,
             "variance": variance,
         }
 

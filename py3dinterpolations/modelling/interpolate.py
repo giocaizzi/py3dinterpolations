@@ -1,27 +1,23 @@
 """interpolator"""
 
-from typing import Union, Tuple
-import numpy as np
+from typing import Union
 
 from ..core.griddata import GridData
 from ..core.grid3d import create_grid3d_from_griddata
 from .modeler import Modeler
 from .preprocessor import Preprocessor
 from .estimator import Estimator
-from ..plotting.plotting import plot_downsampling
 
 
 def interpolate(
     griddata: GridData,
     model_name: str,
-    grid_resolution: Union[float, dict],
+    grid_resolution: Union[int, float, dict],
     model_params: dict = {},
     model_params_grid: dict = {},
     preprocess_kwags: dict = {},
     predict_kwags: dict = {},
-    return_model: bool = False,
-    return_donwsampling_chart: bool = False,
-) -> Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
+) -> Modeler:
     """interpolate griddata
 
     Interpolate griddata using a Modeler instance that wraps all supported
@@ -32,14 +28,21 @@ def interpolate(
     `model_params_grid` argument.
 
     The 3D grid for interpolation is retrived from the training data.
-    At the moment features only a regular grid.
 
     If requested, the griddata is preprocessed using the Preprocessor class.
 
     Args:
         griddata (GridData): griddata to interpolate
         model_name (str): model name
-        grid_resolution (float): grid resolution
+        grid_resolution (int, float or float): grid resolution. If a dictionary is
+            passed, then it will be a grid3d with the specified resolution in each
+            direction.::
+                grid_resolution = {
+                    "X": 1,
+                    "Y": 2,
+                    "Z": 0.1,
+                }
+
         model_params (dict, optional): model parameters.
             Defaults to {}.
         model_params_grid (dict, optional): model parameters grid over which to
@@ -48,25 +51,18 @@ def interpolate(
             Defaults to {}.
         predict_kwags (dict, optional): prediction parameters.
             Defaults to {}.
-        return_model (bool, optional): return model.
-            Defaults to False.
-        return_donwsampling_chart (bool,optional): return downsampling chart.
-            Defaults to False.
 
     Returns:
-        Union[np.ndarray, Tuple[np.ndarray, Modeler, matplotlib.figure.Figure]]:
-            interpolated griddata, optionally with model and
-            downsampling chart.
+        Modeler: modeler instance
 
     Raises:
         ValueError: either model_params or model_params_grid must be passed
         ValueError: model_params and model_params_grid cannot be passed together
-        NotImplementedError: only RegularGrid3D is supported.
         NotImplementedError: Parameter search is only supported for ordinary_kriging
 
     Examples:
         >>> # interpolate griddata
-        >>> interpolated = interpolate(
+        >>> model = interpolate(
         >>>     griddata,
         >>>     model_name="ordinary_kriging",
         >>>     grid_resolution=5,
@@ -89,15 +85,10 @@ def interpolate(
     if model_params != {} and model_params_grid != {}:
         raise ValueError("model_params and model_params_grid cannot be passed together")
 
-    # check grid_resolution is of supported type
-    if isinstance(grid_resolution, float) or isinstance(grid_resolution, int):
-        # retrive associated grid
-        grid3d = create_grid3d_from_griddata(griddata, grid_resolution)
+    grid3d = create_grid3d_from_griddata(griddata, grid_resolution)
 
     # preprocess griddata if needed
     if preprocess_kwags != {}:
-        # save original griddata
-        griddata_original = griddata
         # preprocessor
         preprocessor = Preprocessor(griddata, **preprocess_kwags)
         # get new griddata
@@ -129,21 +120,6 @@ def interpolate(
     )
 
     # make predictions
-    predictions = model.predict(**predict_kwags)
+    model.predict(**predict_kwags)
 
-    # Depending on the arguments, return different things
-    # bydefault only predictions are returned (np.ndarray)
-    # else return a list progressively adding the things
-    if any([return_model, return_donwsampling_chart]):
-        returning = [predictions]
-    else:
-        returning = predictions
-
-    # return model
-    if return_model:
-        returning.append(model)
-    # return downsampling chart
-    if return_donwsampling_chart:
-        returning.append(plot_downsampling(griddata_original, griddata))
-
-    return returning
+    return model

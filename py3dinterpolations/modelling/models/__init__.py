@@ -5,32 +5,18 @@ from typing import Union
 
 # EXTERNAL
 from pykrige.ok3d import OrdinaryKriging3D
+from sklearn.gaussian_process import GaussianProcessClassifier
 
 # INTERNAL
 from .idw import IDW
 
 
 SUPPORTED_MODELS = {
-    "statistical": {
         "ordinary_kriging": OrdinaryKriging3D,  # pykrige
-    },
-    "deterministic": {
         "idw": IDW,
-    },
+        "gaussian_process_classifier": GaussianProcessClassifier,
 }
 
-
-def get_model_type(inner_key: str):
-    """get model type
-
-    Raises:
-        ValueError: if model not supported
-    """
-    for outer_key in SUPPORTED_MODELS:
-        if inner_key in SUPPORTED_MODELS[outer_key]:
-            return outer_key
-    # if gets here, model not supported
-    raise ValueError(f"model {inner_key} not supported")
 
 
 class ModelWrapper:
@@ -44,41 +30,44 @@ class ModelWrapper:
 
     Args:
         model_name (str): model name
-        \\*args: args for model
+        X (np.ndarray): X data
+        Y (np.ndarray): Y data
         \\*\\*kwargs: kwargs for model
 
     Attributes:
-        model (object): model object
-        model_type (str): model type
         model_name (str): model name
+        model (object): model object
 
     """
+    model = None
 
-    @property
-    def model_type(self):
-        return self._model_type
+    def __init__(self, model_name: str,X:np.ndarray,Y:np.ndarray, **kwargs):
+        self._model_name = model_name
+        self._X = X
+        self._Y = Y
 
+        # when itiatin the model, some are already fitted (pykrige) others not (sklearn)
+        self.model = SUPPORTED_MODELS[self.model_name](**kwargs)
+
+        if self.model_name == "gaussian_process_classifier":
+            self.fit(X=self.X, y=self.Y)
+    
     @property
     def model_name(self):
         return self._model_name
+    
+    @property
+    def X(self):
+        return self._X
+    
+    @property
+    def Y(self):
+        return self._Y
 
-    @model_type.setter
-    def model_type(self, model_type: str):
-        self._model_type = model_type
-
-    @model_name.setter
-    def model_name(self, model_name: str):
-        self._model_name = model_name
-        self._model_type = get_model_type(self._model_name)
-
-    def __init__(self, model_name: str, *args, **kwargs):
-        self.model_name = model_name
-        self.model = SUPPORTED_MODELS[self.model_type][self.model_name](*args, **kwargs)
-
-    def fit(self):
+    def fit(self, *args, **kwargs):
         # pykrige is already fitted
         # deterministic models are not
-        pass
+        self.model.fit(*args, **kwargs)
 
     def predict(self, *args, **kwargs) -> Union[tuple, np.ndarray]:
         """predict method
@@ -88,18 +77,26 @@ class ModelWrapper:
         Args:
             \\*args: args for model
             \\*\\*kwargs: kwargs for model
+
+        Returns:
+            Union[tuple, np.ndarray]: only predictions 
+                or prediction and variance grids
         """
-        if self.model_type == "statistical":
+        if self.model_name == "ordinary_kriging":
             # returns both interpolated and variance grids
             # quickfix for weird behacviour
             # unpack first three args as x, y, z
+            # returns predictions and variance grids
             x, y, z, *args = args
             return self.model.execute(
                 *args, style="grid", xpoints=x, ypoints=y, zpoints=z, **kwargs
             )
-        elif self.model_type == "deterministic":
+        elif self.model_name == "idw":
             # idw does not return variance, only a single grid
             return self.model.compute(*args, **kwargs), np.ndarray([])
+        elif self.model_name == "gaussian_process_classifier":
+            # skleran model
+            return self.model.predict(*args, **kwargs)
         else:
             # if gets here, model not supported
-            raise ValueError(f"model {self.model_type} not supported")
+            raise ValueError(f"model {self._model_name} not supported")

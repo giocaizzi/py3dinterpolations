@@ -136,7 +136,7 @@ class Grid3D:
 
     @results.setter
     def results(self, results: dict) -> None:
-        if list(results.keys()) == ["interpolated", "variance"]:
+        if list(results.keys()) == ["interpolated","probability","variance"]:
             self._results = results
         else:
             raise NotImplementedError("Results type not implemented.")

@@ -144,8 +144,8 @@ class Modeler:
             )
         # save results
         self.results = {
-            "interpolated": interpolated,
-            "probability":probabiliy,
+            "interpolated": interpolated.reshape(self.grid3d.mesh["X"].shape), # hardcoding point calculation
+            "probability":probabiliy.reshape(self.grid3d.mesh["X"].shape), # hardcoding
             "variance": variance,
         }
 

@@ -1,6 +1,7 @@
 name: interpolations
 channels:
   - conda-forge
+  - anaconda
 dependencies:
   - python=3.10
   # notebooks
@@ -8,10 +9,12 @@ dependencies:
   - ipykernel
   # package requirements
   - pandas
+  - geopandas
   - numpy
   - matplotlib
   - plotly
   - pykrige
+  - scikit-learn
   # formatting and linting
   - black
   - black-jupyter

@@ -12,11 +12,10 @@ from .idw import IDW
 
 
 SUPPORTED_MODELS = {
-        "ordinary_kriging": OrdinaryKriging3D,  # pykrige
-        "idw": IDW,
-        "gaussian_process_classifier": GaussianProcessClassifier,
+    "ordinary_kriging": OrdinaryKriging3D,  # pykrige
+    "idw": IDW,
+    "gaussian_process_classifier": GaussianProcessClassifier,
 }
-
 
 
 class ModelWrapper:
@@ -39,9 +38,10 @@ class ModelWrapper:
         model (object): model object
 
     """
+
     model = None
 
-    def __init__(self, model_name: str,X:np.ndarray,Y:np.ndarray, **kwargs):
+    def __init__(self, model_name: str, X: np.ndarray, Y: np.ndarray, **kwargs):
         self._model_name = model_name
         self._X = X
         self._Y = Y
@@ -51,15 +51,15 @@ class ModelWrapper:
 
         if self.model_name == "gaussian_process_classifier":
             self.fit(X=self.X, y=self.Y)
-    
+
     @property
     def model_name(self):
         return self._model_name
-    
+
     @property
     def X(self):
         return self._X
-    
+
     @property
     def Y(self):
         return self._Y
@@ -79,7 +79,7 @@ class ModelWrapper:
             \\*\\*kwargs: kwargs for model
 
         Returns:
-            Union[tuple, np.ndarray]: only predictions 
+            Union[tuple, np.ndarray]: only predictions
                 or prediction and variance grids
         """
         if self.model_name == "ordinary_kriging":

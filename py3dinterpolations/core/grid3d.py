@@ -1,7 +1,9 @@
 """grid3d object"""
 
 import numpy as np
+import geopandas as gpd
 from typing import Union
+from shapely.geometry import Polygon
 
 from py3dinterpolations.core.griddata import GridData
 
@@ -136,7 +138,7 @@ class Grid3D:
 
     @results.setter
     def results(self, results: dict) -> None:
-        if list(results.keys()) == ["interpolated","probability","variance"]:
+        if list(results.keys()) == ["interpolated", "probability", "variance"]:
             self._results = results
         else:
             raise NotImplementedError("Results type not implemented.")
@@ -187,6 +189,48 @@ class Grid3D:
             indexing="xy",
         )
         return mesh_array
+
+    def get_prediction_points(
+        self,
+        normalized=False,
+        convex_hull=True,
+        griddata: Union[None, GridData] = None,
+        asFrame: bool = False,
+    ) -> gpd.GeoDataFrame:
+        # get prediction points from the mesh
+        if normalized:
+            source = self.normalized_mesh
+        else:
+            source = self.mesh
+        # make ndarray
+        points = np.concatenate(
+            (
+                source["X"].reshape(-1, 1),
+                source["Y"].reshape(-1, 1),
+                source["Z"].reshape(-1, 1),
+            ),
+            axis=1,
+        )
+        # make gdf
+        gdf = gpd.GeoDataFrame(
+            points,
+            columns = ["X","Y","Z"],
+            geometry=gpd.points_from_xy(points[:, 0], points[:, 1])
+        )
+        if convex_hull and griddata is None:
+            raise ValueError("Convex hull can't be calculated without griddata")
+        elif convex_hull and griddata is not None:
+            points = _within_hull(gdf, griddata.hull)
+
+        if asFrame:
+            return points
+        else:
+            return points.to_numpy()
+
+
+def _within_hull(points: gpd.GeoDataFrame, hull: Polygon) -> np.ndarray:
+    points["CONTAINED"] = points.within(hull)
+    return points
 
 
 class RegularGrid3D(Grid3D):

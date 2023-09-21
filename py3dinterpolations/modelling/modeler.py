@@ -1,6 +1,7 @@
 """model wrapper for interpolation"""
 
 import numpy as np
+import geopandas as gpd
 
 from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
@@ -79,7 +80,7 @@ class Modeler:
     def model_params(self) -> dict:
         return self._model_params
 
-    def predict(self, **kwargs) -> np.ndarray:
+    def predict(self, onlyWithinHull: bool = True, **kwargs):
         """makes predictions considering all past preprocessing
 
         - if normalization was applied, predict on normalized grid
@@ -101,62 +102,94 @@ class Modeler:
 
         # point prediction
         if "normalization" in self.griddata.preprocessor_params.keys():
+            normalized = True
             mesh = self.grid3d.normalized_mesh
         else:
+            normalized = False
             mesh = self.grid3d.mesh
-
-        # harcdcoded for skleran
-        prediction_points = np.concatenate(
-        (
-            mesh["X"].reshape(-1,1),
-            mesh["Y"].reshape(-1,1),
-            mesh["Z"].reshape(-1,1)
-        ),axis=1
-        )
 
         # predict values
         # pykrige ordinarykrigin3d class returns a tuple
         # X : N, Y : M, Z : L
         # shape (L, M, N)
+
+        prediction_points = self.grid3d.get_prediction_points(
+            normalized=normalized, griddata=self.griddata, asFrame=True
+        )
+
+        # hull
+        if onlyWithinHull:
+            valid_prediction_points = prediction_points.loc[
+                prediction_points["CONTAINED"]
+            ][["X", "Y", "Z"]]
+        else:
+            valid_prediction_points = prediction_points[["X", "Y", "Z"]]
+
         interpolated = self.model.predict(
-            prediction_points,
+            valid_prediction_points.to_numpy(),
             **kwargs,
         )
         # probability
-        if hasattr(self.model.model,"predict_proba"):
+        if hasattr(self.model.model, "predict_proba"):
             probabiliy = self.model.model.predict_proba(
-                prediction_points,
+                valid_prediction_points.to_numpy(),
                 **kwargs,
             )
             # some classificators returns array
             probabiliy = probabiliy.max(axis=1)
-
         else:
             probabiliy = None
 
         # variance
         variance = None
 
+        if onlyWithinHull:
+            interpolated = self._add_valid_points_output(
+                prediction_points,
+                valid_prediction_points,
+                interpolated,
+            )
+            probabiliy = self._add_valid_points_output(
+                prediction_points,
+                valid_prediction_points,
+                probabiliy,
+            )
+
         # if standardized data, reverse standardization
         if "standardization" in self.griddata.preprocessor_params:
             interpolated = _reverse_standardized(
-                interpolated, self.griddata.preprocessor_params["standardization"]
+                interpolated,
+                self.griddata.preprocessor_params["standardization"],
             )
         # save results
         self.results = {
-            "interpolated": interpolated.reshape(self.grid3d.mesh["X"].shape), # hardcoding point calculation
-            "probability":probabiliy.reshape(self.grid3d.mesh["X"].shape), # hardcoding
+            "interpolated": interpolated,  # hardcoding point calculation
+            "probability": probabiliy,  # hardcoding
             "variance": variance,
         }
 
-        # sets results  also in associated grid3d
+        # sets results  in associated grid3d
         self.grid3d.results = self.results
 
-        # return interpolated grid
-        return interpolated
+    def _add_valid_points_output(
+        self,
+        all_points: gpd.GeoDataFrame,
+        valid_points: gpd.GeoDataFrame,
+        output: np.ndarray,
+    ) -> np.ndarray:
+        valid_points["ESTIMATED"] = output
+        # join on the position that is uniqur
+        values = (
+            all_points.set_index(["X","Y","Z"]).join(valid_points.set_index(["X","Y","Z"])).reset_index()[["ESTIMATED"]]
+            .to_numpy()
+            .reshape(self.grid3d.mesh["X"].shape)
+        )
+        return values
 
 
-def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray:
+def _reverse_standardized(
+    data: np.ndarray, standardization: dict
+) -> np.ndarray:
     """reverse standardization of a 1d numpy array
 
     considers that data could be none, in which case returns an empty array

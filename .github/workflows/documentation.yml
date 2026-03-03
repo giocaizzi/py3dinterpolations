@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
@@ -23,18 +24,5 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra docs
 
-      - name: Build docs
-        run: uv run mkdocs build
-
-      - name: Commit documentation changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Actions: Build documentation" -a || true
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy docs
+        run: uv run mkdocs gh-deploy --force --clean

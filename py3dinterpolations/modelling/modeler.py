@@ -86,7 +86,9 @@ class Modeler:
             std_params = params.standardization
             interpolated = interpolated * std_params.std + std_params.mean
             if variance is not None:
-                variance = variance * std_params.std + std_params.mean
+                # Variance scales with the square of the standard deviation
+                # and is not shifted by the mean
+                variance = variance * (std_params.std**2)
 
         self._result = InterpolationResult(
             interpolated=interpolated,

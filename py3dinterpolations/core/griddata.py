@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from shapely import MultiPoint
+from shapely.geometry.base import BaseGeometry
 
 from .types import PreprocessingParams
 
@@ -59,8 +59,10 @@ class GridData:
         return self.data.reset_index()[["X", "Y", "Z", "V"]].to_numpy()
 
     @property
-    def hull(self) -> MultiPoint:
+    def hull(self) -> BaseGeometry:
         """Convex hull of XY coordinates as a shapely geometry."""
+        from shapely import MultiPoint
+
         xy = self.data.reset_index()[["X", "Y"]].drop_duplicates().to_numpy()
         return MultiPoint(xy).convex_hull
 

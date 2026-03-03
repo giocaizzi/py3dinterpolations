@@ -68,6 +68,6 @@ def plot_downsampling(
             auto=False,
         )
 
-    fig.suptitle(f"{next(iter(original_griddata.columns))}", fontsize=10)
+    fig.suptitle(f"{original_griddata.columns['V']}", fontsize=10)
     plt.close(fig)
     return fig

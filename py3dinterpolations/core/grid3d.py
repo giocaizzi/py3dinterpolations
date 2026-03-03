@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 import numpy as np
-from shapely import MultiPoint
+from shapely.geometry.base import BaseGeometry
 
 from .griddata import GridData
 from .types import Axis, GridResolution, InterpolationResult
@@ -211,7 +211,7 @@ class IrregularGrid3D(Grid3D):
         z_min: float,
         z_max: float,
         z_res: float,
-        hull: MultiPoint | None = None,
+        hull: BaseGeometry | None = None,
     ):
         super().__init__(
             x=GridAxis(Axis.X, x_min, x_max, x_res),

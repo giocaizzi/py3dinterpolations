@@ -27,7 +27,10 @@ def plot_3d_model(
     if volume_kwargs is None:
         volume_kwargs = {}
 
-    gd_reversed = reverse_preprocessing(modeler.griddata)
+    if modeler.griddata.preprocessing_params is not None:
+        gd_reversed = reverse_preprocessing(modeler.griddata)
+    else:
+        gd_reversed = modeler.griddata
 
     assert modeler.result is not None
     # ZYX -> XYZ

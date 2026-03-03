@@ -16,7 +16,11 @@ def normalize(series: pd.Series) -> tuple[pd.Series, NormalizationParams]:
     """
     series = series.copy()
     params = NormalizationParams(min=float(series.min()), max=float(series.max()))
-    series = (series - params.min) / (params.max - params.min)
+    value_range = params.max - params.min
+    if value_range == 0.0:
+        series[:] = 0.0
+        return series, params
+    series = (series - params.min) / value_range
     return series, params
 
 
@@ -31,5 +35,8 @@ def standardize(series: pd.Series) -> tuple[pd.Series, StandardizationParams]:
     """
     series = series.copy()
     params = StandardizationParams(mean=float(series.mean()), std=float(series.std()))
+    if params.std == 0.0 or pd.isna(params.std):
+        series[:] = 0.0
+        return series, params
     series = (series - params.mean) / params.std
     return series, params

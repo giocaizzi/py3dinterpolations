@@ -64,7 +64,10 @@ def plot_2d_model(
         colorbar_ax, width="100%", height="50%", loc="center"
     )
 
-    gd_reversed = reverse_preprocessing(modeler.griddata)
+    if modeler.griddata.preprocessing_params is not None:
+        gd_reversed = reverse_preprocessing(modeler.griddata)
+    else:
+        gd_reversed = modeler.griddata
     norm = Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
 
     img = None
@@ -94,7 +97,8 @@ def plot_2d_model(
         )
 
         from_value = modeler.grid.grid[axis][i]
-        to_value = from_value + modeler.grid.gridres
+        axis_res = modeler.grid.get_axis(axis).res
+        to_value = from_value + axis_res
 
         if plot_points:
             points_df = gd_reversed.data.copy().reset_index()

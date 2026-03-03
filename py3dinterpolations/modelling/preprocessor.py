@@ -1,93 +1,57 @@
-"""preprocessor module"""
+"""Preprocessing pipeline for GridData."""
+
+from __future__ import annotations
+
+import logging
+from collections.abc import Callable
+from typing import TypedDict, cast
 
 import pandas as pd
 
-from ..modelling.utils import _normalize, _standardize
 from ..core.griddata import GridData
+from ..core.types import (
+    Axis,
+    DownsamplingParams,
+    DownsamplingStatistic,
+    NormalizationParams,
+    PreprocessingParams,
+    StandardizationParams,
+)
+from .utils import normalize, standardize
 
-from typing import Union
+logger = logging.getLogger(__name__)
+
+
+class PreprocessingKwargs(TypedDict, total=False):
+    """Type-safe kwargs for Preprocessor construction."""
+
+    downsampling_res: float | None
+    downsampling_method: DownsamplingStatistic | str | Callable[..., pd.DataFrame]
+    normalize_xyz: bool
+    standardize_v: bool
 
 
 class Preprocessor:
-    """Preprocessor class
+    """Preprocess GridData before interpolation.
 
-    Preprocess data before interpolation. Preprocessing includes:
-        - Downsampling, by taking the mean of blocks of given resolution
-        - Normalization of X Y Z
-        - Standardization of V
-
-    By calling the preprocess method, the data is preprocessed and a new
-    GridData object is returned with the preprocessed data and the
-    preprocessing parameters set.
+    Supports downsampling, normalization of XYZ, and standardization of V.
+    Returns a new GridData with preprocessing params attached.
 
     Args:
-        griddata (GridData): GridData object to preprocess
-        downsampling_res (Union[float, None]): resolution to downsample data
-            by taking the mean of blocks of given resolution. If None, no
-            downsampling is applied. Default is None.
-        normalize_xyz (bool): whether to normalize X Y Z. Default is True.
-        standardize_v (bool): whether to standardize V. Default is True.
-
-    Attributes:
-        griddata (GridData): GridData object to preprocess
-        downsampling_res (Union[float, None]): resolution to downsample data
-            by taking the mean of blocks of given resolution. If None, no
-            downsampling is applied. Default is None.
-        downsampling_method (str or callable): statistic to take when
-            downsampling. Either an accepted string or a custom function::
-
-                downsampling_method = "mean"
-                # OR
-                downsampling_method = somefunction
-
-        normalize_xyz (bool): whether to normalize X Y Z. Default is True.
-        standardize_v (bool): whether to standardize V. Default is True.
-        preprocessor_params (dict): dictionary with the parameters of the
-            preprocessing. It is set after calling the preprocess method.::
-
-                preprocessor_params = {
-                    "downsampling": {
-                        "resolution": downsampling_res,
-                    },
-                    "normalization": {
-                        "X": {
-                            "min": min_value_of_X,
-                            "max": max_value_of_X,
-                        },
-                        "Y": {
-                            "min": min_value_of_Y,
-                            "max": max_value_of_Y,
-                        },
-                        "Z": {
-                            "min": min_value_of_Z,
-                            "max": max_value_of_Z,
-                        },
-                    },
-                    "standardization": {
-                        "mean": mean_value_of_V,
-                        "std": std_value_of_V,
-                    },
-
-                }
-
-    Examples:
-        >>> # preprocess data
-        >>> preprocessor = Preprocessor(
-        >>>     griddata,
-        >>>     downsampling_res=0.1,
-        >>>     normalize_xyz=True,
-        >>>     standardize_v=True,
-        >>> )
-        >>> griddata = preprocessor.preprocess()
+        griddata: Source data to preprocess.
+        downsampling_res: Block resolution for downsampling. None to skip.
+        downsampling_method: Statistic for downsampling, or a custom callable.
+        normalize_xyz: Whether to normalize XYZ to [0, 1].
+        standardize_v: Whether to standardize V to mean=0, std=1.
     """
-
-    preprocessor_params = {}
 
     def __init__(
         self,
         griddata: GridData,
-        downsampling_res: Union[float, None] = None,
-        downsampling_method: Union[str, object] = "mean",
+        downsampling_res: float | None = None,
+        downsampling_method: (
+            DownsamplingStatistic | str | Callable[..., pd.DataFrame]
+        ) = DownsamplingStatistic.MEAN,
         normalize_xyz: bool = True,
         standardize_v: bool = True,
     ):
@@ -98,183 +62,140 @@ class Preprocessor:
         self.standardize_v = standardize_v
 
     def preprocess(self) -> GridData:
-        """preprocess data
+        """Execute the preprocessing pipeline.
 
         Returns:
-            GridData: new GridData object with the preprocessed data
-                and prerpocessing parameters set
-
+            New GridData with preprocessed data and params attached.
         """
-        # get data
+        logger.info("Starting preprocessing")
         data = self.griddata.data.copy().reset_index()[["ID", "X", "Y", "Z", "V"]]
 
-        # first dowmsample
+        downsampling_params: DownsamplingParams | None = None
+        normalization_params: dict[Axis, NormalizationParams] | None = None
+        standardization_params: StandardizationParams | None = None
+
         if self.downsampling_res is not None:
             data = self._downsample_data(data, statistic=self.downsampling_method)
+            downsampling_params = DownsamplingParams(resolution=self.downsampling_res)
 
-        # normalize
         if self.normalize_xyz:
-            data = self._normalize_xyz(data)
+            data, normalization_params = self._normalize_xyz(data)
 
-        # standardize
         if self.standardize_v:
-            data = self._standardize_v(data)
+            data, standardization_params = self._standardize_v(data)
 
-        # return new object with preprocessed data and parameters
-        return GridData(data, preprocessor_params=self.preprocessor_params)
+        params = PreprocessingParams(
+            downsampling=downsampling_params,
+            normalization=normalization_params,
+            standardization=standardization_params,
+        )
+        logger.info("Preprocessing complete: %s", params)
+        return GridData(data, preprocessing_params=params)
 
-    def _normalize_xyz(self, data: pd.DataFrame) -> pd.DataFrame:
-        """apply normalization to X Y Z
-
-        Args:
-            data (pd.DataFrame): data to normalize
-
-        Returns:
-            pd.DataFrame: normalized data
-        """
+    def _normalize_xyz(
+        self, data: pd.DataFrame
+    ) -> tuple[pd.DataFrame, dict[Axis, NormalizationParams]]:
+        """Apply min-max normalization to X, Y, Z columns."""
         df = data.copy()
-        self.preprocessor_params["normalization"] = {}
-        for axis in ["X", "Y", "Z"]:
-            df[axis], axis_params = _normalize(df[axis])
-            self.preprocessor_params["normalization"][axis] = axis_params
-        return df
+        axis_params: dict[Axis, NormalizationParams] = {}
+        for axis in [Axis.X, Axis.Y, Axis.Z]:
+            df[axis.value], params = normalize(df[axis.value])
+            axis_params[axis] = params
+        return df, axis_params
 
-    def _standardize_v(self, data: pd.DataFrame) -> pd.DataFrame:
-        """apply standardization to V"""
+    def _standardize_v(
+        self, data: pd.DataFrame
+    ) -> tuple[pd.DataFrame, StandardizationParams]:
+        """Apply z-score standardization to V column."""
         df = data.copy()
-        df["V"], params = _standardize(df["V"])
-        self.preprocessor_params["standardization"] = params
-        return df
+        df["V"], params = standardize(df["V"])
+        return df, params
 
-    def _downsample_data(self, data: pd.DataFrame, statistic="mean") -> pd.DataFrame:
-        """downsample data making the average by blocks of given resolution
-
-        Args:
-            data (pd.DataFrame): data to downsample
-            statistic (str): statistic to take when downsampling.
-
-        Returns:
-            pd.DataFrame: downsampled data
-        """
-        # save downsampling parameters
-        self.preprocessor_params["downsampling"] = {"resolution": self.downsampling_res}
-
-        # downsample by grouping in blocks of given resolution
+    def _downsample_data(
+        self,
+        data: pd.DataFrame,
+        statistic: (
+            DownsamplingStatistic | str | Callable[..., pd.DataFrame]
+        ) = DownsamplingStatistic.MEAN,
+    ) -> pd.DataFrame:
+        """Downsample data by averaging blocks of given resolution."""
+        assert self.downsampling_res is not None
+        res = self.downsampling_res
         idfs = []
-        # loop over unique ids
-        for id in self.griddata.data.index.get_level_values("ID").unique():
-            # filter by id
+        for id_val in self.griddata.data.index.get_level_values("ID").unique():
             idf = self.griddata.data.loc[
-                self.griddata.data.index.get_level_values("ID") == id
+                self.griddata.data.index.get_level_values("ID") == id_val
             ].reset_index()
 
-            # save x,y values
-            x = idf["X"][0]
-            y = idf["Y"][0]
-
-            # extract z
+            x = idf["X"].iloc[0]
+            y = idf["Y"].iloc[0]
             idf = idf[["Z", "V"]]
 
-            # downsample by grouping in blocks of given resolution
-            # and taking the mean
-            idf = idf.groupby(
-                idf["Z"].apply(
-                    lambda x: self.preprocessor_params["downsampling"]["resolution"]
-                    * round(x / self.preprocessor_params["downsampling"]["resolution"])
-                )
-            )[["V"]].apply(_downsampling_method, downsampling_func=statistic)
-            # new downsampled df
+            grouped = idf.groupby(idf["Z"].apply(lambda z: res * round(z / res)))
+            idf = grouped[["V"]].apply(_apply_downsampling, downsampling_func=statistic)
+
             idf["X"] = x
             idf["Y"] = y
-            idf["ID"] = id
-            idf.reset_index(inplace=True)  # reset index resulting from groupby
+            idf["ID"] = id_val
+            idf = idf.reset_index()
             idfs.append(idf)
 
-        # return downsampled grid data
-        return pd.concat(idfs)
+        return cast(pd.DataFrame, pd.concat(idfs))
 
 
-def _downsampling_method(
-    grouped_df: pd.DataFrame, downsampling_func: Union[str, object]
-) -> pd.DataFrame:
-    """allow to choose different downsampling methods
+def _apply_downsampling(
+    grouped_df: pd.DataFrame,
+    downsampling_func: DownsamplingStatistic | str | Callable[..., pd.DataFrame],
+) -> pd.DataFrame | pd.Series[float]:
+    """Apply a downsampling statistic to a grouped DataFrame."""
+    if callable(downsampling_func) and not isinstance(downsampling_func, str):
+        return downsampling_func(grouped_df)
 
-    Apply downsampling method to grouped dataframe via the apply method of
-    pandas groupby object.
-    The downsampling method can be either an accepted string or a custom
-    function.
-
-    Args:
-        grouped_df (pd.DataFrame): grouped dataframe
-        downsampling_func (Union[str, object]): downsampling method. Either an
-            accepted string or a custom function
-
-    Raises:
-        NotImplementedError: if downsampling_func is not an accepted string
-
-    Returns:
-        pd.DataFrame: downsampled dataframe
-    """
-
-    if isinstance(downsampling_func, str):
-        if downsampling_func == "mean":
-            ratio = grouped_df[["V"]].mean()
-        elif downsampling_func == "max":
-            ratio = grouped_df[["V"]].max()
-        elif downsampling_func == "min":
-            ratio = grouped_df["V"].min()
-        elif downsampling_func == "median":
-            ratio = grouped_df["V"].median()
-        elif downsampling_func == "sum":
-            ratio = grouped_df["V"].sum()
-        elif downsampling_func == "quantile75":
-            ratio = grouped_df["V"].quantile(0.75)
-        else:
-            raise NotImplementedError
-    else:
-        ratio = downsampling_func(grouped_df)
-
-    return ratio
+    stat = DownsamplingStatistic(downsampling_func)
+    match stat:
+        case DownsamplingStatistic.MEAN:
+            return grouped_df[["V"]].mean()
+        case DownsamplingStatistic.MAX:
+            return grouped_df[["V"]].max()
+        case DownsamplingStatistic.MIN:
+            return grouped_df[["V"]].min()
+        case DownsamplingStatistic.MEDIAN:
+            return grouped_df[["V"]].median()
+        case DownsamplingStatistic.SUM:
+            return grouped_df[["V"]].sum()
+        case DownsamplingStatistic.QUANTILE75:
+            return grouped_df[["V"]].quantile(0.75)
 
 
 def reverse_preprocessing(griddata: GridData) -> GridData:
-    """reverse preprocessing of whole GridData object
+    """Reverse all reversible preprocessing transformations.
 
-    reverse all reversible transformations that have been
-    applied to the GridData object.
+    Reverses normalization of XYZ and standardization of V.
+    Downsampling cannot be reversed.
 
-    This method reverses the operations of preprocessing of:
-        - Normalization of X Y Z
-        - Standardization of V
-
-    Note:
-        It cannot reverse downsampling!
+    Args:
+        griddata: GridData with preprocessing_params set.
 
     Returns:
-        GridData: GridData object with the data with reversed preprocessing
+        New GridData with reversed transformations.
+
+    Raises:
+        ValueError: If no preprocessing params are present.
     """
-    if griddata.preprocessor_params is None:
-        raise ValueError("No preprocessing has been applied to the data")
-    else:
-        # get data
-        data = griddata.data.copy().reset_index()
-        if "normalization" in griddata.preprocessor_params:
-            # reverse normalization of X Y Z
-            # original_value = normalized_value * (max_value - min_value) + min_value
-            for axis in ["X", "Y", "Z"]:
-                data[axis] = (
-                    data[axis]
-                    * (
-                        griddata.preprocessor_params["normalization"][axis]["max"]
-                        - griddata.preprocessor_params["normalization"][axis]["min"]
-                    )
-                    + griddata.preprocessor_params["normalization"][axis]["min"]
-                )
-        if "standardization" in griddata.preprocessor_params:
-            # reverse standardization of V
-            data["V"] = (
-                data["V"] * griddata.preprocessor_params["standardization"]["std"]
-                + griddata.preprocessor_params["standardization"]["mean"]
-            )
-            # return
-        return GridData(data)
+    params = griddata.preprocessing_params
+    if params is None:
+        msg = "No preprocessing has been applied to the data"
+        raise ValueError(msg)
+
+    data = griddata.data.copy().reset_index()
+
+    if params.normalization is not None:
+        for axis in [Axis.X, Axis.Y, Axis.Z]:
+            norm = params.normalization[axis]
+            data[axis.value] = data[axis.value] * (norm.max - norm.min) + norm.min
+
+    if params.standardization is not None:
+        std = params.standardization
+        data["V"] = data["V"] * std.std + std.mean
+
+    return GridData(data)

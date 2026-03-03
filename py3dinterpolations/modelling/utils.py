@@ -1,43 +1,42 @@
-"""utility functions for modelling module"""
+"""Utility functions for modelling module."""
 
 import pandas as pd
 
+from ..core.types import NormalizationParams, StandardizationParams
 
-def _normalize(series: pd.Series) -> tuple:
-    """normalize series between 0 and 1
+
+def normalize(series: pd.Series) -> tuple[pd.Series, NormalizationParams]:
+    """Normalize series to [0, 1] range.
 
     Args:
-        series (pd.Series): series to normalize
+        series: Series to normalize.
 
     Returns:
-        tuple: normalized series and normalization parameters
+        Tuple of (normalized series, normalization params).
     """
     series = series.copy()
-    # save normalization parameters
-    params = {
-        "min": series.min(),
-        "max": series.max(),
-    }
-    # normalize
-    series = (series - params["min"]) / (params["max"] - params["min"])
+    params = NormalizationParams(min=float(series.min()), max=float(series.max()))
+    value_range = params.max - params.min
+    if value_range == 0.0:
+        series[:] = 0.0
+        return series, params
+    series = (series - params.min) / value_range
     return series, params
 
 
-def _standardize(series: pd.Series) -> tuple:
-    """standardize series to have mean 0 and std 1
+def standardize(series: pd.Series) -> tuple[pd.Series, StandardizationParams]:
+    """Standardize series to mean=0, std=1.
 
     Args:
-        series (pd.Series): series to standardize
+        series: Series to standardize.
 
     Returns:
-        tuple: standardized series and standardization parameters
+        Tuple of (standardized series, standardization params).
     """
     series = series.copy()
-    # save standardization parameters
-    params = {
-        "mean": series.mean(),
-        "std": series.std(),
-    }
-    # standardize
-    series = (series - params["mean"]) / (params["std"])
+    params = StandardizationParams(mean=float(series.mean()), std=float(series.std()))
+    if params.std == 0.0 or pd.isna(params.std):
+        series[:] = 0.0
+        return series, params
+    series = (series - params.mean) / params.std
     return series, params

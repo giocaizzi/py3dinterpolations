@@ -1,40 +1,26 @@
 """test preprocessing class"""
 
 import pytest
-from unittest.mock import patch
 import itertools
 from pandas.testing import assert_frame_equal
 
-
 from py3dinterpolations.core.griddata import GridData
+from py3dinterpolations.core.types import PreprocessingParams
 from py3dinterpolations.modelling.preprocessor import (
     Preprocessor,
     reverse_preprocessing,
 )
 
 
-def test_Preprocessor_init(test_data):
-    # test that the Preprocessor class is initialized correctly
-    # with the right attributes
-    # and preprocssing is not actually run
+def test_preprocessor_init(test_data):
     gd = GridData(test_data)
-    preprocess = Preprocessor(
-        gd,
-    )
-    # griddata is set correctly
-    assert preprocess.griddata == gd
-
-    # Preprocessor Default parameters are set correctly
+    preprocess = Preprocessor(gd)
+    assert preprocess.griddata is gd
     assert preprocess.downsampling_res is None
     assert preprocess.standardize_v is True
     assert preprocess.normalize_xyz is True
 
-    # preprocessing is not run
-    assert preprocess.preprocessor_params == {}
 
-
-# like this, all scenarios are tested,
-# also the False, False, None
 # original data is at 1 m resolution so the 4 m downsampling_res
 PREPROCESSING_COMBINATIONS = list(
     itertools.product([4, None], [True, False], [True, False])
@@ -45,13 +31,10 @@ PREPROCESSING_COMBINATIONS = list(
     "downsampling_res, normalize_xyz, standardize_v",
     PREPROCESSING_COMBINATIONS,
 )
-def test_Preprocessor_preprocess_output(
+def test_preprocessor_preprocess_output(
     downsampling_res, normalize_xyz, standardize_v, test_data
 ):
-    """test that the Preprocessor class restitute a griddata object"""
-    # with same carachetristics as the original one,
-    # if downsample with also less data
-
+    """test that the Preprocessor class returns a griddata object"""
     gd = GridData(test_data)
     pp_gd = Preprocessor(
         gd,
@@ -60,18 +43,14 @@ def test_Preprocessor_preprocess_output(
         standardize_v=standardize_v,
     ).preprocess()
 
-    # output is a griddata object
     assert isinstance(pp_gd, GridData)
+    assert isinstance(pp_gd.preprocessing_params, PreprocessingParams)
 
-    # if downsampling_res is not None,
-    # less data is expected
     if downsampling_res is not None:
-        # has less data
         assert len(gd.data) > len(pp_gd.data)
+        assert pp_gd.preprocessing_params.downsampling is not None
 
-    # normalize means that are between 0 and 1
     if normalize_xyz:
-        # X Y Z are normalized
         df = pp_gd.data.copy().reset_index()
         assert df["X"].min() == 0
         assert df["X"].max() == 1
@@ -79,31 +58,25 @@ def test_Preprocessor_preprocess_output(
         assert df["Y"].max() == 1
         assert df["Z"].min() == 0
         assert df["Z"].max() == 1
+        assert pp_gd.preprocessing_params.normalization is not None
 
-    def compare_floats(a, b, eps=1e-10):
-        return abs(a - b) < eps
-
-    # standardize means that mean is 0 and std is 1
     if standardize_v:
-        # V is standardized
-        assert compare_floats(pp_gd.data["V"].mean(), 0.0)
-        assert compare_floats(pp_gd.data["V"].std(), 1.0)
+        assert abs(pp_gd.data["V"].mean()) < 1e-10
+        assert abs(pp_gd.data["V"].std() - 1.0) < 1e-10
+        assert pp_gd.preprocessing_params.standardization is not None
 
-    # in any case it would not change number of unique ids
+    # same number of unique ids
     assert len(gd.data.index.get_level_values("ID").unique()) == len(
         pp_gd.data.index.get_level_values("ID").unique()
     )
 
 
-@pytest.mark.skip
-# test reverse preprocessing method
 @pytest.mark.parametrize(
     "downsampling_res, normalize_xyz, standardize_v",
     PREPROCESSING_COMBINATIONS,
 )
-def test_reverse_preprocessing(
-    downsampling_res, normalize_xyz, standardize_v, test_data
-):
+def test_reverse_preprocessing(downsampling_res, normalize_xyz, standardize_v, test_data):
+    """test reverse_preprocessing restores original data"""
     gd = GridData(test_data)
     pp_gd = Preprocessor(
         gd,
@@ -111,15 +84,20 @@ def test_reverse_preprocessing(
         normalize_xyz=normalize_xyz,
         standardize_v=standardize_v,
     ).preprocess()
-    # reverse preprocessing
+
     gd_rev = reverse_preprocessing(pp_gd)
 
-    # can check if they are equal to original only if downsampling is not None
     if downsampling_res is None:
-        print(gd.data, gd_rev.data)
-        # datframes should be equal
+        # dataframes should be equal when no downsampling
         assert_frame_equal(gd.data, gd_rev.data)
     else:
-        pytest.skip("NOT IMPLEMENTED YET")
+        # with downsampling, at least check we can reverse
+        assert isinstance(gd_rev, GridData)
+        assert gd_rev.preprocessing_params is None
 
-    # todo: assert something if downsampling is not None
+
+def test_reverse_preprocessing_no_params(test_data):
+    """test that ValueError is raised when no params"""
+    gd = GridData(test_data)
+    with pytest.raises(ValueError, match="No preprocessing"):
+        reverse_preprocessing(gd)

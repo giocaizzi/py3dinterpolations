@@ -1,34 +1,69 @@
-# py3Dinterpolations
+<div align="center">
 
-|  |  |
-| --- | --- |
-| Distribution | ![PyPI](https://img.shields.io/pypi/v/py3Dinterpolations?color=blue) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py3Dinterpolations) |
-| Testing | [![Tests](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/tests.yml) [![codecov](https://codecov.io/gh/giocaizzi/py3Dinterpolations/branch/main/graph/badge.svg?token=8COIITUR2I)](https://codecov.io/gh/giocaizzi/py3Dinterpolations) |
-|Code style|![Black](https://img.shields.io/badge/code%20style-black-black) [![Flake8 Linting](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/linting.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/linting.yml)|
-| Documentation | [![Documentation](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/documentation.yml/badge.svg?branch=gh-pages)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/documentation.yml) |
+<img src="assets/logo.png" alt="py3dinterpolations" width="100">
 
+# py3dinterpolations
 
-This is a python package to compute **quick 3D interpolations of spatial data**.
+**Quick 3D interpolation with Python.**
 
-Supports the **following interpolation** methods:
-- *Ordinary 3D Kriging* : [`pykrige`](https://github.com/GeoStat-Framework/PyKrige)
-- *Inverse Distance Weighting (IDW)*
+[![PyPI](https://img.shields.io/pypi/v/py3dinterpolations?color=blue)](https://pypi.org/project/py3dinterpolations/)
+[![Python](https://img.shields.io/pypi/pyversions/py3dinterpolations)](https://pypi.org/project/py3dinterpolations/)
+[![Tests](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/tests.yml)
+[![Coverage](https://codecov.io/gh/giocaizzi/py3dinterpolations/branch/main/graph/badge.svg?token=8COIITUR2I)](https://codecov.io/gh/giocaizzi/py3dinterpolations)
+[![Docs](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/documentation.yml/badge.svg?branch=gh-pages)](https://giocaizzi.github.io/py3dinterpolations/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Supports **preprocessing** of data:
-- *Downsampling*
-- *Normalization* of X,Y,Z coordinates
-- *Standardization* of signal 
+</div>
 
-**Visualizations**
-- 2D with [`matplotlib`](https://matplotlib.org/stable/)
-- 3D with [`plotly`](https://plotly.com/).
+---
+
+Interpolate scattered 3D spatial data onto regular grids using Ordinary Kriging or Inverse Distance Weighting (IDW). Built on top of [PyKrige](https://github.com/GeoStat-Framework/PyKrige) and [scikit-learn](https://scikit-learn.org/), with built-in preprocessing, cross-validation, and interactive visualizations.
+
+```python
+import pandas as pd
+from py3dinterpolations import GridData, interpolate
+
+# load your spatial data (columns: ID, X, Y, Z, V)
+df = pd.read_csv("measurements.csv")
+griddata = GridData(df)
+
+# interpolate onto a regular 3D grid
+modeler = interpolate(
+    griddata=griddata,
+    model_type="ordinary_kriging",
+    grid_resolution=5.0,
+    model_params={"variogram_model": "linear", "nlags": 6, "weight": True},
+)
+
+# access results
+grid = modeler.result  # interpolated 3D grid
+```
+
+## Features
+
+- **Interpolation** — Ordinary 3D Kriging and IDW out of the box
+- **Preprocessing** — downsampling, coordinate normalization, signal standardization
+- **Cross-validation** — parameter grid search for kriging models
+- **Visualization** — 2D slices with [matplotlib](https://matplotlib.org/), interactive 3D with [plotly](https://plotly.com/)
 
 ## Installation
 
+```bash
+pip install py3dinterpolations
 ```
-pip install py3Dinterpolations
+
+With development dependencies:
+
+```bash
+pip install py3dinterpolations[dev]
 ```
 
 ## Documentation
 
-Documentation with working examples can be found [here](https://giocaizzi.github.io/py3Dinterpolations/).
+Full documentation with working examples is available at
+[giocaizzi.github.io/py3dinterpolations](https://giocaizzi.github.io/py3dinterpolations/).
+
+## License
+
+[MIT](LICENSE)

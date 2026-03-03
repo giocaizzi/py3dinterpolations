@@ -1,0 +1,31 @@
+site_name: py3dinterpolations
+site_url: https://giocaizzi.github.io/py3dinterpolations/
+repo_url: https://github.com/giocaizzi/py3dinterpolations
+repo_name: giocaizzi/py3dinterpolations
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+
+nav:
+  - Home: index.md
+  - API Reference: api.md

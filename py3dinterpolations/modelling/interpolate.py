@@ -1,151 +1,81 @@
-"""interpolator"""
+"""Top-level interpolation function."""
 
-from typing import Union, Tuple
-import numpy as np
+import logging
 
+from ..core.grid3d import create_grid
 from ..core.griddata import GridData
-from ..core.grid3d import create_regulargrid3d_from_griddata
-from .modeler import Modeler
-from .preprocessor import Preprocessor
+from ..core.types import ModelType
 from .estimator import Estimator
-from ..plotting.plotting import plot_downsampling
+from .modeler import Modeler
+from .models import get_model
+from .preprocessor import Preprocessor
+
+logger = logging.getLogger(__name__)
 
 
 def interpolate(
     griddata: GridData,
-    model_name: str,
-    grid_resolution: float,
-    model_params: dict = {},
-    model_params_grid: dict = {},
-    preprocess_kwags: dict = {},
-    predict_kwags: dict = {},
-    return_model: bool = False,
-    return_donwsampling_chart: bool = False,
-) -> Union[np.ndarray, Tuple[np.ndarray, Modeler]]:
-    """interpolate griddata
-
-    Interpolate griddata using a Modeler instance that wraps all supported
-    models. The model is selected with the argument `model_name`.
-
-    If the `model_params` is passed, then the model is initialized with those
-    parameters. Otherwise, to make a search for the best parameters, use the
-    `model_params_grid` argument.
-
-    The 3D grid for interpolation is retrived from the training data.
-    At the moment features only a regular grid.
-
-    If requested, the griddata is preprocessed using the Preprocessor class.
+    model_type: ModelType | str,
+    grid_resolution: float | dict[str, float],
+    model_params: dict[str, object] | None = None,
+    model_params_grid: dict[str, list[object]] | None = None,
+    preprocessing: dict[str, object] | None = None,
+    **predict_kwargs: object,
+) -> Modeler:
+    """Interpolate GridData and return the Modeler with results.
 
     Args:
-        griddata (GridData): griddata to interpolate
-        model_name (str): model name
-        grid_resolution (float): grid resolution
-        model_params (dict, optional): model parameters.
-            Defaults to {}.
-        model_params_grid (dict, optional): model parameters grid over which to
-            search for the best parameters. Defaults to {}.
-        preprocess_kwags (dict, optional): preprocessing parameters.
-            Defaults to {}.
-        predict_kwags (dict, optional): prediction parameters.
-            Defaults to {}.
-        return_model (bool, optional): return model.
-            Defaults to False.
-        return_donwsampling_chart (bool,optional): return downsampling chart.
-            Defaults to False.
+        griddata: Source data to interpolate.
+        model_type: Which model to use (e.g. "ordinary_kriging", "idw").
+        grid_resolution: Grid resolution. Float for regular, dict for irregular.
+        model_params: Model constructor parameters.
+        model_params_grid: Parameter grid for cross-validation search.
+        preprocessing: Keyword args for Preprocessor
+            (e.g. downsampling_res, normalize_xyz).
+        **predict_kwargs: Extra kwargs passed to model.predict().
 
     Returns:
-        Union[np.ndarray, Tuple[np.ndarray, Modeler, matplotlib.figure.Figure]]:
-            interpolated griddata, optionally with model and
-            downsampling chart.
+        Modeler instance with .result populated.
 
     Raises:
-        ValueError: either model_params or model_params_grid must be passed
-        ValueError: model_params and model_params_grid cannot be passed together
-        NotImplementedError: only RegularGrid3D is supported.
-        NotImplementedError: Parameter search is only supported for ordinary_kriging
-
-    Examples:
-        >>> # interpolate griddata
-        >>> interpolated = interpolate(
-        >>>     griddata,
-        >>>     model_name="ordinary_kriging",
-        >>>     grid_resolution=5,
-        >>>     model_params={
-        >>>         "variogram_model": "linear",
-        >>>         "nlags": 6,
-        >>>         "weight": True,
-        >>>     },
-        >>>     preprocess_kwags={
-        >>>         "downsampling_res": 0.1,
-        >>>         "normalize_xyz": True,
-        >>>         "standardize_v": True,
-        >>>     },
-        >>> )
-
+        ValueError: If neither or both model_params/model_params_grid are given.
+        NotImplementedError: If parameter search is used for non-kriging models.
     """
-    # check model_params and model_params_grid
-    if model_params == {} and model_params_grid == {}:
-        raise ValueError("either model_params or model_params_grid must be passed")
-    if model_params != {} and model_params_grid != {}:
-        raise ValueError("model_params and model_params_grid cannot be passed together")
+    logger.info("Starting interpolation with model=%s", model_type)
 
-    # check grid_resolution is of supported type
-    if isinstance(grid_resolution, float) or isinstance(grid_resolution, int):
-        # retrive associated grid
-        grid3d = create_regulargrid3d_from_griddata(griddata, grid_resolution)
-    else:
-        raise NotImplementedError("only RegularGrid3D is supported.")
+    if model_params is None and model_params_grid is None:
+        msg = "Either model_params or model_params_grid must be provided"
+        raise ValueError(msg)
+    if model_params is not None and model_params_grid is not None:
+        msg = "Cannot provide both model_params and model_params_grid"
+        raise ValueError(msg)
 
-    # preprocess griddata if needed
-    if preprocess_kwags != {}:
-        # save original griddata
-        griddata_original = griddata
-        # preprocessor
-        preprocessor = Preprocessor(griddata, **preprocess_kwags)
-        # get new griddata
+    # Build grid
+    grid = create_grid(griddata, grid_resolution)
+
+    # Preprocess if needed
+    if preprocessing is not None:
+        preprocessor = Preprocessor(griddata, **preprocessing)
         griddata = preprocessor.preprocess()
 
-    if model_params == {}:
-        # implemented only for ordinary_kriging
-        if model_name != "ordinary_kriging":
-            raise NotImplementedError(
-                "Parameter search is only supported for ordinary_kriging"
-            )
+    # Parameter search via estimator
+    if model_params is None:
+        model_type_enum = ModelType(model_type)
+        if model_type_enum != ModelType.ORDINARY_KRIGING:
+            msg = "Parameter search is only supported for ordinary_kriging"
+            raise NotImplementedError(msg)
 
-        # estimate
+        assert model_params_grid is not None
         est = Estimator(griddata, model_params_grid)
+        model_params = dict(est.best_params)
+        model_params.pop("method", None)
 
-        # TODO: krige wrapper, method key param
-        #   that is not needed for the estimator
-        #   find a flexible way to handle this, probably a good way is to use directly
-        #   the sci-kit wrapper Krige()
-        model_params = est.best_params
-        model_params.pop("method")
+    # Build and fit model
+    model = get_model(model_type, **model_params)
+    modeler = Modeler(griddata=griddata, grid=grid, model=model)
 
-    # init Modeler
-    model = Modeler(
-        griddata=griddata,
-        grid3d=grid3d,
-        model_name=model_name,
-        model_params=model_params,
-    )
+    # Predict
+    modeler.predict(**predict_kwargs)
 
-    # make predictions
-    predictions = model.predict(**predict_kwags)
-
-    # Depending on the arguments, return different things
-    # bydefault only predictions are returned (np.ndarray)
-    # else return a list progressively adding the things
-    if any([return_model, return_donwsampling_chart]):
-        returning = [predictions]
-    else:
-        returning = predictions
-
-    # return model
-    if return_model:
-        returning.append(model)
-    # return downsampling chart
-    if return_donwsampling_chart:
-        returning.append(plot_downsampling(griddata_original, griddata))
-
-    return returning
+    logger.info("Interpolation complete")
+    return modeler

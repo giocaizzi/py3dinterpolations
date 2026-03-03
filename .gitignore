@@ -3,9 +3,13 @@ data
 
 ####### Documentation
 docsrc/build/
+site/
 
 ######## VScode
 .vscode
+
+####### Ruff
+.ruff_cache/
 
 ####### Default python gitignore
 

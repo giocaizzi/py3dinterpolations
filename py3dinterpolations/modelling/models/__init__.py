@@ -1,105 +1,43 @@
-"""models for 3D interpolation"""
+"""Model registry for 3D interpolation."""
 
-import numpy as np
-from typing import Union
+from ...core.types import ModelType
+from .base import BaseModel
+from .idw import IDWModel
+from .kriging import KrigingModel
+from .sklearn_model import SklearnModel
 
-# EXTERNAL
-from pykrige.ok3d import OrdinaryKriging3D
-
-# INTERNAL
-from .idw import IDW
-
-
-SUPPORTED_MODELS = {
-    "statistical": {
-        "ordinary_kriging": OrdinaryKriging3D,  # pykrige
-    },
-    "deterministic": {
-        "idw": IDW,
-    },
+MODEL_REGISTRY: dict[ModelType, type[BaseModel]] = {
+    ModelType.ORDINARY_KRIGING: KrigingModel,
+    ModelType.IDW: IDWModel,
 }
 
-
-def get_model_type(inner_key: str):
-    """get model type
-
-    Raises:
-        ValueError: if model not supported
-    """
-    for outer_key in SUPPORTED_MODELS:
-        if inner_key in SUPPORTED_MODELS[outer_key]:
-            return outer_key
-    # if gets here, model not supported
-    raise ValueError(f"model {inner_key} not supported")
+__all__ = [
+    "MODEL_REGISTRY",
+    "BaseModel",
+    "IDWModel",
+    "KrigingModel",
+    "SklearnModel",
+    "get_model",
+]
 
 
-class ModelWrapper:
-    """model wrappper
-
-    This class is designed to allow wrapping of different models
-    from different libraries, both external and internal to py3Dinterpolations.
-
-    Defines a fit and a predict method, to be called
-    when interpolating.
+def get_model(model_type: ModelType | str, **kwargs: object) -> BaseModel:
+    """Instantiate a model by type.
 
     Args:
-        model_name (str): model name
-        \\*args: args for model
-        \\*\\*kwargs: kwargs for model
+        model_type: Model identifier, either a ModelType enum or its string value.
+        **kwargs: Parameters passed to the model constructor.
 
-    Attributes:
-        model (object): model object
-        model_type (str): model type
-        model_name (str): model name
+    Returns:
+        An instantiated model ready for fit().
 
+    Raises:
+        ValueError: If model_type is not in the registry.
     """
-
-    @property
-    def model_type(self):
-        return self._model_type
-
-    @property
-    def model_name(self):
-        return self._model_name
-
-    @model_type.setter
-    def model_type(self, model_type: str):
-        self._model_type = model_type
-
-    @model_name.setter
-    def model_name(self, model_name: str):
-        self._model_name = model_name
-        self._model_type = get_model_type(self._model_name)
-
-    def __init__(self, model_name: str, *args, **kwargs):
-        self.model_name = model_name
-        self.model = SUPPORTED_MODELS[self.model_type][self.model_name](*args, **kwargs)
-
-    def fit(self):
-        # pykrige is already fitted
-        # deterministic models are not
-        pass
-
-    def predict(self, *args, **kwargs) -> Union[tuple, np.ndarray]:
-        """predict method
-
-        Execute predictions for the model.
-
-        Args:
-            \\*args: args for model
-            \\*\\*kwargs: kwargs for model
-        """
-        if self.model_type == "statistical":
-            # returns both interpolated and variance grids
-            # quickfix for weird behacviour
-            # unpack first three args as x, y, z
-            x, y, z, *args = args
-            return self.model.execute(
-                *args, style="grid", xpoints=x, ypoints=y, zpoints=z, **kwargs
-            )
-        elif self.model_type == "deterministic":
-            # idw does not return variance, only a single grid
-            return self.model.compute(*args, **kwargs), np.ndarray([])
-        else:
-            # if gets here, model not supported
-            raise ValueError(f"model {self.model_type} not supported")
+    model_type = ModelType(model_type)
+    cls = MODEL_REGISTRY.get(model_type)
+    if cls is None:
+        available = list(MODEL_REGISTRY.keys())
+        msg = f"Model {model_type!r} not in registry. Available: {available}"
+        raise ValueError(msg)
+    return cls(**kwargs)

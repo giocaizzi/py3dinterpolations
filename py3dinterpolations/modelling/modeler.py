@@ -1,141 +1,101 @@
-"""model wrapper for interpolation"""
+"""High-level modelling orchestrator."""
+
+import logging
 
 import numpy as np
 
-from ..core.griddata import GridData
 from ..core.grid3d import Grid3D
-from .models import ModelWrapper
+from ..core.griddata import GridData
+from ..core.types import InterpolationResult
+from .models.base import BaseModel
+
+logger = logging.getLogger(__name__)
 
 
 class Modeler:
-    """modeler class for 3d modelling
+    """Orchestrates fitting a model and predicting on a 3D grid.
 
-    This class applies a model defined within the ModelWrapper
-    class to a Grid3D instance
-
-    Currently supports:
-        Statistical:
-            - Ordinary Kriging : `ordinary_kriging` (pykrige)
-        Deterministic:
-            - Inverse Distance Weighting : `idw`
+    Handles normalization-aware grid selection and standardization reversal.
 
     Args:
-        griddata (GridData): GridData istance
-        grid3d (Grid3D): Grid3D istance
-        model_name (str): model name, default `ordinary_kriging`
-        model_params (dict): model parameters
-
-    Attributes:
-        griddata (GridData): GridData istance
-        grid3d (Grid3D): Grid3D istance
-        model (object): model object
-        results (dict): dictionary with interpolated and variance grids
-
-    Examples:
-        >>> # modeler
-        >>> modeler = Modeler(griddata, grid3d)
-        >>> # predict
-        >>> interpolated = modeler.predict()
-
+        griddata: Training data.
+        grid: 3D grid for predictions.
+        model: Fitted or unfitted BaseModel instance. Will be fit on construction.
     """
-
-    model: ModelWrapper
-    results: dict
 
     def __init__(
         self,
         griddata: GridData,
-        grid3d: Grid3D,
-        model_name: str = "ordinary_kriging",
-        model_params: dict = {},
+        grid: Grid3D,
+        model: BaseModel,
     ):
-        # griddata and grid3d
         self._griddata = griddata
-        self._grid3d = grid3d
-        self._model_name = model_name
-        self._model_params = model_params
+        self._grid = grid
+        self._model = model
+        self._result: InterpolationResult | None = None
 
-        # model
-        self.model = ModelWrapper(
-            model_name,
-            self.griddata.numpy_data[:, 0],  # x
-            self.griddata.numpy_data[:, 1],  # y
-            self.griddata.numpy_data[:, 2],  # z
-            self.griddata.numpy_data[:, 3],  # value
-            **model_params,
-        )
+        # Fit the model on training data
+        data = griddata.numpy_data
+        self._model.fit(data[:, 0], data[:, 1], data[:, 2], data[:, 3])
+        logger.info("Model %s fitted on %d points", model.name, len(data))
 
     @property
     def griddata(self) -> GridData:
         return self._griddata
 
     @property
-    def grid3d(self) -> Grid3D:
-        return self._grid3d
+    def grid(self) -> Grid3D:
+        return self._grid
 
     @property
-    def model_name(self) -> str:
-        return self._model_name
+    def model(self) -> BaseModel:
+        return self._model
 
     @property
-    def model_params(self) -> dict:
-        return self._model_params
+    def result(self) -> InterpolationResult | None:
+        return self._result
 
-    def predict(self, **kwargs) -> np.ndarray:
-        """makes predictions considering all past preprocessing
-
-        - if normalization was applied, predict on normalized grid
-        - if standardized data, reverse standardization
-        - reshape from zxy to xyz (pykrige output)
-
-        Args:
-            grids_arrays (dict): dictionary with x, y, z grids 1d np.ndarray
+    def predict(self, **kwargs: object) -> np.ndarray:
+        """Make predictions, handling normalization and standardization reversal.
 
         Returns:
-            interpolated (np.ndarray): interpolated grid
+            Interpolated numpy array.
         """
-        # make predictions on normalized grid if normalization was applied
-        if "normalization" in self.griddata.preprocessor_params.keys():
-            grids_arrays = self.grid3d.normalized_grid
-        else:
-            grids_arrays = self.grid3d.grid
+        logger.info("Starting prediction on grid %s", self._grid)
 
-        # predict
-        # pykrige ordinarykrigin3d class returns a tuple
-        # X : N, Y : M, Z : L
-        # shape (L, M, N)
-        interpolated, variance = self.model.predict(
-            grids_arrays["X"],
-            grids_arrays["Y"],
-            grids_arrays["Z"],
+        # Use normalized grid if normalization was applied
+        params = self._griddata.preprocessing_params
+        if params is not None and params.normalization is not None:
+            grid_arrays = self._grid.normalized_grid
+        else:
+            grid_arrays = self._grid.grid
+
+        # Predict
+        result = self._model.predict(
+            grid_arrays["X"],
+            grid_arrays["Y"],
+            grid_arrays["Z"],
             **kwargs,
         )
 
-        # if standardized data, reverse standardization
-        if "standardization" in self.griddata.preprocessor_params:
-            interpolated = _reverse_standardized(
-                interpolated, self.griddata.preprocessor_params["standardization"]
-            )
-            variance = _reverse_standardized(
-                variance, self.griddata.preprocessor_params["standardization"]
-            )
+        interpolated = result.interpolated
+        variance = result.variance
 
-        # save results
-        self.results = {
-            "interpolated": interpolated,
-            "variance": variance,
-        }
+        # Reverse standardization if it was applied
+        if params is not None and params.standardization is not None:
+            std_params = params.standardization
+            interpolated = interpolated * std_params.std + std_params.mean
+            if variance is not None:
+                variance = variance * std_params.std + std_params.mean
 
-        # sets results  also in associated grid3d
-        self.grid3d.results = self.results
+        self._result = InterpolationResult(
+            interpolated=interpolated,
+            variance=variance,
+            probability=result.probability,
+        )
 
-        # return interpolated grid
+        # Also attach to grid
+        self._grid.result = self._result
+
+        logger.info("Prediction complete")
         return interpolated
-
-
-def _reverse_standardized(data: np.ndarray, standardization: dict) -> np.ndarray:
-    """reverse standardization of a 1d numpy array
-
-    considers that data could be none, in which case returns an empty array
-    """
-    return data * standardization["std"] + standardization["mean"]

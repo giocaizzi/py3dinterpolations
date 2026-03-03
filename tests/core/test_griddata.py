@@ -1,59 +1,47 @@
-"""test griddata class"""
+"""test GridData class"""
 
 import pytest
-from unittest.mock import patch
 
-from py3dinterpolations.core.griddata import GridData
+from py3dinterpolations.core.griddata import GridData, GridDataSpecs
+from py3dinterpolations.core.types import PreprocessingParams
 
 import pandas as pd
 
 
 @pytest.mark.parametrize(
-    "test_data,colnames,preprocessor_params",
+    "test_data,colnames,pp_params",
     [
         ("griddata_default_colnames.csv", ["ID", "X", "Y", "Z", "V"], None),
-        ("griddata_default_colnames.csv", ["ID", "X", "Y", "Z", "V"], {"foo": "bar"}),
+        (
+            "griddata_default_colnames.csv",
+            ["ID", "X", "Y", "Z", "V"],
+            PreprocessingParams(),
+        ),
         ("griddata_custom_colnames.csv", ["IID", "XX", "YY", "ZZ", "VV"], None),
         (
             "griddata_custom_colnames.csv",
             ["IID", "XX", "YY", "ZZ", "VV"],
-            {"foo": "bar"},
+            PreprocessingParams(),
         ),
     ],
     indirect=["test_data"],
 )
-def test_GridData_init(test_data, colnames, preprocessor_params):
-    """test GridData initalization with custom column names"""
-    # avoid setting specs
+def test_griddata_init(test_data, colnames, pp_params):
+    """test GridData initialization with custom column names"""
+    griddata = GridData(
+        test_data,
+        ID=colnames[0],
+        X=colnames[1],
+        Y=colnames[2],
+        Z=colnames[3],
+        V=colnames[4],
+        preprocessing_params=pp_params,
+    )
 
-    if preprocessor_params is None:
-        griddata = GridData(
-            test_data,
-            ID=colnames[0],
-            X=colnames[1],
-            Y=colnames[2],
-            Z=colnames[3],
-            V=colnames[4],
-        )
+    if pp_params is None:
+        assert griddata.preprocessing_params is None
     else:
-        griddata = GridData(
-            test_data,
-            ID=colnames[0],
-            X=colnames[1],
-            Y=colnames[2],
-            Z=colnames[3],
-            V=colnames[4],
-            preprocessor_params=preprocessor_params,
-        )
-
-    # assert preprocessor_params is not passed
-    if preprocessor_params == None:
-        # assert preprocessor_params is empty dict
-        assert griddata.preprocessor_params == {}
-    else:
-        # saved preprocessor_params
-        assert isinstance(griddata.preprocessor_params, dict)
-        assert griddata.preprocessor_params == preprocessor_params
+        assert isinstance(griddata.preprocessing_params, PreprocessingParams)
 
     # assert default column names mapping
     assert griddata.columns == {
@@ -64,18 +52,42 @@ def test_GridData_init(test_data, colnames, preprocessor_params):
         "V": colnames[4],
     }
 
-    # assert data is in GridData.data standard
+    # data format
     assert isinstance(griddata.data, pd.DataFrame)
-    # assert index
     assert len(griddata.data.index.names) == 4
     assert griddata.data.index.names == ["ID", "X", "Y", "Z"]
-    # assert columns
     assert len(griddata.data.columns) == 1
-    assert griddata.data.columns == ["V"]
+    assert griddata.data.columns.tolist() == ["V"]
     assert griddata.data["V"].dtype == "float64"
 
 
-# test fails when prerpocessor_params is not dict
-def test_GridData_init_fail(test_data):
-    with pytest.raises(ValueError):
-        gd = GridData(test_data, preprocessor_params="foo")
+def test_griddata_specs(test_data):
+    gd = GridData(test_data)
+    specs = gd.specs
+    assert isinstance(specs, GridDataSpecs)
+    assert specs.xmin <= specs.xmax
+    assert specs.ymin <= specs.ymax
+    assert specs.zmin <= specs.zmax
+    assert specs.vmin <= specs.vmax
+    assert specs.xsize >= 0
+    assert specs.ysize >= 0
+    assert specs.zsize >= 0
+
+
+def test_griddata_hull(test_data):
+    gd = GridData(test_data)
+    hull = gd.hull
+    assert hull is not None
+    assert hull.area > 0
+
+
+def test_griddata_len(test_data):
+    gd = GridData(test_data)
+    assert len(gd) == len(gd.data)
+
+
+def test_griddata_repr(test_data):
+    gd = GridData(test_data)
+    r = repr(gd)
+    assert "GridData" in r
+    assert "points=" in r

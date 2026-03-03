@@ -34,7 +34,13 @@ dev = [
     "mypy>=1.10",
     "pandas-stubs>=2.0",
 ]
-docs = ["mkdocs-material>=9.0", "mkdocstrings[python]>=0.25"]
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+    "mkdocs-gen-files>=0.5",
+    "mkdocs-literate-nav>=0.6",
+    "mkdocs-section-index>=0.3.8",
+]
 
 [project.urls]
 Documentation = "https://giocaizzi.github.io/py3dinterpolations/"

@@ -1,10 +1,11 @@
-name: Documentation build
+name: Documentation
 
 on:
   push:
-    branches: [gh-pages]
-  pull_request:
-    branches: [gh-pages]
+    branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   docs:
@@ -12,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: Install uv
@@ -23,6 +23,11 @@ jobs:
 
       - name: Install dependencies
         run: uv sync --extra docs
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy docs
         run: uv run mkdocs gh-deploy --force --clean

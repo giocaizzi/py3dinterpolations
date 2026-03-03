@@ -1,31 +1,83 @@
 site_name: py3dinterpolations
 site_url: https://giocaizzi.github.io/py3dinterpolations/
+site_description: Quick 3D interpolation with Python
+site_author: Giorgio Caizzi
 repo_url: https://github.com/giocaizzi/py3dinterpolations
 repo_name: giocaizzi/py3dinterpolations
 
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/logo.png
   palette:
     - scheme: default
       primary: indigo
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
+      toggle: { icon: material/brightness-7, name: Switch to dark mode }
     - scheme: slate
       primary: indigo
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+      toggle: { icon: material/brightness-4, name: Switch to light mode }
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - toc.follow
 
 plugins:
   - search
+  - gen-files:
+      scripts: [scripts/gen_ref_pages.py]
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
   - mkdocstrings:
       handlers:
         python:
+          paths: [.]
           options:
-            show_source: true
+            docstring_style: google
             show_root_heading: true
+            show_source: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            signature_crossrefs: true
+            merge_init_into_class: true
+            members_order: source
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - tables
+  - pymdownx.arithmatex: { generic: true }
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight: { use_pygments: true }
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed: { alternate_style: true }
+  - pymdownx.tasklist: { custom_checkbox: true }
+  - toc: { permalink: true }
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
   - Home: index.md
-  - API Reference: api.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+  - User Guide:
+      - Preprocessing: guide/preprocessing.md
+      - Models: guide/models.md
+      - Visualization: guide/visualization.md
+  - API Reference: reference/

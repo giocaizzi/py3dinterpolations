@@ -1,6 +1,11 @@
-<div align="center">
+---
+hide:
+  - navigation
+---
 
-<img src="assets/logo.png" alt="py3dinterpolations" width="100">
+<div align="center" markdown>
+
+![py3dinterpolations](assets/logo.png){ width="120" }
 
 # py3dinterpolations
 
@@ -10,23 +15,13 @@
 [![Python](https://img.shields.io/pypi/pyversions/py3dinterpolations)](https://pypi.org/project/py3dinterpolations/)
 [![Tests](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/tests.yml)
 [![Coverage](https://codecov.io/gh/giocaizzi/py3dinterpolations/branch/main/graph/badge.svg?token=8COIITUR2I)](https://codecov.io/gh/giocaizzi/py3dinterpolations)
-[![Docs](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/documentation.yml/badge.svg?branch=main)](https://giocaizzi.github.io/py3dinterpolations/)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 </div>
 
 ---
 
-Interpolate scattered 3D spatial data onto regular grids using Ordinary Kriging or Inverse Distance Weighting (IDW). Built on top of [PyKrige](https://github.com/GeoStat-Framework/PyKrige) and [scikit-learn](https://scikit-learn.org/), with built-in preprocessing, cross-validation, and interactive visualizations.
-
-<div align="center">
-<a href="https://giocaizzi.github.io/py3dinterpolations/guide/visualization/">
-<img src="assets/3d_screenshot.png" alt="3D interpolation volume — click for interactive version" width="700">
-</a>
-
-<sub>Click the image for the interactive 3D visualization</sub>
-</div>
+Interpolate scattered 3D spatial data onto regular grids using **Ordinary Kriging** or **Inverse Distance Weighting (IDW)**. Built on top of [PyKrige](https://github.com/GeoStat-Framework/PyKrige) and [scikit-learn](https://scikit-learn.org/), with built-in preprocessing, cross-validation, and interactive visualizations.
 
 ```python
 import pandas as pd
@@ -45,7 +40,7 @@ modeler = interpolate(
 )
 
 # access results
-grid = modeler.result  # interpolated 3D grid
+result = modeler.result  # InterpolationResult with .interpolated array
 ```
 
 ## Features
@@ -55,23 +50,8 @@ grid = modeler.result  # interpolated 3D grid
 - **Cross-validation** — parameter grid search for kriging models
 - **Visualization** — 2D slices with [matplotlib](https://matplotlib.org/), interactive 3D with [plotly](https://plotly.com/)
 
-## Installation
+## Quick links
 
-```bash
-pip install py3dinterpolations
-```
-
-With development dependencies:
-
-```bash
-pip install py3dinterpolations[dev]
-```
-
-## Documentation
-
-Full documentation with working examples is available at
-[giocaizzi.github.io/py3dinterpolations](https://giocaizzi.github.io/py3dinterpolations/).
-
-## License
-
-[MIT](LICENSE)
+- [Installation](getting-started/installation.md)
+- [Quick Start](getting-started/quickstart.md)
+- [API Reference](reference/)

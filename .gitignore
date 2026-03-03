@@ -2,7 +2,6 @@ temp
 data
 
 ####### Documentation
-docsrc/build/
 site/
 
 ######## VScode
@@ -83,7 +82,7 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
+# Documentation build
 docs/_build/
 
 # PyBuilder

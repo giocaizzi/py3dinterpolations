@@ -54,4 +54,4 @@ result = modeler.result  # InterpolationResult with .interpolated array
 
 - [Installation](getting-started/installation.md)
 - [Quick Start](getting-started/quickstart.md)
-- [API Reference](reference/)
+- [API Reference](reference/index.md)

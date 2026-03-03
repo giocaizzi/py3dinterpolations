@@ -20,7 +20,7 @@ fig = plot_3d_model(
 fig.show()
 ```
 
-<iframe src="../assets/3d_plot.html" width="100%" height="500" frameborder="0"></iframe>
+<iframe src="../../assets/3d_plot.html" width="100%" height="500" frameborder="0"></iframe>
 
 ### Parameters
 

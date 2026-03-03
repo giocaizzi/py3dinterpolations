@@ -20,14 +20,6 @@
 
 Interpolate scattered 3D spatial data onto regular grids using Ordinary Kriging or Inverse Distance Weighting (IDW). Built on top of [PyKrige](https://github.com/GeoStat-Framework/PyKrige) and [scikit-learn](https://scikit-learn.org/), with built-in preprocessing, cross-validation, and interactive visualizations.
 
-<div align="center">
-<a href="https://giocaizzi.github.io/py3dinterpolations/guide/visualization/">
-<img src="assets/3d_screenshot.png" alt="3D interpolation volume — click for interactive version" width="700">
-</a>
-
-<sub>Click the image for the interactive 3D visualization</sub>
-</div>
-
 ```python
 import pandas as pd
 from py3dinterpolations import GridData, interpolate

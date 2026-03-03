@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from ...core.types import InterpolationResult
+from ...core.types import InterpolationResult, SklearnClassifier, SklearnEstimator
 from .base import BaseModel
 
 
@@ -16,7 +16,7 @@ class SklearnModel(BaseModel):
         model_name: Human-readable name for this model.
     """
 
-    def __init__(self, estimator: object, model_name: str = "sklearn"):
+    def __init__(self, estimator: SklearnEstimator, model_name: str = "sklearn"):
         self._estimator = estimator
         self._model_name = model_name
 
@@ -47,7 +47,7 @@ class SklearnModel(BaseModel):
         interpolated = np.einsum("xyz->zyx", interpolated)
 
         probability = None
-        if hasattr(self._estimator, "predict_proba"):
+        if isinstance(self._estimator, SklearnClassifier):
             proba = self._estimator.predict_proba(X)
             probability = proba.reshape((*mx.shape, -1))
 

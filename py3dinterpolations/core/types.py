@@ -2,8 +2,24 @@
 
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import Protocol, runtime_checkable
 
 import numpy as np
+
+
+@runtime_checkable
+class SklearnEstimator(Protocol):
+    """Structural type for sklearn-compatible estimators."""
+
+    def fit(self, X: np.ndarray, y: np.ndarray) -> object: ...
+    def predict(self, X: np.ndarray) -> np.ndarray: ...
+
+
+@runtime_checkable
+class SklearnClassifier(SklearnEstimator, Protocol):
+    """Structural type for sklearn classifiers with predict_proba."""
+
+    def predict_proba(self, X: np.ndarray) -> np.ndarray: ...
 
 
 class Axis(StrEnum):

@@ -1,7 +1,10 @@
 """Preprocessing pipeline for GridData."""
 
+from __future__ import annotations
+
 import logging
 from collections.abc import Callable
+from typing import TypedDict, cast
 
 import pandas as pd
 
@@ -17,6 +20,15 @@ from ..core.types import (
 from .utils import normalize, standardize
 
 logger = logging.getLogger(__name__)
+
+
+class PreprocessingKwargs(TypedDict, total=False):
+    """Type-safe kwargs for Preprocessor construction."""
+
+    downsampling_res: float | None
+    downsampling_method: DownsamplingStatistic | str | Callable[..., pd.DataFrame]
+    normalize_xyz: bool
+    standardize_v: bool
 
 
 class Preprocessor:
@@ -128,13 +140,13 @@ class Preprocessor:
             idf = idf.reset_index()
             idfs.append(idf)
 
-        return pd.concat(idfs)
+        return cast(pd.DataFrame, pd.concat(idfs))
 
 
 def _apply_downsampling(
     grouped_df: pd.DataFrame,
     downsampling_func: DownsamplingStatistic | str | Callable[..., pd.DataFrame],
-) -> pd.DataFrame:
+) -> pd.DataFrame | pd.Series[float]:
     """Apply a downsampling statistic to a grouped DataFrame."""
     if callable(downsampling_func) and not isinstance(downsampling_func, str):
         return downsampling_func(grouped_df)

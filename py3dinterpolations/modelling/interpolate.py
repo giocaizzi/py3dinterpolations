@@ -8,7 +8,7 @@ from ..core.types import ModelType
 from .estimator import Estimator
 from .modeler import Modeler
 from .models import get_model
-from .preprocessor import Preprocessor
+from .preprocessor import PreprocessingKwargs, Preprocessor
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +19,7 @@ def interpolate(
     grid_resolution: float | dict[str, float],
     model_params: dict[str, object] | None = None,
     model_params_grid: dict[str, list[object]] | None = None,
-    preprocessing: dict[str, object] | None = None,
+    preprocessing: PreprocessingKwargs | None = None,
     **predict_kwargs: object,
 ) -> Modeler:
     """Interpolate GridData and return the Modeler with results.

@@ -228,7 +228,8 @@ class IrregularGrid3D(Grid3D):
             from shapely import Point
 
             mask = np.array([self._hull.contains(Point(p[0], p[1])) for p in points])
-            return points[mask]
+            filtered: np.ndarray = points[mask]
+            return filtered
         return points
 
 

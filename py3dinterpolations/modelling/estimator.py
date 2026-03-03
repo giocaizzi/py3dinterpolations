@@ -1,5 +1,7 @@
 """Cross-validation parameter estimation for interpolation models."""
 
+from typing import cast
+
 from pykrige.rk import Krige
 from sklearn.model_selection import GridSearchCV
 
@@ -38,12 +40,12 @@ class Estimator:
 
     @property
     def best_params(self) -> dict[str, object]:
-        return self.estimator.best_params_
+        return cast(dict[str, object], self.estimator.best_params_)
 
     @property
     def best_score(self) -> float:
-        return self.estimator.best_score_
+        return cast(float, self.estimator.best_score_)
 
     @property
     def cv_results(self) -> dict[str, object]:
-        return self.estimator.cv_results_
+        return cast(dict[str, object], self.estimator.cv_results_)

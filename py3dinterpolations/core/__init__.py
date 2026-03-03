@@ -17,6 +17,8 @@ from .types import (
     ModelType,
     NormalizationParams,
     PreprocessingParams,
+    SklearnClassifier,
+    SklearnEstimator,
     StandardizationParams,
 )
 
@@ -35,6 +37,8 @@ __all__ = [
     "NormalizationParams",
     "PreprocessingParams",
     "RegularGrid3D",
+    "SklearnClassifier",
+    "SklearnEstimator",
     "StandardizationParams",
     "create_grid",
 ]

@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
+from matplotlib.colors import Normalize
 from matplotlib.figure import Figure
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
@@ -64,7 +65,7 @@ def plot_2d_model(
     )
 
     gd_reversed = reverse_preprocessing(modeler.griddata)
-    norm = plt.Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
+    norm = Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
 
     img = None
     for ax, i in zip(axes, range(len(axis_data)), strict=False):
@@ -82,12 +83,12 @@ def plot_2d_model(
         img = ax.imshow(
             matrix.squeeze(),
             origin="lower",
-            extent=[
+            extent=(
                 modeler.grid.get_axis(SLICING_AXIS[axis]["X'"]).min,
                 modeler.grid.get_axis(SLICING_AXIS[axis]["X'"]).max,
                 modeler.grid.get_axis(SLICING_AXIS[axis]["Y'"]).min,
                 modeler.grid.get_axis(SLICING_AXIS[axis]["Y'"]).max,
-            ],
+            ),
             cmap="plasma",
             norm=norm,
         )

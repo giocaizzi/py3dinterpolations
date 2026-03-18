@@ -13,6 +13,10 @@ def normalize(series: pd.Series) -> tuple[pd.Series, NormalizationParams]:
 
     Returns:
         Tuple of (normalized series, normalization params).
+
+    Note:
+        NaN values are silently ignored when computing min/max (pandas
+        ``skipna=True`` default). NaN inputs will remain NaN in the output.
     """
     series = series.copy()
     params = NormalizationParams(min=float(series.min()), max=float(series.max()))
@@ -32,6 +36,10 @@ def standardize(series: pd.Series) -> tuple[pd.Series, StandardizationParams]:
 
     Returns:
         Tuple of (standardized series, standardization params).
+
+    Note:
+        NaN values are silently ignored when computing mean/std (pandas
+        ``skipna=True`` default). NaN inputs will remain NaN in the output.
     """
     series = series.copy()
     params = StandardizationParams(mean=float(series.mean()), std=float(series.std()))

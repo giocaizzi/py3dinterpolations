@@ -94,6 +94,9 @@ class GridDataSpecs:
     @classmethod
     def from_dataframe(cls, data: pd.DataFrame) -> "GridDataSpecs":
         """Compute specs from a canonical GridData DataFrame."""
+        if data.empty:
+            msg = "Cannot compute specs from empty DataFrame"
+            raise ValueError(msg)
         df = data.reset_index()
         return cls(
             xmin=float(df["X"].min()),

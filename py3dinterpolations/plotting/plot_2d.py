@@ -30,7 +30,9 @@ def plot_2d_model(
     Returns:
         Matplotlib Figure.
     """
-    assert modeler.result is not None
+    if modeler.result is None:
+        msg = "Modeler must have results before plotting; call predict() first"
+        raise RuntimeError(msg)
     axis_data = modeler.grid.grid[axis]
 
     num_rows, num_cols = number_of_plots(len(axis_data), n_cols=2)
@@ -71,6 +73,8 @@ def plot_2d_model(
     norm = Normalize(gd_reversed.specs.vmin, gd_reversed.specs.vmax)
 
     img = None
+    if plot_points:
+        points_df = gd_reversed.data.copy().reset_index()
     for ax, i in zip(axes, range(len(axis_data)), strict=False):
         if axis == "Z":
             matrix = modeler.result.interpolated[i, :, :]
@@ -101,7 +105,6 @@ def plot_2d_model(
         to_value = from_value + axis_res
 
         if plot_points:
-            points_df = gd_reversed.data.copy().reset_index()
             points = points_df[
                 (points_df[axis] >= from_value) & (points_df[axis] < to_value)
             ].copy()

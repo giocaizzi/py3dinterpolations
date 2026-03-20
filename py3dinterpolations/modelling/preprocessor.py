@@ -96,7 +96,7 @@ class Preprocessor:
         self, data: pd.DataFrame
     ) -> tuple[pd.DataFrame, dict[Axis, NormalizationParams]]:
         """Apply min-max normalization to X, Y, Z columns."""
-        df = data.copy()
+        df = data
         axis_params: dict[Axis, NormalizationParams] = {}
         for axis in [Axis.X, Axis.Y, Axis.Z]:
             df[axis.value], params = normalize(df[axis.value])
@@ -107,7 +107,7 @@ class Preprocessor:
         self, data: pd.DataFrame
     ) -> tuple[pd.DataFrame, StandardizationParams]:
         """Apply z-score standardization to V column."""
-        df = data.copy()
+        df = data
         df["V"], params = standardize(df["V"])
         return df, params
 
@@ -119,7 +119,9 @@ class Preprocessor:
         ) = DownsamplingStatistic.MEAN,
     ) -> pd.DataFrame:
         """Downsample data by averaging blocks of given resolution."""
-        assert self.downsampling_res is not None
+        if self.downsampling_res is None:
+            msg = "downsampling_res must be set before downsampling"
+            raise RuntimeError(msg)
         res = self.downsampling_res
         idfs = []
         for id_val in self.griddata.data.index.get_level_values("ID").unique():
@@ -146,7 +148,7 @@ class Preprocessor:
 def _apply_downsampling(
     grouped_df: pd.DataFrame,
     downsampling_func: DownsamplingStatistic | str | Callable[..., pd.DataFrame],
-) -> pd.DataFrame | pd.Series[float]:
+) -> pd.DataFrame:
     """Apply a downsampling statistic to a grouped DataFrame."""
     if callable(downsampling_func) and not isinstance(downsampling_func, str):
         return downsampling_func(grouped_df)

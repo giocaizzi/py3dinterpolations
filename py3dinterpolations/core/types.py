@@ -92,6 +92,11 @@ class GridResolution:
     y: float
     z: float
 
+    def __post_init__(self) -> None:
+        if any(r <= 0 for r in (self.x, self.y, self.z)):
+            msg = "Grid resolution values must be positive"
+            raise ValueError(msg)
+
     @classmethod
     def uniform(cls, resolution: float) -> "GridResolution":
         """Create uniform resolution across all axes."""

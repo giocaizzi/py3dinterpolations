@@ -34,7 +34,9 @@ def plot_downsampling(
     unique_ids = df["ID"].unique().tolist()
 
     num_rows, num_cols = number_of_plots(len(unique_ids))
-    fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 10), dpi=300)
+    fig, axes = plt.subplots(
+        num_rows, num_cols, figsize=(10, 10), dpi=300, squeeze=False
+    )
     fig.subplots_adjust(wspace=0.3, hspace=0.7)
 
     for idx, id_to_plot in enumerate(unique_ids):
@@ -55,18 +57,18 @@ def plot_downsampling(
         ax.tick_params(axis="both", which="major", labelsize=3)
         ax.set_title(f"{id_to_plot}", fontsize=5)
 
-        if len(unique_ids) < num_rows * num_cols:
-            for i in range(len(unique_ids), num_rows * num_cols):
-                r = i // num_cols
-                c = i % num_cols
-                axes[r, c].set_visible(False)
-
         ax.set_xlim(
             xmin=0,
             xmax=original_griddata.specs.vmax
             + (original_griddata.specs.vmax / 100) * 10,
             auto=False,
         )
+
+    if len(unique_ids) < num_rows * num_cols:
+        for i in range(len(unique_ids), num_rows * num_cols):
+            r = i // num_cols
+            c = i % num_cols
+            axes[r, c].set_visible(False)
 
     fig.suptitle(f"{original_griddata.columns['V']}", fontsize=10)
     plt.close(fig)

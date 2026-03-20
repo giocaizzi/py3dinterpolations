@@ -42,8 +42,9 @@ class IDWModel(BaseModel):
         Returns:
             (M,) array of interpolated values.
         """
-        assert self._points is not None
-        assert self._values is not None
+        if self._points is None or self._values is None:
+            msg = "Model must be fit before predicting"
+            raise RuntimeError(msg)
 
         # (M, N) distance matrix
         diff = query_points[:, np.newaxis, :] - self._points[np.newaxis, :, :]

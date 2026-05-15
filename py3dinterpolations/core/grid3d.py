@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from functools import cached_property
 
 import numpy as np
 from shapely.geometry.base import BaseGeometry
@@ -88,7 +89,7 @@ class Grid3D(ABC):
     def result(self, value: InterpolationResult) -> None:
         self._result = value
 
-    @property
+    @cached_property
     def grid(self) -> dict[str, np.ndarray]:
         """1D grid arrays per axis."""
         return {
@@ -97,7 +98,7 @@ class Grid3D(ABC):
             "Z": self.Z.grid,
         }
 
-    @property
+    @cached_property
     def normalized_grid(self) -> dict[str, np.ndarray]:
         """Min-max normalized 1D grid arrays per axis."""
         result = {}
@@ -116,7 +117,7 @@ class Grid3D(ABC):
             return self.X.res
         return {"X": self.X.res, "Y": self.Y.res, "Z": self.Z.res}
 
-    @property
+    @cached_property
     def mesh(self) -> dict[str, np.ndarray]:
         """3D meshgrid arrays."""
         mx, my, mz = np.meshgrid(
@@ -124,7 +125,7 @@ class Grid3D(ABC):
         )
         return {"X": mx, "Y": my, "Z": mz}
 
-    @property
+    @cached_property
     def normalized_mesh(self) -> dict[str, np.ndarray]:
         """Normalized 3D meshgrid arrays."""
         mx, my, mz = np.meshgrid(
@@ -225,9 +226,9 @@ class IrregularGrid3D(Grid3D):
         m = self.mesh
         points = np.column_stack([m["X"].ravel(), m["Y"].ravel(), m["Z"].ravel()])
         if self._hull is not None:
-            from shapely import Point
+            from shapely import contains_xy
 
-            mask = np.array([self._hull.contains(Point(p[0], p[1])) for p in points])
+            mask = contains_xy(self._hull, points[:, 0], points[:, 1])
             filtered: np.ndarray = points[mask]
             return filtered
         return points

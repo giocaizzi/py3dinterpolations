@@ -21,6 +21,10 @@ class Modeler:
         griddata: Training data.
         grid: 3D grid for predictions.
         model: Fitted or unfitted BaseModel instance. Will be fit on construction.
+
+    Note:
+        The model is fitted immediately during construction. A Modeler
+        instance is always in a "fitted" state ready for ``predict()``.
     """
 
     def __init__(

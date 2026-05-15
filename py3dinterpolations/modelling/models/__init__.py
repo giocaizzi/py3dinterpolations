@@ -1,4 +1,10 @@
-"""Model registry for 3D interpolation."""
+"""Model registry for 3D interpolation.
+
+Note:
+    ``SklearnModel`` is intentionally excluded from ``MODEL_REGISTRY``.
+    It wraps arbitrary sklearn estimators and must be instantiated
+    directly rather than via ``get_model()``.
+"""
 
 from ...core.types import ModelType
 from .base import BaseModel

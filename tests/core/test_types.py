@@ -83,6 +83,21 @@ def test_grid_resolution_from_input_invalid():
         GridResolution.from_input("invalid")
 
 
+def test_grid_resolution_rejects_zero():
+    with pytest.raises(ValueError, match="positive"):
+        GridResolution(x=0, y=1, z=1)
+
+
+def test_grid_resolution_rejects_negative():
+    with pytest.raises(ValueError, match="positive"):
+        GridResolution(x=1, y=-1, z=1)
+
+
+def test_grid_resolution_from_input_rejects_zero():
+    with pytest.raises(ValueError, match="positive"):
+        GridResolution.from_input(0.0)
+
+
 def test_interpolation_result():
     data = np.zeros((3, 4, 5))
     result = InterpolationResult(interpolated=data)

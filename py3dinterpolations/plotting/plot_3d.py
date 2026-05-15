@@ -1,6 +1,5 @@
 """3D volume plot using plotly."""
 
-import numpy as np
 import plotly.graph_objs as go
 
 from ..modelling.modeler import Modeler
@@ -32,9 +31,11 @@ def plot_3d_model(
     else:
         gd_reversed = modeler.griddata
 
-    assert modeler.result is not None
-    # ZYX -> XYZ
-    values = np.einsum("ZXY->XYZ", modeler.result.interpolated)
+    if modeler.result is None:
+        msg = "Modeler must have results before plotting; call predict() first"
+        raise RuntimeError(msg)
+    # pykrige outputs (Z, Y, X) -> transpose to (Y, X, Z) to match mesh indexing="xy"
+    values = modeler.result.interpolated.transpose(1, 2, 0)
 
     data: list[go.Volume | go.Scatter3d] = [
         go.Volume(

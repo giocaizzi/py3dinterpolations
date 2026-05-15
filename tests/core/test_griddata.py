@@ -81,6 +81,11 @@ def test_griddata_hull(test_data):
     assert hull.area > 0
 
 
+def test_griddata_specs_rejects_empty_dataframe():
+    with pytest.raises(ValueError, match="empty"):
+        GridDataSpecs.from_dataframe(pd.DataFrame())
+
+
 def test_griddata_len(test_data):
     gd = GridData(test_data)
     assert len(gd) == len(gd.data)

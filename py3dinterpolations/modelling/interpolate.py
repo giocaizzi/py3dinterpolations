@@ -38,14 +38,13 @@ def interpolate(
         Modeler instance with .result populated.
 
     Raises:
-        ValueError: If neither or both model_params/model_params_grid are given.
+        ValueError: If both model_params and model_params_grid are given.
         NotImplementedError: If parameter search is used for non-kriging models.
     """
     logger.info("Starting interpolation with model=%s", model_type)
 
     if model_params is None and model_params_grid is None:
-        msg = "Either model_params or model_params_grid must be provided"
-        raise ValueError(msg)
+        model_params = {}
     if model_params is not None and model_params_grid is not None:
         msg = "Cannot provide both model_params and model_params_grid"
         raise ValueError(msg)
@@ -65,7 +64,9 @@ def interpolate(
             msg = "Parameter search is only supported for ordinary_kriging"
             raise NotImplementedError(msg)
 
-        assert model_params_grid is not None
+        if model_params_grid is None:
+            msg = "model_params_grid must not be None when model_params is None"
+            raise RuntimeError(msg)
         est = Estimator(griddata, model_params_grid)
         model_params = dict(est.best_params)
         model_params.pop("method", None)

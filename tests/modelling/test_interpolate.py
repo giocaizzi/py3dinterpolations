@@ -49,15 +49,16 @@ def test_interpolate_model_params_preprocessing(test_data):
     assert isinstance(modeler, Modeler)
 
 
-def test_interpolate_no_params_raises(test_data):
-    """test that ValueError is raised when no params given"""
+def test_interpolate_default_params(test_data):
+    """test that no params defaults to empty dict (model defaults)"""
     gd = GridData(test_data)
-    with pytest.raises(ValueError, match="Either"):
-        interpolate(
-            griddata=gd,
-            model_type="ordinary_kriging",
-            grid_resolution=5,
-        )
+    modeler = interpolate(
+        griddata=gd,
+        model_type="ordinary_kriging",
+        grid_resolution=5,
+    )
+    assert isinstance(modeler, Modeler)
+    assert modeler.result is not None
 
 
 def test_interpolate_both_params_raises(test_data):

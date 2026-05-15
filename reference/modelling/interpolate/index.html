@@ -905,7 +905,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If neither or both model_params/model_params_grid are given.</p>
+                <p>If both model_params and model_params_grid are given.</p>
               </div>
             </td>
           </tr>
@@ -990,7 +990,8 @@
 <span class="normal">78</span>
 <span class="normal">79</span>
 <span class="normal">80</span>
-<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">interpolate</span><span class="p">(</span>
+<span class="normal">81</span>
+<span class="normal">82</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">interpolate</span><span class="p">(</span>
     <span class="n">griddata</span><span class="p">:</span> <span class="n">GridData</span><span class="p">,</span>
     <span class="n">model_type</span><span class="p">:</span> <span class="n">ModelType</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">grid_resolution</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
@@ -1015,14 +1016,13 @@
 <span class="sd">        Modeler instance with .result populated.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If neither or both model_params/model_params_grid are given.</span>
+<span class="sd">        ValueError: If both model_params and model_params_grid are given.</span>
 <span class="sd">        NotImplementedError: If parameter search is used for non-kriging models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting interpolation with model=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Either model_params or model_params_grid must be provided&quot;</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">model_params</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot provide both model_params and model_params_grid&quot;</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1042,7 +1042,9 @@
             <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Parameter search is only supported for ordinary_kriging&quot;</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-        <span class="k">assert</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;model_params_grid must not be None when model_params is None&quot;</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="n">est</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">griddata</span><span class="p">,</span> <span class="n">model_params_grid</span><span class="p">)</span>
         <span class="n">model_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">est</span><span class="o">.</span><span class="n">best_params</span><span class="p">)</span>
         <span class="n">model_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>

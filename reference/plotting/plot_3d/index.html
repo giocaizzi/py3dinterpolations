@@ -843,7 +843,8 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>py3dinterpolations/plotting/plot_3d.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
+<span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
@@ -910,7 +911,8 @@
 <span class="normal">74</span>
 <span class="normal">75</span>
 <span class="normal">76</span>
-<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_3d_model</span><span class="p">(</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_3d_model</span><span class="p">(</span>
     <span class="n">modeler</span><span class="p">:</span> <span class="n">Modeler</span><span class="p">,</span>
     <span class="n">plot_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">scale_points</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -935,9 +937,11 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">gd_reversed</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">griddata</span>
 
-    <span class="k">assert</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-    <span class="c1"># ZYX -&gt; XYZ</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ZXY-&gt;XYZ&quot;</span><span class="p">,</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Modeler must have results before plotting; call predict() first&quot;</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="c1"># pykrige outputs (Z, Y, X) -&gt; transpose to (Y, X, Z) to match mesh indexing=&quot;xy&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">go</span><span class="o">.</span><span class="n">Volume</span> <span class="o">|</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter3d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">go</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span>

@@ -808,6 +808,12 @@
     </table>
 
 
+<details class="note" open>
+  <summary>Note</summary>
+  <p>NaN values are silently ignored when computing min/max (pandas
+<code>skipna=True</code> default). NaN inputs will remain NaN in the output.</p>
+</details>
+
             <details class="mkdocstrings-source">
               <summary>Source code in <code>py3dinterpolations/modelling/utils.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
@@ -826,7 +832,11 @@
 <span class="normal">21</span>
 <span class="normal">22</span>
 <span class="normal">23</span>
-<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">NormalizationParams</span><span class="p">]:</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">NormalizationParams</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize series to [0, 1] range.</span>
 
 <span class="sd">    Args:</span>
@@ -834,6 +844,10 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Tuple of (normalized series, normalization params).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        NaN values are silently ignored when computing min/max (pandas</span>
+<span class="sd">        ``skipna=True`` default). NaN inputs will remain NaN in the output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">series</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">NormalizationParams</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">max</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
@@ -921,13 +935,15 @@
     </table>
 
 
+<details class="note" open>
+  <summary>Note</summary>
+  <p>NaN values are silently ignored when computing mean/std (pandas
+<code>skipna=True</code> default). NaN inputs will remain NaN in the output.</p>
+</details>
+
             <details class="mkdocstrings-source">
               <summary>Source code in <code>py3dinterpolations/modelling/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
@@ -938,7 +954,15 @@
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
-<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">standardize</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">StandardizationParams</span><span class="p">]:</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">standardize</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">StandardizationParams</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Standardize series to mean=0, std=1.</span>
 
 <span class="sd">    Args:</span>
@@ -946,6 +970,10 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Tuple of (standardized series, standardization params).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        NaN values are silently ignored when computing mean/std (pandas</span>
+<span class="sd">        ``skipna=True`` default). NaN inputs will remain NaN in the output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">series</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">StandardizationParams</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">std</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>

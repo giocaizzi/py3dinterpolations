@@ -991,7 +991,10 @@
 <span class="normal">143</span>
 <span class="normal">144</span>
 <span class="normal">145</span>
-<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_2d_model</span><span class="p">(</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_2d_model</span><span class="p">(</span>
     <span class="n">modeler</span><span class="p">:</span> <span class="n">Modeler</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
     <span class="n">plot_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1010,7 +1013,9 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Matplotlib Figure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Modeler must have results before plotting; call predict() first&quot;</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">axis_data</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span>
 
     <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span> <span class="o">=</span> <span class="n">number_of_plots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis_data</span><span class="p">),</span> <span class="n">n_cols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -1051,6 +1056,8 @@
     <span class="n">norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">gd_reversed</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span> <span class="n">gd_reversed</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">vmax</span><span class="p">)</span>
 
     <span class="n">img</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">plot_points</span><span class="p">:</span>
+        <span class="n">points_df</span> <span class="o">=</span> <span class="n">gd_reversed</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis_data</span><span class="p">)),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
             <span class="n">matrix</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
@@ -1081,7 +1088,6 @@
         <span class="n">to_value</span> <span class="o">=</span> <span class="n">from_value</span> <span class="o">+</span> <span class="n">axis_res</span>
 
         <span class="k">if</span> <span class="n">plot_points</span><span class="p">:</span>
-            <span class="n">points_df</span> <span class="o">=</span> <span class="n">gd_reversed</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
             <span class="n">points</span> <span class="o">=</span> <span class="n">points_df</span><span class="p">[</span>
                 <span class="p">(</span><span class="n">points_df</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">from_value</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">points_df</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">to_value</span><span class="p">)</span>
             <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>

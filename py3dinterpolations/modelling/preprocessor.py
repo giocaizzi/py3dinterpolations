@@ -148,7 +148,7 @@ class Preprocessor:
 def _apply_downsampling(
     grouped_df: pd.DataFrame,
     downsampling_func: DownsamplingStatistic | str | Callable[..., pd.DataFrame],
-) -> pd.DataFrame:
+) -> pd.DataFrame | pd.Series[float]:
     """Apply a downsampling statistic to a grouped DataFrame."""
     if callable(downsampling_func) and not isinstance(downsampling_func, str):
         return downsampling_func(grouped_df)

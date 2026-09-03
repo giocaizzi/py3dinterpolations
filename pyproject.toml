@@ -40,7 +40,7 @@ docs = [
     "mkdocs-gen-files>=0.5",
     "mkdocs-literate-nav>=0.6",
     "mkdocs-section-index>=0.3.8",
-    "pygments>=2.18,<2.20",
+    "pygments>=2.18,<2.21",
 ]
 
 [project.urls]

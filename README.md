@@ -53,16 +53,21 @@ grid = modeler.result  # interpolated 3D grid
 pip install py3dinterpolations
 ```
 
-With development dependencies:
+## Development
+
+Requires [uv](https://docs.astral.sh/uv/).
 
 ```bash
-pip install py3dinterpolations[dev]
+git clone https://github.com/giocaizzi/py3dinterpolations.git
+cd py3dinterpolations
+uv sync --extra dev
+make check
 ```
 
 ## Documentation
 
 Full documentation with working examples is available at
-[giocaizzi.github.io/py3dinterpolations](https://giocaizzi.github.io/py3dinterpolations/).
+[giocaizzi.github.io/py3dinterpolations](https://giocaizzi.github.io/py3dinterpolations/); its sources are in [docs/](docs/).
 
 ## License
 

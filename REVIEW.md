@@ -126,6 +126,7 @@ This creates a Python `Point` object and calls `contains()` per grid point. For 
 **Fix**: Use shapely's vectorized `contains` via `shapely.vectorized.contains` or `shapely.contains_xy` (shapely ≥2.0):
 ```python
 from shapely import contains_xy
+
 mask = contains_xy(self._hull, points[:, 0], points[:, 1])
 ```
 
@@ -160,9 +161,9 @@ Every call to `.mesh` creates a new `np.meshgrid`. Every call to `.grid` creates
 ```python
 from functools import cached_property
 
+
 @cached_property
-def mesh(self) -> dict[str, np.ndarray]:
-    ...
+def mesh(self) -> dict[str, np.ndarray]: ...
 ```
 
 Since `GridAxis` is frozen, these values never change — caching is safe.
@@ -230,7 +231,7 @@ Plotting functions hardcode `"X"`, `"Y"`, `"Z"`, `"V"` column names. While `Grid
 ```python
 for idx, id_to_plot in enumerate(unique_ids):
     ...
-    if len(unique_ids) < num_rows * num_cols:   # This is loop-invariant!
+    if len(unique_ids) < num_rows * num_cols:  # This is loop-invariant!
         for i in range(len(unique_ids), num_rows * num_cols):
             ...
 ```

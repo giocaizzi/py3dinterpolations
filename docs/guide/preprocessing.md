@@ -48,8 +48,8 @@ preprocessor = Preprocessor(
 )
 preprocessed = preprocessor.preprocess()
 
-print(len(griddata))       # 283
-print(len(preprocessed))   # 127 (reduced)
+print(len(griddata))  # 283
+print(len(preprocessed))  # 127 (reduced)
 ```
 
 You can also pass a custom callable for `downsampling_method`.

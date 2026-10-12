@@ -30,7 +30,7 @@ modeler = interpolate(
 # kriging also returns variance
 result = modeler.result
 print(result.interpolated.shape)  # 3D array of predictions
-print(result.variance.shape)      # 3D array of kriging variance
+print(result.variance.shape)  # 3D array of kriging variance
 ```
 
 ### Variogram parameters

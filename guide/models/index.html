@@ -931,7 +931,7 @@ predictions and variance estimates. It is backed by
 <span class="c1"># kriging also returns variance</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># 3D array of predictions</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">variance</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># 3D array of kriging variance</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">variance</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># 3D array of kriging variance</span>
 </code></pre></div>
 <h3 id="variogram-parameters">Variogram parameters<a class="headerlink" href="#variogram-parameters" title="Permanent link">&para;</a></h3>
 <p>The <code>model_params</code> dict is passed directly to PyKrige's <code>OrdinaryKriging3D</code>.

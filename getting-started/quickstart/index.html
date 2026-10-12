@@ -907,7 +907,9 @@ The expected columns are <strong>ID</strong>, <strong>X</strong>, <strong>Y</str
 <div class="admonition tip">
 <p class="admonition-title">Custom column names</p>
 <p>If your columns differ from the defaults, pass them explicitly:</p>
-<div class="highlight"><pre><span></span><code><span class="n">griddata</span> <span class="o">=</span> <span class="n">GridData</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ID</span><span class="o">=</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">&quot;easting&quot;</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="s2">&quot;northing&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="s2">&quot;concentration&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">griddata</span> <span class="o">=</span> <span class="n">GridData</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">ID</span><span class="o">=</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s2">&quot;easting&quot;</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="s2">&quot;northing&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="s2">&quot;concentration&quot;</span>
+<span class="p">)</span>
 </code></pre></div>
 </div>
 <h2 id="interpolate">Interpolate<a class="headerlink" href="#interpolate" title="Permanent link">&para;</a></h2>
@@ -932,9 +934,9 @@ It builds the 3D grid, runs optional preprocessing, fits the model, and returns 
 <span class="p">)</span>
 </code></pre></div>
 <h3 id="access-results">Access results<a class="headerlink" href="#access-results" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span>       <span class="c1"># InterpolationResult</span>
-<span class="n">grid</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">interpolated</span>    <span class="c1"># np.ndarray — the interpolated 3D volume</span>
-<span class="n">variance</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">variance</span>    <span class="c1"># np.ndarray or None — kriging variance</span>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span>  <span class="c1"># InterpolationResult</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">interpolated</span>  <span class="c1"># np.ndarray — the interpolated 3D volume</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">variance</span>  <span class="c1"># np.ndarray or None — kriging variance</span>
 </code></pre></div>
 <h2 id="visualize">Visualize<a class="headerlink" href="#visualize" title="Permanent link">&para;</a></h2>
 <h3 id="2d-slices-with-matplotlib">2D slices with matplotlib<a class="headerlink" href="#2d-slices-with-matplotlib" title="Permanent link">&para;</a></h3>

@@ -1,11 +1,9 @@
 """test estimator module"""
 
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from py3dinterpolations.core.griddata import GridData
 from py3dinterpolations.modelling.estimator import Estimator
-
 
 PARAMS = {
     "method": ["ordinary3d"],
@@ -20,11 +18,18 @@ def test_estimator(test_data):
     gd = GridData(test_data)
 
     mock_cv = MagicMock()
-    mock_cv.best_params_ = {"method": "ordinary3d", "variogram_model": "linear", "nlags": 6, "weight": True}
+    mock_cv.best_params_ = {
+        "method": "ordinary3d",
+        "variogram_model": "linear",
+        "nlags": 6,
+        "weight": True,
+    }
     mock_cv.best_score_ = -1.5
     mock_cv.cv_results_ = {"mean_test_score": [-1.5]}
 
-    with patch("py3dinterpolations.modelling.estimator.GridSearchCV", return_value=mock_cv):
+    with patch(
+        "py3dinterpolations.modelling.estimator.GridSearchCV", return_value=mock_cv
+    ):
         estimator = Estimator(gd, PARAMS)
 
     assert isinstance(estimator.best_params, dict)

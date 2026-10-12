@@ -1,7 +1,7 @@
 """test Grid3D objects"""
 
-import pytest
 import numpy as np
+import pytest
 
 from py3dinterpolations.core.grid3d import Grid3D, GridAxis, RegularGrid3D
 from py3dinterpolations.core.types import Axis

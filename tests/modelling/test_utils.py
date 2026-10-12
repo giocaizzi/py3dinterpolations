@@ -3,8 +3,8 @@
 import pandas as pd
 from pandas.testing import assert_series_equal
 
-from py3dinterpolations.modelling.utils import standardize, normalize
 from py3dinterpolations.core.types import NormalizationParams, StandardizationParams
+from py3dinterpolations.modelling.utils import normalize, standardize
 
 
 def test_standardize():

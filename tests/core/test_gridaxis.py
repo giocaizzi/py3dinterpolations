@@ -1,7 +1,7 @@
 """test GridAxis frozen dataclass"""
 
-import pytest
 import numpy as np
+import pytest
 
 from py3dinterpolations.core.grid3d import GridAxis
 from py3dinterpolations.core.types import Axis

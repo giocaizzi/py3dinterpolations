@@ -1,18 +1,17 @@
 """test type primitives"""
 
-import pytest
 import numpy as np
+import pytest
 
 from py3dinterpolations.core.types import (
     Axis,
-    ModelType,
     DownsamplingStatistic,
-    NormalizationParams,
-    StandardizationParams,
-    DownsamplingParams,
-    PreprocessingParams,
     GridResolution,
     InterpolationResult,
+    ModelType,
+    NormalizationParams,
+    PreprocessingParams,
+    StandardizationParams,
 )
 
 

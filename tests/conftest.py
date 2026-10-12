@@ -1,7 +1,8 @@
-import pytest
 from pathlib import Path
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+import pytest
 
 
 def pytest_configure(config):

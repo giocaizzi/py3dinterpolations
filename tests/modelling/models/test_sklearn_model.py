@@ -1,7 +1,6 @@
 """test SklearnModel wrapper"""
 
 import numpy as np
-import pytest
 from sklearn.neighbors import KNeighborsRegressor
 
 from py3dinterpolations.modelling.models.sklearn_model import SklearnModel

@@ -2,10 +2,10 @@
 
 import pytest
 
-from py3dinterpolations.modelling.models import get_model
-from py3dinterpolations.modelling.models.kriging import KrigingModel
-from py3dinterpolations.modelling.models.idw import IDWModel
 from py3dinterpolations.core.types import ModelType
+from py3dinterpolations.modelling.models import get_model
+from py3dinterpolations.modelling.models.idw import IDWModel
+from py3dinterpolations.modelling.models.kriging import KrigingModel
 
 
 def test_get_model_kriging():

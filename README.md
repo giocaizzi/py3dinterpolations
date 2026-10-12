@@ -8,7 +8,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/py3dinterpolations?color=blue)](https://pypi.org/project/py3dinterpolations/)
 [![Python](https://img.shields.io/pypi/pyversions/py3dinterpolations)](https://pypi.org/project/py3dinterpolations/)
-[![Tests](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/tests.yml)
+[![CI](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/giocaizzi/py3dinterpolations/branch/main/graph/badge.svg?token=8COIITUR2I)](https://codecov.io/gh/giocaizzi/py3dinterpolations)
 [![Docs](https://github.com/giocaizzi/py3dinterpolations/actions/workflows/documentation.yml/badge.svg?branch=main)](https://giocaizzi.github.io/py3dinterpolations/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)

@@ -25,7 +25,9 @@ The `GridData` object standardizes the DataFrame into a canonical format with a
     If your columns differ from the defaults, pass them explicitly:
 
     ```python
-    griddata = GridData(df, ID="site", X="easting", Y="northing", Z="depth", V="concentration")
+    griddata = GridData(
+        df, ID="site", X="easting", Y="northing", Z="depth", V="concentration"
+    )
     ```
 
 ## Interpolate
@@ -56,9 +58,9 @@ modeler = interpolate(
 ### Access results
 
 ```python
-result = modeler.result       # InterpolationResult
-grid = result.interpolated    # np.ndarray — the interpolated 3D volume
-variance = result.variance    # np.ndarray or None — kriging variance
+result = modeler.result  # InterpolationResult
+grid = result.interpolated  # np.ndarray — the interpolated 3D volume
+variance = result.variance  # np.ndarray or None — kriging variance
 ```
 
 ## Visualize

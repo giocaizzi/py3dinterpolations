@@ -10,5 +10,5 @@
 ## Workflow
 
 - Changes land on `main` only via a squash-merged PR with a Conventional Commit title; required CI job is `check` (`.github/workflows/ci.yml`). Repo conventions: [GitHub standard](https://github.com/giocaizzi/.github/blob/main/docs/standard.md).
-- Any change under `py3dinterpolations/` must bump `version` in `pyproject.toml` and `__version__` in `py3dinterpolations/__init__.py` to the same value (`versioning_checks.yml` enforces it).
-- Publishing to PyPI runs on a published GitHub release (`python-publish.yml`); docs deploy to GitHub Pages on push to `main` (`documentation.yml`).
+- Versions are owned by release-please (`release-please.yml`, `release-please-config.json`, `.release-please-manifest.json`): never bump `pyproject.toml` or `__version__` by hand; the Conventional Commit PR title drives the bump.
+- Publishing to PyPI runs on the GitHub release that release-please creates (`python-publish.yml`); docs deploy to GitHub Pages on push to `main` (`documentation.yml`).

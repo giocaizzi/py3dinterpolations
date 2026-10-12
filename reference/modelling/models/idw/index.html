@@ -875,7 +875,7 @@ with a training point (exact interpolation).</p>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Store training data.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Store training data."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">=</span> <span class="n">v</span>
 </code></pre></div></td></tr></table></div>
@@ -980,18 +980,18 @@ with a training point (exact interpolation).</p>
     <span class="n">grid_z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InterpolationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict on a regular grid defined by 1D arrays.</span>
+<span class="w">    </span><span class="sd">"""Predict on a regular grid defined by 1D arrays.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        InterpolationResult with shape (len(grid_z), len(grid_y), len(grid_x))</span>
-<span class="sd">        to match pykrige&#39;s output convention.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        to match pykrige's output convention.</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Model must be fit before predicting&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Model must be fit before predicting"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="c1"># Build meshgrid in ij (XYZ) indexing for computation</span>
-    <span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">query_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">mx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">my</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">mz</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
 
     <span class="c1"># Batch processing for memory safety</span>
@@ -1003,7 +1003,7 @@ with a training point (exact interpolation).</p>
 
     <span class="c1"># Reshape to (X, Y, Z) then transpose to (Z, Y, X) to match pykrige</span>
     <span class="n">interpolated</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;xyz-&gt;zyx&quot;</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">)</span>
+    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"xyz-&gt;zyx"</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">InterpolationResult</span><span class="p">(</span><span class="n">interpolated</span><span class="o">=</span><span class="n">interpolated</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>

@@ -1457,14 +1457,14 @@
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Axis</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GridAxis</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a grid axis by name.</span>
+<span class="w">    </span><span class="sd">"""Get a grid axis by name.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        axis: Axis name (&quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;) or Axis enum.</span>
+<span class="sd">        axis: Axis name ("X", "Y", "Z") or Axis enum.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If axis name is invalid.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">axis</span> <span class="o">=</span> <span class="n">Axis</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
     <span class="k">match</span> <span class="n">axis</span><span class="p">:</span>
         <span class="k">case</span> <span class="n">Axis</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
@@ -1504,7 +1504,7 @@
 <span class="normal">141</span>
 <span class="normal">142</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">prediction_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return (N, 3) array of points at which to predict.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return (N, 3) array of points at which to predict."""</span>
     <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1952,9 +1952,9 @@
 <span class="normal">232</span>
 <span class="normal">233</span>
 <span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">prediction_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return grid points filtered by convex hull if available.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return grid points filtered by convex hull if available."""</span>
     <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span>
-    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hull</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">contains_xy</span>
 
@@ -2195,9 +2195,9 @@
 <span class="normal">183</span>
 <span class="normal">184</span>
 <span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">prediction_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all grid points as (N, 3) array.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return all grid points as (N, 3) array."""</span>
     <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">m</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2217,7 +2217,7 @@
 
 
 <h3 id="py3dinterpolations.core.GridData" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">ID</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="n">preprocessing_params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">ID</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s1">'X'</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="s1">'Y'</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="s1">'Z'</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="s1">'V'</span><span class="p">,</span> <span class="n">preprocessing_params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#py3dinterpolations.core.GridData" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -2387,15 +2387,15 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">ID</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ID&quot;</span><span class="p">,</span>
-    <span class="n">X</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span>
-    <span class="n">Y</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
-    <span class="n">Z</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
-    <span class="n">V</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span>
+    <span class="n">ID</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"ID"</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"X"</span><span class="p">,</span>
+    <span class="n">Y</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Y"</span><span class="p">,</span>
+    <span class="n">Z</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Z"</span><span class="p">,</span>
+    <span class="n">V</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"V"</span><span class="p">,</span>
     <span class="n">preprocessing_params</span><span class="p">:</span> <span class="n">PreprocessingParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">preprocessing_params</span> <span class="o">=</span> <span class="n">preprocessing_params</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="n">V</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ID"</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">"Z"</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">:</span> <span class="n">V</span><span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
                   </details>
@@ -2566,21 +2566,21 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
 <span class="normal">108</span>
 <span class="normal">109</span>
 <span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GridDataSpecs&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute specs from a canonical GridData DataFrame.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"GridDataSpecs"</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Compute specs from a canonical GridData DataFrame."""</span>
     <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot compute specs from empty DataFrame&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Cannot compute specs from empty DataFrame"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-        <span class="n">xmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
-        <span class="n">xmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
-        <span class="n">ymin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
-        <span class="n">ymax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
-        <span class="n">zmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
-        <span class="n">zmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
-        <span class="n">vmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
-        <span class="n">vmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+        <span class="n">xmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
+        <span class="n">xmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+        <span class="n">ymin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
+        <span class="n">ymax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+        <span class="n">zmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
+        <span class="n">zmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2808,8 +2808,8 @@ or <code>from_input()</code> to accept either float or per-axis dict.</p>
 <span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">uniform</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GridResolution&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create uniform resolution across all axes.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">uniform</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"GridResolution"</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create uniform resolution across all axes."""</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">resolution</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2850,17 +2850,17 @@ or <code>from_input()</code> to accept either float or per-axis dict.</p>
 <span class="normal">115</span>
 <span class="normal">116</span>
 <span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">from_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;GridResolution&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create from either a uniform float or per-axis dict.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_input</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">"GridResolution"</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create from either a uniform float or per-axis dict."""</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]),</span>
-            <span class="n">y</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]),</span>
-            <span class="n">z</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]),</span>
+            <span class="n">x</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]),</span>
+            <span class="n">y</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]),</span>
+            <span class="n">z</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">resolution</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]),</span>
         <span class="p">)</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;resolution must be float or dict, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"resolution must be float or dict, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3375,7 +3375,7 @@ or per-axis dict for IrregularGrid3D.</p>
     <span class="n">griddata</span><span class="p">:</span> <span class="n">GridData</span><span class="p">,</span>
     <span class="n">resolution</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Grid3D</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Factory to create the appropriate Grid3D from data and resolution.</span>
+<span class="w">    </span><span class="sd">"""Factory to create the appropriate Grid3D from data and resolution.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        griddata: Source data to derive grid extents from.</span>
@@ -3387,7 +3387,7 @@ or per-axis dict for IrregularGrid3D.</p>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        TypeError: If resolution type is unsupported.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">specs</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">specs</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">GridResolution</span><span class="o">.</span><span class="n">from_input</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
 
@@ -3414,7 +3414,7 @@ or per-axis dict for IrregularGrid3D.</p>
             <span class="n">z_res</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
             <span class="n">hull</span><span class="o">=</span><span class="n">griddata</span><span class="o">.</span><span class="n">hull</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;resolution must be float or dict, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"resolution must be float or dict, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>

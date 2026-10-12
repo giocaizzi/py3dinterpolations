@@ -837,7 +837,7 @@
 <span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">NormalizationParams</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize series to [0, 1] range.</span>
+<span class="w">    </span><span class="sd">"""Normalize series to [0, 1] range.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        series: Series to normalize.</span>
@@ -848,7 +848,7 @@
 <span class="sd">    Note:</span>
 <span class="sd">        NaN values are silently ignored when computing min/max (pandas</span>
 <span class="sd">        ``skipna=True`` default). NaN inputs will remain NaN in the output.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">series</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">NormalizationParams</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">max</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
     <span class="n">value_range</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">params</span><span class="o">.</span><span class="n">min</span>
@@ -963,7 +963,7 @@
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">standardize</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">StandardizationParams</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standardize series to mean=0, std=1.</span>
+<span class="w">    </span><span class="sd">"""Standardize series to mean=0, std=1.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        series: Series to standardize.</span>
@@ -974,7 +974,7 @@
 <span class="sd">    Note:</span>
 <span class="sd">        NaN values are silently ignored when computing mean/std (pandas</span>
 <span class="sd">        ``skipna=True`` default). NaN inputs will remain NaN in the output.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">series</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">StandardizationParams</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">std</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>
     <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">std</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">std</span><span class="p">):</span>

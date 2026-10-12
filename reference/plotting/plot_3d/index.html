@@ -918,7 +918,7 @@
     <span class="n">scale_points</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="n">volume_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot 3D interpolation result as a plotly Volume.</span>
+<span class="w">    </span><span class="sd">"""Plot 3D interpolation result as a plotly Volume.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        modeler: Modeler with prediction results.</span>
@@ -928,7 +928,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Plotly Figure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">volume_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">volume_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -938,16 +938,16 @@
         <span class="n">gd_reversed</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">griddata</span>
 
     <span class="k">if</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Modeler must have results before plotting; call predict() first&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Modeler must have results before plotting; call predict() first"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-    <span class="c1"># pykrige outputs (Z, Y, X) -&gt; transpose to (Y, X, Z) to match mesh indexing=&quot;xy&quot;</span>
+    <span class="c1"># pykrige outputs (Z, Y, X) -&gt; transpose to (Y, X, Z) to match mesh indexing="xy"</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">go</span><span class="o">.</span><span class="n">Volume</span> <span class="o">|</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter3d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">go</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
-            <span class="n">z</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+            <span class="n">z</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
             <span class="n">value</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
             <span class="n">opacityscale</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
             <span class="n">cmin</span><span class="o">=</span><span class="n">gd_reversed</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span>
@@ -965,22 +965,22 @@
 
         <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="n">go</span><span class="o">.</span><span class="n">Scatter3d</span><span class="p">(</span>
-                <span class="n">x</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span>
-                <span class="n">y</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span>
-                <span class="n">z</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">],</span>
-                <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"X"</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">],</span>
+                <span class="n">z</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">],</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s2">"markers"</span><span class="p">,</span>
                 <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-                    <span class="n">size</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
-                    <span class="n">sizemode</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
-                    <span class="n">sizeref</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale_points</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
-                    <span class="n">color</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">],</span>
+                    <span class="n">size</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                    <span class="n">sizemode</span><span class="o">=</span><span class="s2">"area"</span><span class="p">,</span>
+                    <span class="n">sizeref</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale_points</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">],</span>
                     <span class="n">sizemin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_scenes</span><span class="p">(</span><span class="n">aspectmode</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_scenes</span><span class="p">(</span><span class="n">aspectmode</span><span class="o">=</span><span class="s2">"data"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
             </details>

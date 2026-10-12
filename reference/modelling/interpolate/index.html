@@ -1000,11 +1000,11 @@
     <span class="n">preprocessing</span><span class="p">:</span> <span class="n">PreprocessingKwargs</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">predict_kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Modeler</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolate GridData and return the Modeler with results.</span>
+<span class="w">    </span><span class="sd">"""Interpolate GridData and return the Modeler with results.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        griddata: Source data to interpolate.</span>
-<span class="sd">        model_type: Which model to use (e.g. &quot;ordinary_kriging&quot;, &quot;idw&quot;).</span>
+<span class="sd">        model_type: Which model to use (e.g. "ordinary_kriging", "idw").</span>
 <span class="sd">        grid_resolution: Grid resolution. Float for regular, dict for irregular.</span>
 <span class="sd">        model_params: Model constructor parameters.</span>
 <span class="sd">        model_params_grid: Parameter grid for cross-validation search.</span>
@@ -1018,13 +1018,13 @@
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If both model_params and model_params_grid are given.</span>
 <span class="sd">        NotImplementedError: If parameter search is used for non-kriging models.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting interpolation with model=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting interpolation with model=</span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">model_params</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot provide both model_params and model_params_grid&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Cannot provide both model_params and model_params_grid"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="c1"># Build grid</span>
@@ -1039,15 +1039,15 @@
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">model_type_enum</span> <span class="o">=</span> <span class="n">ModelType</span><span class="p">(</span><span class="n">model_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">model_type_enum</span> <span class="o">!=</span> <span class="n">ModelType</span><span class="o">.</span><span class="n">ORDINARY_KRIGING</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Parameter search is only supported for ordinary_kriging&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Parameter search is only supported for ordinary_kriging"</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;model_params_grid must not be None when model_params is None&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">"model_params_grid must not be None when model_params is None"</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="n">est</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">griddata</span><span class="p">,</span> <span class="n">model_params_grid</span><span class="p">)</span>
         <span class="n">model_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">est</span><span class="o">.</span><span class="n">best_params</span><span class="p">)</span>
-        <span class="n">model_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">model_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"method"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="c1"># Build and fit model</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="o">**</span><span class="n">model_params</span><span class="p">)</span>
@@ -1056,7 +1056,7 @@
     <span class="c1"># Predict</span>
     <span class="n">modeler</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">**</span><span class="n">predict_kwargs</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Interpolation complete&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Interpolation complete"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">modeler</span>
 </code></pre></div></td></tr></table></div>
             </details>

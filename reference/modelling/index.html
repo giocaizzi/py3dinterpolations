@@ -985,7 +985,7 @@
 
 
 <h3 id="py3dinterpolations.modelling.Estimator" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">Estimator</span><span class="p">(</span><span class="n">griddata</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_mean_absolute_error&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">Estimator</span><span class="p">(</span><span class="n">griddata</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">'neg_mean_absolute_error'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
 
 <a href="#py3dinterpolations.modelling.Estimator" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -1105,7 +1105,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">griddata</span><span class="p">:</span> <span class="n">GridData</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">object</span><span class="p">]],</span>
-    <span class="n">scoring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"neg_mean_absolute_error"</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
@@ -1265,7 +1265,7 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
     <span class="c1"># Fit the model on training data</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">numpy_data</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Model </span><span class="si">%s</span><span class="s2"> fitted on </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Model </span><span class="si">%s</span><span class="s2"> fitted on </span><span class="si">%d</span><span class="s2"> points"</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
                   </details>
 
@@ -1367,12 +1367,12 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
 <span class="normal">105</span>
 <span class="normal">106</span>
 <span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make predictions, handling normalization and standardization reversal.</span>
+<span class="w">    </span><span class="sd">"""Make predictions, handling normalization and standardization reversal.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Interpolated numpy array.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting prediction on grid </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting prediction on grid </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid</span><span class="p">)</span>
 
     <span class="c1"># Use normalized grid if normalization was applied</span>
     <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_griddata</span><span class="o">.</span><span class="n">preprocessing_params</span>
@@ -1383,9 +1383,9 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
 
     <span class="c1"># Predict</span>
     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
-        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span>
-        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span>
-        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">],</span>
+        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">"X"</span><span class="p">],</span>
+        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">],</span>
+        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">],</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1410,7 +1410,7 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
     <span class="c1"># Also attach to grid</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_grid</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Prediction complete&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Prediction complete"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">interpolated</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1601,14 +1601,14 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
 <span class="normal">25</span>
 <span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the model to training data.</span>
+<span class="w">    </span><span class="sd">"""Fit the model to training data.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        x: X coordinates of training points.</span>
 <span class="sd">        y: Y coordinates of training points.</span>
 <span class="sd">        z: Z coordinates of training points.</span>
 <span class="sd">        v: Values at training points.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1752,7 +1752,7 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
     <span class="n">grid_z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InterpolationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict on 1D grid arrays.</span>
+<span class="w">    </span><span class="sd">"""Predict on 1D grid arrays.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        grid_x: 1D array of X grid coordinates.</span>
@@ -1761,7 +1761,7 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Interpolation result with at least the interpolated field.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1900,7 +1900,7 @@ with a training point (exact interpolation).</p>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Store training data.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Store training data."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">=</span> <span class="n">v</span>
 </code></pre></div></td></tr></table></div>
@@ -2005,18 +2005,18 @@ with a training point (exact interpolation).</p>
     <span class="n">grid_z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InterpolationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict on a regular grid defined by 1D arrays.</span>
+<span class="w">    </span><span class="sd">"""Predict on a regular grid defined by 1D arrays.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        InterpolationResult with shape (len(grid_z), len(grid_y), len(grid_x))</span>
-<span class="sd">        to match pykrige&#39;s output convention.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        to match pykrige's output convention.</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Model must be fit before predicting&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Model must be fit before predicting"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="c1"># Build meshgrid in ij (XYZ) indexing for computation</span>
-    <span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">query_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">mx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">my</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">mz</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
 
     <span class="c1"># Batch processing for memory safety</span>
@@ -2028,7 +2028,7 @@ with a training point (exact interpolation).</p>
 
     <span class="c1"># Reshape to (X, Y, Z) then transpose to (Z, Y, X) to match pykrige</span>
     <span class="n">interpolated</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;xyz-&gt;zyx&quot;</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">)</span>
+    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"xyz-&gt;zyx"</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">InterpolationResult</span><span class="p">(</span><span class="n">interpolated</span><span class="o">=</span><span class="n">interpolated</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -2145,7 +2145,7 @@ OrdinaryKriging3D instance.</p>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit by constructing the OrdinaryKriging3D model.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Fit by constructing the OrdinaryKriging3D model."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">OrdinaryKriging3D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2243,17 +2243,17 @@ OrdinaryKriging3D instance.</p>
     <span class="n">grid_z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InterpolationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute kriging on the given grid arrays.</span>
+<span class="w">    </span><span class="sd">"""Execute kriging on the given grid arrays.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        InterpolationResult with interpolated and variance arrays.</span>
 <span class="sd">        Shape is (len(grid_z), len(grid_y), len(grid_x)) per pykrige convention.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Model must be fit before predicting&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Model must be fit before predicting"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">interpolated</span><span class="p">,</span> <span class="n">variance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;grid&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">"grid"</span><span class="p">,</span>
         <span class="n">xpoints</span><span class="o">=</span><span class="n">grid_x</span><span class="p">,</span>
         <span class="n">ypoints</span><span class="o">=</span><span class="n">grid_y</span><span class="p">,</span>
         <span class="n">zpoints</span><span class="o">=</span><span class="n">grid_z</span><span class="p">,</span>
@@ -2282,7 +2282,7 @@ OrdinaryKriging3D instance.</p>
 
 
 <h3 id="py3dinterpolations.modelling.SklearnModel" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">SklearnModel</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;sklearn&#39;</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">SklearnModel</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">'sklearn'</span><span class="p">)</span></code>
 
 <a href="#py3dinterpolations.modelling.SklearnModel" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -2354,7 +2354,7 @@ OrdinaryKriging3D instance.</p>
                     <summary>Source code in <code>py3dinterpolations/modelling/models/sklearn_model.py</code></summary>
                     <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estimator</span><span class="p">:</span> <span class="n">SklearnEstimator</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;sklearn&quot;</span><span class="p">):</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estimator</span><span class="p">:</span> <span class="n">SklearnEstimator</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"sklearn"</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_estimator</span> <span class="o">=</span> <span class="n">estimator</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_model_name</span> <span class="o">=</span> <span class="n">model_name</span>
 </code></pre></div></td></tr></table></div>
@@ -2393,7 +2393,7 @@ OrdinaryKriging3D instance.</p>
 <span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the sklearn estimator.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Fit the sklearn estimator."""</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -2495,19 +2495,19 @@ OrdinaryKriging3D instance.</p>
     <span class="n">grid_z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InterpolationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict on a regular grid.</span>
+<span class="w">    </span><span class="sd">"""Predict on a regular grid.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        InterpolationResult with shape (len(grid_z), len(grid_y), len(grid_x))</span>
 <span class="sd">        to match the convention of other models.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">,</span> <span class="n">grid_z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">mx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">my</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">mz</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
 
     <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">interpolated</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="c1"># Transpose from XYZ to ZYX to match pykrige convention</span>
-    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;xyz-&gt;zyx&quot;</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">)</span>
+    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"xyz-&gt;zyx"</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">)</span>
 
     <span class="n">probability</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_estimator</span><span class="p">,</span> <span class="n">SklearnClassifier</span><span class="p">):</span>
@@ -2816,13 +2816,13 @@ Returns a new GridData with preprocessing params attached.</p>
 <span class="normal">91</span>
 <span class="normal">92</span>
 <span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GridData</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute the preprocessing pipeline.</span>
+<span class="w">    </span><span class="sd">"""Execute the preprocessing pipeline.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        New GridData with preprocessed data and params attached.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting preprocessing&quot;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">griddata</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">]]</span>
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting preprocessing"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">griddata</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s2">"ID"</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">,</span> <span class="s2">"Z"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">]]</span>
 
     <span class="n">downsampling_params</span><span class="p">:</span> <span class="n">DownsamplingParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">normalization_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Axis</span><span class="p">,</span> <span class="n">NormalizationParams</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -2843,7 +2843,7 @@ Returns a new GridData with preprocessing params attached.</p>
         <span class="n">normalization</span><span class="o">=</span><span class="n">normalization_params</span><span class="p">,</span>
         <span class="n">standardization</span><span class="o">=</span><span class="n">standardization_params</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preprocessing complete: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Preprocessing complete: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">preprocessing_params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2989,7 +2989,7 @@ Returns a new GridData with preprocessing params attached.</p>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_model</span><span class="p">(</span><span class="n">model_type</span><span class="p">:</span> <span class="n">ModelType</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseModel</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instantiate a model by type.</span>
+<span class="w">    </span><span class="sd">"""Instantiate a model by type.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model_type: Model identifier, either a ModelType enum or its string value.</span>
@@ -3000,12 +3000,12 @@ Returns a new GridData with preprocessing params attached.</p>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If model_type is not in the registry.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">model_type</span> <span class="o">=</span> <span class="n">ModelType</span><span class="p">(</span><span class="n">model_type</span><span class="p">)</span>
     <span class="bp">cls</span> <span class="o">=</span> <span class="n">MODEL_REGISTRY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model_type</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">available</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">MODEL_REGISTRY</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">model_type</span><span class="si">!r}</span><span class="s2"> not in registry. Available: </span><span class="si">{</span><span class="n">available</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Model </span><span class="si">{</span><span class="n">model_type</span><span class="si">!r}</span><span class="s2"> not in registry. Available: </span><span class="si">{</span><span class="n">available</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -3141,7 +3141,7 @@ Downsampling cannot be reversed.</p>
 <span class="normal">201</span>
 <span class="normal">202</span>
 <span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reverse_preprocessing</span><span class="p">(</span><span class="n">griddata</span><span class="p">:</span> <span class="n">GridData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GridData</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reverse all reversible preprocessing transformations.</span>
+<span class="w">    </span><span class="sd">"""Reverse all reversible preprocessing transformations.</span>
 
 <span class="sd">    Reverses normalization of XYZ and standardization of V.</span>
 <span class="sd">    Downsampling cannot be reversed.</span>
@@ -3154,10 +3154,10 @@ Downsampling cannot be reversed.</p>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If no preprocessing params are present.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">preprocessing_params</span>
     <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No preprocessing has been applied to the data&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"No preprocessing has been applied to the data"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -3169,7 +3169,7 @@ Downsampling cannot be reversed.</p>
 
     <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">standardization</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">std</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">standardization</span>
-        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">std</span><span class="o">.</span><span class="n">std</span> <span class="o">+</span> <span class="n">std</span><span class="o">.</span><span class="n">mean</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span> <span class="o">*</span> <span class="n">std</span><span class="o">.</span><span class="n">std</span> <span class="o">+</span> <span class="n">std</span><span class="o">.</span><span class="n">mean</span>
 
     <span class="k">return</span> <span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>

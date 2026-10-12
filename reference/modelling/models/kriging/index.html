@@ -852,7 +852,7 @@ OrdinaryKriging3D instance.</p>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit by constructing the OrdinaryKriging3D model.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Fit by constructing the OrdinaryKriging3D model."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">OrdinaryKriging3D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -950,17 +950,17 @@ OrdinaryKriging3D instance.</p>
     <span class="n">grid_z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InterpolationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute kriging on the given grid arrays.</span>
+<span class="w">    </span><span class="sd">"""Execute kriging on the given grid arrays.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        InterpolationResult with interpolated and variance arrays.</span>
 <span class="sd">        Shape is (len(grid_z), len(grid_y), len(grid_x)) per pykrige convention.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Model must be fit before predicting&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Model must be fit before predicting"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">interpolated</span><span class="p">,</span> <span class="n">variance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;grid&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">"grid"</span><span class="p">,</span>
         <span class="n">xpoints</span><span class="o">=</span><span class="n">grid_x</span><span class="p">,</span>
         <span class="n">ypoints</span><span class="o">=</span><span class="n">grid_y</span><span class="p">,</span>
         <span class="n">zpoints</span><span class="o">=</span><span class="n">grid_z</span><span class="p">,</span>

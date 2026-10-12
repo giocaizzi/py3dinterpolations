@@ -812,7 +812,7 @@
 
 
 <h3 id="py3dinterpolations.GridData" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">ID</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="n">preprocessing_params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">ID</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="s1">'X'</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="s1">'Y'</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="s1">'Z'</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="s1">'V'</span><span class="p">,</span> <span class="n">preprocessing_params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#py3dinterpolations.GridData" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -982,15 +982,15 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">ID</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ID&quot;</span><span class="p">,</span>
-    <span class="n">X</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span>
-    <span class="n">Y</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
-    <span class="n">Z</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
-    <span class="n">V</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span>
+    <span class="n">ID</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"ID"</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"X"</span><span class="p">,</span>
+    <span class="n">Y</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Y"</span><span class="p">,</span>
+    <span class="n">Z</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Z"</span><span class="p">,</span>
+    <span class="n">V</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"V"</span><span class="p">,</span>
     <span class="n">preprocessing_params</span><span class="p">:</span> <span class="n">PreprocessingParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">preprocessing_params</span> <span class="o">=</span> <span class="n">preprocessing_params</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="n">V</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ID"</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">"Z"</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">:</span> <span class="n">V</span><span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
                   </details>
@@ -1406,11 +1406,11 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="n">preprocessing</span><span class="p">:</span> <span class="n">PreprocessingKwargs</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">predict_kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Modeler</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolate GridData and return the Modeler with results.</span>
+<span class="w">    </span><span class="sd">"""Interpolate GridData and return the Modeler with results.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        griddata: Source data to interpolate.</span>
-<span class="sd">        model_type: Which model to use (e.g. &quot;ordinary_kriging&quot;, &quot;idw&quot;).</span>
+<span class="sd">        model_type: Which model to use (e.g. "ordinary_kriging", "idw").</span>
 <span class="sd">        grid_resolution: Grid resolution. Float for regular, dict for irregular.</span>
 <span class="sd">        model_params: Model constructor parameters.</span>
 <span class="sd">        model_params_grid: Parameter grid for cross-validation search.</span>
@@ -1424,13 +1424,13 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If both model_params and model_params_grid are given.</span>
 <span class="sd">        NotImplementedError: If parameter search is used for non-kriging models.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting interpolation with model=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting interpolation with model=</span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">model_params</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot provide both model_params and model_params_grid&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Cannot provide both model_params and model_params_grid"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="c1"># Build grid</span>
@@ -1445,15 +1445,15 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">model_type_enum</span> <span class="o">=</span> <span class="n">ModelType</span><span class="p">(</span><span class="n">model_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">model_type_enum</span> <span class="o">!=</span> <span class="n">ModelType</span><span class="o">.</span><span class="n">ORDINARY_KRIGING</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Parameter search is only supported for ordinary_kriging&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Parameter search is only supported for ordinary_kriging"</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">model_params_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;model_params_grid must not be None when model_params is None&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">"model_params_grid must not be None when model_params is None"</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="n">est</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">griddata</span><span class="p">,</span> <span class="n">model_params_grid</span><span class="p">)</span>
         <span class="n">model_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">est</span><span class="o">.</span><span class="n">best_params</span><span class="p">)</span>
-        <span class="n">model_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">model_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"method"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="c1"># Build and fit model</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="o">**</span><span class="n">model_params</span><span class="p">)</span>
@@ -1462,7 +1462,7 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="c1"># Predict</span>
     <span class="n">modeler</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">**</span><span class="n">predict_kwargs</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Interpolation complete&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Interpolation complete"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">modeler</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1474,7 +1474,7 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
 
 
 <h3 id="py3dinterpolations.plot_2d_model" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">plot_2d_model</span><span class="p">(</span><span class="n">modeler</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="n">plot_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">annotate_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figure_width</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">plot_2d_model</span><span class="p">(</span><span class="n">modeler</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">'Z'</span><span class="p">,</span> <span class="n">plot_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">annotate_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figure_width</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span></code>
 
 <a href="#py3dinterpolations.plot_2d_model" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -1741,25 +1741,25 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
 <span class="normal">148</span>
 <span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_2d_model</span><span class="p">(</span>
     <span class="n">modeler</span><span class="p">:</span> <span class="n">Modeler</span><span class="p">,</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Z"</span><span class="p">,</span>
     <span class="n">plot_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">annotate_points</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">figure_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot 2D slices of a 3D interpolation along an axis.</span>
+<span class="w">    </span><span class="sd">"""Plot 2D slices of a 3D interpolation along an axis.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        modeler: Modeler with prediction results.</span>
-<span class="sd">        axis: Axis to slice along (&quot;X&quot;, &quot;Y&quot;, or &quot;Z&quot;).</span>
+<span class="sd">        axis: Axis to slice along ("X", "Y", or "Z").</span>
 <span class="sd">        plot_points: Whether to overlay training points on slices.</span>
 <span class="sd">        annotate_points: Whether to annotate point values.</span>
 <span class="sd">        figure_width: Figure width in inches.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Matplotlib Figure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Modeler must have results before plotting; call predict() first&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Modeler must have results before plotting; call predict() first"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">axis_data</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span>
 
@@ -1781,17 +1781,17 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
             <span class="n">axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]))</span>
 
     <span class="n">colorbar_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"top"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"bottom"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"left"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"right"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
     <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
     <span class="n">colorbar_ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
 
     <span class="n">colorbar_inset_ax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
-        <span class="n">colorbar_ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center&quot;</span>
+        <span class="n">colorbar_ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">"100%"</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">"50%"</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"center"</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">modeler</span><span class="o">.</span><span class="n">griddata</span><span class="o">.</span><span class="n">preprocessing_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1804,27 +1804,27 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="k">if</span> <span class="n">plot_points</span><span class="p">:</span>
         <span class="n">points_df</span> <span class="o">=</span> <span class="n">gd_reversed</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis_data</span><span class="p">)),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"Z"</span><span class="p">:</span>
             <span class="n">matrix</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
-        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"Y"</span><span class="p">:</span>
             <span class="n">matrix</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
-        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"X"</span><span class="p">:</span>
             <span class="n">matrix</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;axis </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> not implemented. Choose from </span><span class="si">{</span><span class="n">keys</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"axis </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> not implemented. Choose from </span><span class="si">{</span><span class="n">keys</span><span class="si">}</span><span class="s2">"</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="n">img</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
             <span class="n">matrix</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
-            <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span>
+            <span class="n">origin</span><span class="o">=</span><span class="s2">"lower"</span><span class="p">,</span>
             <span class="n">extent</span><span class="o">=</span><span class="p">(</span>
-                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;X&#39;&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
-                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;X&#39;&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
-                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;Y&#39;&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
-                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;Y&#39;&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"X'"</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"X'"</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"Y'"</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                <span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">get_axis</span><span class="p">(</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"Y'"</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;plasma&quot;</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="s2">"plasma"</span><span class="p">,</span>
             <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -1836,37 +1836,37 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
             <span class="n">points</span> <span class="o">=</span> <span class="n">points_df</span><span class="p">[</span>
                 <span class="p">(</span><span class="n">points_df</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">from_value</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">points_df</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">to_value</span><span class="p">)</span>
             <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">])</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">"V"</span><span class="p">])</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-                <span class="n">points</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;X&#39;&quot;</span><span class="p">]],</span>
-                <span class="n">points</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;Y&#39;&quot;</span><span class="p">]],</span>
-                <span class="n">c</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">],</span>
-                <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;plasma&quot;</span><span class="p">,</span>
+                <span class="n">points</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"X'"</span><span class="p">]],</span>
+                <span class="n">points</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"Y'"</span><span class="p">]],</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">],</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="s2">"plasma"</span><span class="p">,</span>
                 <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
                 <span class="n">s</span><span class="o">=</span><span class="n">figure_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">annotate_points</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">_idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">points</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
                     <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">'V'</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
                         <span class="n">xy</span><span class="o">=</span><span class="p">(</span>
-                            <span class="n">row</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;X&#39;&quot;</span><span class="p">]],</span>
-                            <span class="n">row</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">&quot;Y&#39;&quot;</span><span class="p">]],</span>
+                            <span class="n">row</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"X'"</span><span class="p">]],</span>
+                            <span class="n">row</span><span class="p">[</span><span class="n">SLICING_AXIS</span><span class="p">[</span><span class="n">axis</span><span class="p">][</span><span class="s2">"Y'"</span><span class="p">]],</span>
                         <span class="p">),</span>
                         <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-                        <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span>
+                        <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span>
                         <span class="n">fontsize</span><span class="o">=</span><span class="n">figure_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
                     <span class="p">)</span>
 
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">from_value</span><span class="si">}</span><span class="se">\u00f7</span><span class="si">{</span><span class="n">to_value</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">from_value</span><span class="si">}</span><span class="se">\u00f7</span><span class="si">{</span><span class="n">to_value</span><span class="si">}</span><span class="s2"> m"</span><span class="p">)</span>
 
-    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Along </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> axis&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Along </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> axis"</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">img</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
             <span class="n">img</span><span class="p">,</span>
             <span class="n">cax</span><span class="o">=</span><span class="n">colorbar_inset_ax</span><span class="p">,</span>
-            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.0f</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">"</span><span class="si">%.0f</span><span class="s2">"</span><span class="p">,</span>
             <span class="n">fraction</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -2074,7 +2074,7 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
     <span class="n">scale_points</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="n">volume_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot 3D interpolation result as a plotly Volume.</span>
+<span class="w">    </span><span class="sd">"""Plot 3D interpolation result as a plotly Volume.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        modeler: Modeler with prediction results.</span>
@@ -2084,7 +2084,7 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Plotly Figure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">volume_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">volume_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -2094,16 +2094,16 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
         <span class="n">gd_reversed</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">griddata</span>
 
     <span class="k">if</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Modeler must have results before plotting; call predict() first&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Modeler must have results before plotting; call predict() first"</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-    <span class="c1"># pykrige outputs (Z, Y, X) -&gt; transpose to (Y, X, Z) to match mesh indexing=&quot;xy&quot;</span>
+    <span class="c1"># pykrige outputs (Z, Y, X) -&gt; transpose to (Y, X, Z) to match mesh indexing="xy"</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">modeler</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">interpolated</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">go</span><span class="o">.</span><span class="n">Volume</span> <span class="o">|</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter3d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">go</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
-            <span class="n">z</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">"X"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+            <span class="n">z</span><span class="o">=</span><span class="n">modeler</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
             <span class="n">value</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
             <span class="n">opacityscale</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
             <span class="n">cmin</span><span class="o">=</span><span class="n">gd_reversed</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span>
@@ -2121,22 +2121,22 @@ MultiIndex (ID, X, Y, Z) and a single column V.</p>
 
         <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="n">go</span><span class="o">.</span><span class="n">Scatter3d</span><span class="p">(</span>
-                <span class="n">x</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span>
-                <span class="n">y</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span>
-                <span class="n">z</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">],</span>
-                <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"X"</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">],</span>
+                <span class="n">z</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">],</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s2">"markers"</span><span class="p">,</span>
                 <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-                    <span class="n">size</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
-                    <span class="n">sizemode</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
-                    <span class="n">sizeref</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale_points</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
-                    <span class="n">color</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">],</span>
+                    <span class="n">size</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                    <span class="n">sizemode</span><span class="o">=</span><span class="s2">"area"</span><span class="p">,</span>
+                    <span class="n">sizeref</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale_points</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">points</span><span class="p">[</span><span class="s2">"V"</span><span class="p">],</span>
                     <span class="n">sizemin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_scenes</span><span class="p">(</span><span class="n">aspectmode</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_scenes</span><span class="p">(</span><span class="n">aspectmode</span><span class="o">=</span><span class="s2">"data"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
             </details>

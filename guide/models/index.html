@@ -919,12 +919,12 @@ predictions and variance estimates. It is backed by
 
 <span class="n">modeler</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span>
     <span class="n">griddata</span><span class="o">=</span><span class="n">griddata</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;ordinary_kriging&quot;</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="o">=</span><span class="s2">"ordinary_kriging"</span><span class="p">,</span>
     <span class="n">grid_resolution</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
     <span class="n">model_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;variogram_model&quot;</span><span class="p">:</span> <span class="s2">&quot;spherical&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;nlags&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-        <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"variogram_model"</span><span class="p">:</span> <span class="s2">"spherical"</span><span class="p">,</span>
+        <span class="s2">"nlags"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="s2">"weight"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 
@@ -967,13 +967,13 @@ Key parameters:</p>
 using scikit-learn's <code>GridSearchCV</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">modeler</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span>
     <span class="n">griddata</span><span class="o">=</span><span class="n">griddata</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;ordinary_kriging&quot;</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="o">=</span><span class="s2">"ordinary_kriging"</span><span class="p">,</span>
     <span class="n">grid_resolution</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
     <span class="n">model_params_grid</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ordinary3d&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;variogram_model&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="s2">&quot;spherical&quot;</span><span class="p">,</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;nlags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
-        <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+        <span class="s2">"method"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ordinary3d"</span><span class="p">],</span>
+        <span class="s2">"variogram_model"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"linear"</span><span class="p">,</span> <span class="s2">"spherical"</span><span class="p">,</span> <span class="s2">"gaussian"</span><span class="p">],</span>
+        <span class="s2">"nlags"</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+        <span class="s2">"weight"</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -993,9 +993,9 @@ w_i(\mathbf{x}) = \frac{1}{d(\mathbf{x}, \mathbf{x}_i)^p}
 \]</div>
 <div class="highlight"><pre><span></span><code><span class="n">modeler</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span>
     <span class="n">griddata</span><span class="o">=</span><span class="n">griddata</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;idw&quot;</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="o">=</span><span class="s2">"idw"</span><span class="p">,</span>
     <span class="n">grid_resolution</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
-    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"power"</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
 <span class="p">)</span>
 </code></pre></div>
 <h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h3>

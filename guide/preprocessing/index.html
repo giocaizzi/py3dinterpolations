@@ -872,13 +872,13 @@ normalization and standardization when making predictions.</p>
 <span class="n">griddata</span> <span class="o">=</span> <span class="n">GridData</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 <span class="n">modeler</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span>
     <span class="n">griddata</span><span class="o">=</span><span class="n">griddata</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;ordinary_kriging&quot;</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="o">=</span><span class="s2">"ordinary_kriging"</span><span class="p">,</span>
     <span class="n">grid_resolution</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
-    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;variogram_model&quot;</span><span class="p">:</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="s2">&quot;nlags&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"variogram_model"</span><span class="p">:</span> <span class="s2">"linear"</span><span class="p">,</span> <span class="s2">"nlags"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"weight"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="n">preprocessing</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;downsampling_res&quot;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
-        <span class="s2">&quot;normalize_xyz&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;standardize_v&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"downsampling_res"</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="s2">"normalize_xyz"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"standardize_v"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -891,7 +891,7 @@ preserving general trends.</p>
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">Preprocessor</span><span class="p">(</span>
     <span class="n">griddata</span><span class="p">,</span>
     <span class="n">downsampling_res</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
-    <span class="n">downsampling_method</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;max&quot;, &quot;min&quot;, &quot;median&quot;, &quot;sum&quot;, &quot;quantile75&quot;</span>
+    <span class="n">downsampling_method</span><span class="o">=</span><span class="s2">"mean"</span><span class="p">,</span>  <span class="c1"># or "max", "min", "median", "sum", "quantile75"</span>
 <span class="p">)</span>
 <span class="n">preprocessed</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
 

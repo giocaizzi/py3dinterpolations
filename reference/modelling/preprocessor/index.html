@@ -1047,13 +1047,13 @@ Returns a new GridData with preprocessing params attached.</p>
 <span class="normal">91</span>
 <span class="normal">92</span>
 <span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GridData</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute the preprocessing pipeline.</span>
+<span class="w">    </span><span class="sd">"""Execute the preprocessing pipeline.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        New GridData with preprocessed data and params attached.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting preprocessing&quot;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">griddata</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">]]</span>
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting preprocessing"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">griddata</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s2">"ID"</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">,</span> <span class="s2">"Z"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">]]</span>
 
     <span class="n">downsampling_params</span><span class="p">:</span> <span class="n">DownsamplingParams</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">normalization_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Axis</span><span class="p">,</span> <span class="n">NormalizationParams</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1074,7 +1074,7 @@ Returns a new GridData with preprocessing params attached.</p>
         <span class="n">normalization</span><span class="o">=</span><span class="n">normalization_params</span><span class="p">,</span>
         <span class="n">standardization</span><span class="o">=</span><span class="n">standardization_params</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preprocessing complete: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Preprocessing complete: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">preprocessing_params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1218,7 +1218,7 @@ Downsampling cannot be reversed.</p>
 <span class="normal">201</span>
 <span class="normal">202</span>
 <span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reverse_preprocessing</span><span class="p">(</span><span class="n">griddata</span><span class="p">:</span> <span class="n">GridData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GridData</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reverse all reversible preprocessing transformations.</span>
+<span class="w">    </span><span class="sd">"""Reverse all reversible preprocessing transformations.</span>
 
 <span class="sd">    Reverses normalization of XYZ and standardization of V.</span>
 <span class="sd">    Downsampling cannot be reversed.</span>
@@ -1231,10 +1231,10 @@ Downsampling cannot be reversed.</p>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If no preprocessing params are present.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">preprocessing_params</span>
     <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No preprocessing has been applied to the data&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">"No preprocessing has been applied to the data"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -1246,7 +1246,7 @@ Downsampling cannot be reversed.</p>
 
     <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">standardization</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">std</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">standardization</span>
-        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;V&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">std</span><span class="o">.</span><span class="n">std</span> <span class="o">+</span> <span class="n">std</span><span class="o">.</span><span class="n">mean</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span> <span class="o">*</span> <span class="n">std</span><span class="o">.</span><span class="n">std</span> <span class="o">+</span> <span class="n">std</span><span class="o">.</span><span class="n">mean</span>
 
     <span class="k">return</span> <span class="n">GridData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>

@@ -772,15 +772,15 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">py3dinterpolations</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridData</span><span class="p">,</span> <span class="n">interpolate</span>
 
 <span class="c1"># load your spatial data (columns: ID, X, Y, Z, V)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;measurements.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"measurements.csv"</span><span class="p">)</span>
 <span class="n">griddata</span> <span class="o">=</span> <span class="n">GridData</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
 <span class="c1"># interpolate onto a regular 3D grid</span>
 <span class="n">modeler</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span>
     <span class="n">griddata</span><span class="o">=</span><span class="n">griddata</span><span class="p">,</span>
-    <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;ordinary_kriging&quot;</span><span class="p">,</span>
+    <span class="n">model_type</span><span class="o">=</span><span class="s2">"ordinary_kriging"</span><span class="p">,</span>
     <span class="n">grid_resolution</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
-    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;variogram_model&quot;</span><span class="p">:</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="s2">&quot;nlags&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"variogram_model"</span><span class="p">:</span> <span class="s2">"linear"</span><span class="p">,</span> <span class="s2">"nlags"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"weight"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
 <span class="p">)</span>
 
 <span class="c1"># access results</span>

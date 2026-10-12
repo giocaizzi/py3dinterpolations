@@ -864,7 +864,7 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
     <span class="c1"># Fit the model on training data</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">griddata</span><span class="o">.</span><span class="n">numpy_data</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Model </span><span class="si">%s</span><span class="s2"> fitted on </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Model </span><span class="si">%s</span><span class="s2"> fitted on </span><span class="si">%d</span><span class="s2"> points"</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
                   </details>
 
@@ -966,12 +966,12 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
 <span class="normal">105</span>
 <span class="normal">106</span>
 <span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make predictions, handling normalization and standardization reversal.</span>
+<span class="w">    </span><span class="sd">"""Make predictions, handling normalization and standardization reversal.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Interpolated numpy array.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting prediction on grid </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting prediction on grid </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid</span><span class="p">)</span>
 
     <span class="c1"># Use normalized grid if normalization was applied</span>
     <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_griddata</span><span class="o">.</span><span class="n">preprocessing_params</span>
@@ -982,9 +982,9 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
 
     <span class="c1"># Predict</span>
     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
-        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span>
-        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span>
-        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">],</span>
+        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">"X"</span><span class="p">],</span>
+        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">"Y"</span><span class="p">],</span>
+        <span class="n">grid_arrays</span><span class="p">[</span><span class="s2">"Z"</span><span class="p">],</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1009,7 +1009,7 @@ instance is always in a "fitted" state ready for <code>predict()</code>.</p>
     <span class="c1"># Also attach to grid</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_grid</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Prediction complete&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Prediction complete"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">interpolated</span>
 </code></pre></div></td></tr></table></div>
             </details>

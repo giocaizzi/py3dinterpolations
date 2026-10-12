@@ -1,13 +1,13 @@
 """test Modeler class"""
 
-import pytest
 import numpy as np
+import pytest
 
-from py3dinterpolations.core.griddata import GridData
 from py3dinterpolations.core.grid3d import create_grid
+from py3dinterpolations.core.griddata import GridData
+from py3dinterpolations.core.types import InterpolationResult
 from py3dinterpolations.modelling.modeler import Modeler
 from py3dinterpolations.modelling.models import get_model
-from py3dinterpolations.core.types import InterpolationResult
 
 scenarios = [
     ("ordinary_kriging", {"variogram_model": "linear", "nlags": 6, "weight": True}),

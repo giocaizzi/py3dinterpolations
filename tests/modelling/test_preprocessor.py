@@ -1,7 +1,8 @@
 """test preprocessing class"""
 
-import pytest
 import itertools
+
+import pytest
 from pandas.testing import assert_frame_equal
 
 from py3dinterpolations.core.griddata import GridData
@@ -75,7 +76,9 @@ def test_preprocessor_preprocess_output(
     "downsampling_res, normalize_xyz, standardize_v",
     PREPROCESSING_COMBINATIONS,
 )
-def test_reverse_preprocessing(downsampling_res, normalize_xyz, standardize_v, test_data):
+def test_reverse_preprocessing(
+    downsampling_res, normalize_xyz, standardize_v, test_data
+):
     """test reverse_preprocessing restores original data"""
     gd = GridData(test_data)
     pp_gd = Preprocessor(

@@ -1,11 +1,10 @@
 """test GridData class"""
 
+import pandas as pd
 import pytest
 
 from py3dinterpolations.core.griddata import GridData, GridDataSpecs
 from py3dinterpolations.core.types import PreprocessingParams
-
-import pandas as pd
 
 
 @pytest.mark.parametrize(

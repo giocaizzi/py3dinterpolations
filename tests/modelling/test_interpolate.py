@@ -1,8 +1,9 @@
 """test interpolate function"""
 
-import pytest
-import numpy as np
 from unittest.mock import patch
+
+import numpy as np
+import pytest
 
 from py3dinterpolations.core.griddata import GridData
 from py3dinterpolations.modelling.interpolate import interpolate

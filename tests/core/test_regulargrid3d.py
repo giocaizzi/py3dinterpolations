@@ -1,17 +1,15 @@
 """test RegularGrid3D and IrregularGrid3D"""
 
 import pytest
-import numpy as np
 
 from py3dinterpolations.core.grid3d import (
-    RegularGrid3D,
-    IrregularGrid3D,
     Grid3D,
     GridAxis,
+    IrregularGrid3D,
+    RegularGrid3D,
     create_grid,
 )
 from py3dinterpolations.core.griddata import GridData
-
 
 REGULARGRID3D_PARAMETERS = {
     "x_min": 0.0,
@@ -48,9 +46,15 @@ def test_regulargrid3d_prediction_points():
 
 def test_irregulargrid3d():
     ig3d = IrregularGrid3D(
-        x_min=0.0, x_max=1.0, x_res=0.1,
-        y_min=0.0, y_max=1.0, y_res=0.2,
-        z_min=0.0, z_max=1.0, z_res=0.25,
+        x_min=0.0,
+        x_max=1.0,
+        x_res=0.1,
+        y_min=0.0,
+        y_max=1.0,
+        y_res=0.2,
+        z_min=0.0,
+        z_max=1.0,
+        z_res=0.25,
     )
     assert isinstance(ig3d, Grid3D)
     assert ig3d.X.res == 0.1
@@ -66,16 +70,28 @@ def test_irregulargrid3d_with_hull(test_data):
     hull = gd.hull
     specs = gd.specs
     ig3d = IrregularGrid3D(
-        x_min=specs.xmin, x_max=specs.xmax, x_res=5.0,
-        y_min=specs.ymin, y_max=specs.ymax, y_res=5.0,
-        z_min=specs.zmin, z_max=specs.zmax, z_res=5.0,
+        x_min=specs.xmin,
+        x_max=specs.xmax,
+        x_res=5.0,
+        y_min=specs.ymin,
+        y_max=specs.ymax,
+        y_res=5.0,
+        z_min=specs.zmin,
+        z_max=specs.zmax,
+        z_res=5.0,
         hull=hull,
     )
     points_with_hull = ig3d.prediction_points()
     ig3d_no_hull = IrregularGrid3D(
-        x_min=specs.xmin, x_max=specs.xmax, x_res=5.0,
-        y_min=specs.ymin, y_max=specs.ymax, y_res=5.0,
-        z_min=specs.zmin, z_max=specs.zmax, z_res=5.0,
+        x_min=specs.xmin,
+        x_max=specs.xmax,
+        x_res=5.0,
+        y_min=specs.ymin,
+        y_max=specs.ymax,
+        y_res=5.0,
+        z_min=specs.zmin,
+        z_max=specs.zmax,
+        z_res=5.0,
     )
     points_no_hull = ig3d_no_hull.prediction_points()
     # Hull filtering should reduce or equal number of points

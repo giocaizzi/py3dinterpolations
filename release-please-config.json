@@ -31,6 +31,10 @@
           "type": "toml",
           "path": "uv.lock",
           "jsonpath": "$.package[?(@.name.value=='py3dinterpolations')].version"
+        },
+        {
+          "type": "generic",
+          "path": "py3dinterpolations/__init__.py"
         }
       ]
     }
